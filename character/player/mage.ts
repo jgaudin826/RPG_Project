@@ -17,7 +17,7 @@ export default class Mage extends Character{
     MagicAttack(enemy : Character) : boolean{
         if (this.manaNow - (this.manaMax*(25/100))>= 0){
             this.manaNow -= (this.manaMax*(25/100))
-            enemy.currentHP -= this.attack
+            enemy.currentHp -= this.attack
             return true
         }
         return false
