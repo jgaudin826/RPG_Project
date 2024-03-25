@@ -3,8 +3,8 @@ import Character from "../character.ts"
 export default class Mage extends Character{
     manaNow : number;
     manaMax : number;
-    constructor(name :string, attack : number, defense :number , speed : number, hpMax :number,currentHP : number,manaNow : number,manaMax : number){
-        super(name,attack,defense,speed,hpMax,currentHP)
+    constructor(name :string, attack : number, defense :number , speed : number, maxHp :number,currentHp : number,manaNow : number,manaMax : number){
+        super(name,attack,defense,speed,maxHp,currentHp)
         this.manaMax =manaMax
         this.manaNow =manaNow
     }
