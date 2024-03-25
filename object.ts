@@ -1,3 +1,4 @@
+import Character from "./character/character.ts"
 export class Object {
     name : string;
     hpGain : number;
