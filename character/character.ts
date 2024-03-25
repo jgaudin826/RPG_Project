@@ -3,20 +3,22 @@ export default class Character {
     attack : number; 
     defense : number;
     speed : number; 
-    maxHp : number;
-    currentHp : number;
+    maxHP : number;
+    currentHP : number;
+    className : string;
 
-    constructor(name : string, attack : number, defense : number,speed : number, maxHp : number, currentHp : number,){
+    constructor(name : string, attack : number, defense : number,speed : number, maxHP : number, currentHP : number, className : string){
         this.name = name
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
-        this.maxHp = maxHp;
-        this.currentHp = currentHp;
+        this.maxHP = maxHP;
+        this.currentHP = currentHP;
+        this.className = className;
     }
 
     damage() {
-        if(this.currentHp > 0) {
+        if(this.currentHP > 0) {
             this.attack - this.defense
         } else {
             console.log("On n'attaque pas un mort !")
@@ -24,20 +26,20 @@ export default class Character {
     }
 
     heal(percent : number) {
-        if(this.currentHp <= 0){
+        if(this.currentHP <= 0){
             console.log("On ne soigne pas un mort !")
         } else {
-            if(this.currentHp > this.currentHp + this.maxHp*(percent/100)) {
-                this.currentHp = this.maxHp
+            if(this.currentHP > this.currentHP + this.maxHP*(percent/100)) {
+                this.currentHP = this.maxHP
             } else {
-                this.currentHp += this.maxHp*(percent/100)
+                this.currentHP += this.maxHP*(percent/100)
             }
         }
     }
 
     resurection(percent : number) {
-        if(this.currentHp <= 0) {
-            this.currentHp += this.maxHp*(percent/100)
+        if(this.currentHP <= 0) {
+            this.currentHP += this.maxHP*(percent/100)
         } else {
             console.log("On ne ressucite pas un un personnage déjà vivant !")
         }
