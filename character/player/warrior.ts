@@ -6,10 +6,10 @@ export default class Warrior extends Player{
     className:string="Warrior";
     constructor(name :string="Warrior",
                 team:string="player",
-                attack : number = Math.floor(Math.random() * 100), 
-                defense : number = Math.floor(Math.random() * 100), 
-                speed : number= Math.floor((Math.random() * 10)+95), 
-                maxHp :number= Math.floor(Math.random() * 100)
+                attack : number = Math.floor((Math.random() * 100)), 
+                defense : number = Math.floor((Math.random() * 100)), 
+                speed : number= Math.floor((Math.random() * 11)+95), 
+                maxHp :number= Math.floor((Math.random() * 100))
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }

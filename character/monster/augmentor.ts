@@ -7,10 +7,10 @@ export default class augmentor extends Monster{
     boostCount:number=0
     constructor(name :string="augmentor",
                 team:string,
-                attack : number = Math.floor(Math.random() * 100), 
-                defense : number = Math.floor(Math.random() * 100), 
-                speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100)
+                attack : number = Math.floor((Math.random() * 100)), 
+                defense : number = Math.floor((Math.random() * 100)), 
+                speed : number= Math.floor((Math.random() * 100)), 
+                maxHp :number= Math.floor((Math.random() * 100))
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
