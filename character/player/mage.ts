@@ -9,12 +9,11 @@ export default class Mage extends Character{
                 defense : number = Math.floor(Math.random() * 100), 
                 speed : number= Math.floor(Math.random() * 100), 
                 maxHp :number= Math.floor(Math.random() * 100),
-                manaNow : number= Math.floor(Math.random() * 100),
                 manaMax : number= Math.floor(Math.random() * 100)
                 ){
         super(name,team,attack,defense,speed,maxHp)
-        this.manaMax = Math.floor(Math.random() * 100)
-        this.manaNow = Math.floor(Math.random() * 100)
+        this.manaMax = manaMax
+        this.manaNow = manaMax
     }
     gainMana(percent : number){
         this.manaNow += (this.manaMax*(percent/100))
