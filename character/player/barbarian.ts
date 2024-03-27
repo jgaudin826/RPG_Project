@@ -6,10 +6,10 @@ export default class Barbarian extends Player{
     className:string="barbarian";
     constructor(name :string="barbarian",
                 team:string="player",
-                attack : number = Math.floor((Math.random() * 100)), 
-                defense : number = Math.floor((Math.random() * 100)), 
-                speed : number= Math.floor((Math.random() * 100)), 
-                maxHp :number= Math.floor((Math.random() * 100))
+                attack : number = Math.floor((Math.random() * 20)+70), 
+                defense : number = Math.floor((Math.random() * 10)+15), 
+                speed : number= Math.floor((Math.random() * 10)+100), 
+                maxHp :number= Math.floor((Math.random() * 10)+200)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
