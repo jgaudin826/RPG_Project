@@ -1,5 +1,7 @@
 import Character from "./character/character.ts"
-export default class Object {
+import Mage from "./character/player/mage.ts"
+
+export  default class Object {
     name : string;
     hpGain : number;
     resurectGain : number;

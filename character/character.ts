@@ -15,9 +15,9 @@ export default class Character {
         this.currentHp = currentHp;
     }
 
-    damage() {
+    damage(enemy:Character) {
         if(this.currentHp > 0) {
-            this.attack - this.defense
+            enemy.currentHp-=(this.attack - this.defense)
         } else {
             console.log("On n'attaque pas un mort !")
         }
