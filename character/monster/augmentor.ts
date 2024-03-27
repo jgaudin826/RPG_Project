@@ -1,5 +1,6 @@
 import Character from "../character.ts"
 export default class augmentor extends Character{
+    className:string="augmentor";
     orbe : string[] =[]
     boostCount:number=0
     constructor(name :string="augmentor",
@@ -29,13 +30,20 @@ export default class augmentor extends Character{
     }
     damageReceve(){
         if (this.orbe.length>=1){
-            this.orbe.splice(this.orbe.length-1,1)
+            this.orbe.pop()
             this.boost()
         }
     }
     playTurn(players:Character[],monsters:Character[]){
         this.rituel()
-        let enemy : Character = players[Math.floor(Math.random() * players.length)]
-        this.damage(enemy)
+        let intendedCharacter : Character = players[0]
+        let whichEnnemi :number = Math.floor(Math.random() * 10)
+        if (whichEnnemi>3 && whichEnnemi<6){
+            intendedCharacter = this.playerWithLowestHP(players)
+        } else {
+            intendedCharacter = players[Math.floor(Math.random() * players.length)]
+        }
+        
+            this.damage(intendedCharacter)
     }
 }

@@ -1,6 +1,7 @@
 import Character from "../character.ts"
 
 export default class Mage extends Character{
+    className:string="mage";
     manaNow : number;
     manaMax : number;
     constructor(name :string="mage",
@@ -21,13 +22,13 @@ export default class Mage extends Character{
             this.manaNow = this.manaMax
         }
     }
-    magicAttack(enemy : Character) : boolean{
+    specialAttack(enemy : Character) : object{
         if (this.manaNow - (this.manaMax*(25/100))>= 0){
             this.manaNow -= (this.manaMax*(25/100))
             enemy.currentHp -= this.attack
-            return true
+            return {play:true,stealObject:null}
         }
-        return false
+        return {play:true,stealObject:null}
     }
     playTurn(players:Character[],monsters:Character[]){
         let canPlay: boolean = false

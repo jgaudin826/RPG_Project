@@ -1,6 +1,7 @@
 import Character from "../character.ts"
 
 export default class Thief extends Character{
+    className:string="thief";
     constructor(name :string="thief",
                 team:string,
                 attack : number = Math.floor(Math.random() * 100), 
@@ -10,7 +11,7 @@ export default class Thief extends Character{
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
-    steal():string | null {3
+    specialAttack():object{
         let stealObject : string | null
         let stealNumber : number = Math.floor(Math.random() * 100);
         if (stealNumber<5){
@@ -24,7 +25,7 @@ export default class Thief extends Character{
         } else {
             stealObject = null
         }
-        return stealObject
+        return {play:true,stealObject:stealObject}
     }
     playTurn(players:Character[],monsters:Character[]){
     }

@@ -1,6 +1,7 @@
 import Character from "../character.ts"
 
 export default class Paladin extends Character{
+    className:string="paladin";
     constructor(name :string="paladin",
                 team:string,
                 attack : number = Math.floor(Math.random() * 100), 
@@ -10,10 +11,9 @@ export default class Paladin extends Character{
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
-    saintAttack(enemies : Character[]) {
-        enemies.forEach(enemy => {
-            enemy.currentHp -= ((this.attack - enemy.defense)*0.4)
-        });    
+    specialAttack(enemy : Character):object {
+        enemy.currentHp -= ((this.attack - enemy.defense)*0.4)
+        return {play:true,stealObject:null} 
     }
     playTurn(players:Character[],monsters:Character[]){
     }
