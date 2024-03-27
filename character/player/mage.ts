@@ -8,11 +8,11 @@ export default class Mage extends Player{
     manaMax : number;
     constructor(name :string="mage",
                 team:string,
-                attack : number = Math.floor((Math.random() * 100)), 
-                defense : number = Math.floor((Math.random() * 100)), 
-                speed : number= Math.floor((Math.random() * 100)), 
-                maxHp :number= Math.floor((Math.random() * 100)),
-                manaMax : number= Math.floor((Math.random() * 100))
+                attack : number = Math.floor((Math.random() * 10)+35), 
+                defense : number = Math.floor((Math.random() * 5)+10), 
+                speed : number= Math.floor((Math.random() * 10)+115), 
+                maxHp :number= Math.floor((Math.random() * 20)+190),
+                manaMax : number= 100
                 ){
         super(name,team,attack,defense,speed,maxHp)
         this.manaMax = manaMax
@@ -66,5 +66,6 @@ export default class Mage extends Player{
                 this.playTurn(players,monsters)
                 
         }
+        this.gainMana(10)
     }
 }
