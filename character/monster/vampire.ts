@@ -5,10 +5,10 @@ export default class vampire extends Monster{
     className:string="vampire";
     constructor(name :string="vampire",
                 team:string,
-                attack : number = Math.floor((Math.random() * 100)), 
-                defense : number = Math.floor((Math.random() * 100)), 
-                speed : number= Math.floor((Math.random() * 100)), 
-                maxHp :number= Math.floor((Math.random() * 100))
+                attack : number = Math.floor((Math.random() * 20)+70), 
+                defense : number = Math.floor((Math.random() * 5)+15), 
+                speed : number= Math.floor((Math.random() * 10)+95), 
+                maxHp :number= Math.floor((Math.random() * 20)+165)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
