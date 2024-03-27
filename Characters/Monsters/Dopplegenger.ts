@@ -1,9 +1,5 @@
-<<<<<<< HEAD:Characters/Monsters/Dopplegenger.ts
-import Character from "../Character.ts"
-=======
 import Character from "../character.ts";
 import Monster from "../monster.ts";
->>>>>>> cassian:character/monster/dopplegenger.ts
 
 export default class Dopplegenger extends Monster{
     className:string="dopplegenger";
