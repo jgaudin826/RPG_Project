@@ -1,5 +1,5 @@
 import Character from "../Character.ts"
-import Menu from "../../menu.ts"
+import Menu from "../../Menu.ts"
 import Player from "../Player.ts";
 
 export default class Warrior extends Player{
