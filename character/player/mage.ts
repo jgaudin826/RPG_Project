@@ -29,4 +29,10 @@ export default class Mage extends Character{
         }
         return false
     }
+    playTurn(players:Character[],monsters:Character[]){
+        let canPlay: boolean = false
+        while(canPlay==false){
+
+        }
+    }
 }

@@ -6,12 +6,10 @@ export default class Thief extends Character{
                 attack : number = Math.floor(Math.random() * 100), 
                 defense : number = Math.floor(Math.random() * 100), 
                 speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100),
-                manaNow : number= Math.floor(Math.random() * 100),
-                manaMax : number= Math.floor(Math.random() * 100)
+                maxHp :number= Math.floor(Math.random() * 100)
                 ){
         super(name,team,attack,defense,speed,maxHp)
-}
+    }
     steal():string | null {3
         let stealObject : string | null
         let stealNumber : number = Math.floor(Math.random() * 100);
@@ -27,5 +25,7 @@ export default class Thief extends Character{
             stealObject = null
         }
         return stealObject
+    }
+    playTurn(players:Character[],monsters:Character[]){
     }
 }

@@ -45,6 +45,6 @@ export default class Character {
         }
     }
 
-    playTurn(){
+    playTurn(player:Character[],monster:Character[]){
     }
 }

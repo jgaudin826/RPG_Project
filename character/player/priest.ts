@@ -6,13 +6,13 @@ export default class Priest extends Character{
                 attack : number = Math.floor(Math.random() * 100), 
                 defense : number = Math.floor(Math.random() * 100), 
                 speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100),
-                manaNow : number= Math.floor(Math.random() * 100),
-                manaMax : number= Math.floor(Math.random() * 100)
+                maxHp :number= Math.floor(Math.random() * 100)
                 ){
         super(name,team,attack,defense,speed,maxHp)
-}
+    }
     regeneration(ally : Character){
         ally.heal(25)
+    }
+    playTurn(players:Character[],monsters:Character[]){
     }
 }

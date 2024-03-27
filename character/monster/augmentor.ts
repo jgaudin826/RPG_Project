@@ -7,12 +7,10 @@ export default class augmentor extends Character{
                 attack : number = Math.floor(Math.random() * 100), 
                 defense : number = Math.floor(Math.random() * 100), 
                 speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100),
-                manaNow : number= Math.floor(Math.random() * 100),
-                manaMax : number= Math.floor(Math.random() * 100)
+                maxHp :number= Math.floor(Math.random() * 100)
                 ){
         super(name,team,attack,defense,speed,maxHp)
-}
+    }
     rituel(){
         if (this.orbe.length<5){
             this.orbe.push("")
@@ -34,5 +32,10 @@ export default class augmentor extends Character{
             this.orbe.splice(this.orbe.length-1,1)
             this.boost()
         }
+    }
+    playTurn(players:Character[],monsters:Character[]){
+        this.rituel()
+        let enemy : Character = players[Math.floor(Math.random() * players.length)]
+        this.damage(enemy)
     }
 }

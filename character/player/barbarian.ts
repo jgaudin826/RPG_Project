@@ -6,9 +6,7 @@ export default class Barbarian extends Character{
                 attack : number = Math.floor(Math.random() * 100), 
                 defense : number = Math.floor(Math.random() * 100), 
                 speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100),
-                manaNow : number= Math.floor(Math.random() * 100),
-                manaMax : number= Math.floor(Math.random() * 100)
+                maxHp :number= Math.floor(Math.random() * 100)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
@@ -19,5 +17,11 @@ export default class Barbarian extends Character{
             return true
         }
         return false
+    }
+    playTurn(players:Character[],monsters:Character[]){
+        let canPlay: boolean = false
+        while(canPlay==false){
+            
+        }
     }
 }
