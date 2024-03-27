@@ -5,14 +5,16 @@ export default class Character {
     speed : number; 
     maxHp : number;
     currentHp : number;
+    team:string;
 
-    constructor(name : string, attack : number, defense : number,speed : number, maxHp : number, currentHp : number,){
+    constructor(name : string, team:string, attack : number, defense : number,speed : number, maxHp : number){
         this.name = name
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
         this.maxHp = maxHp;
-        this.currentHp = currentHp;
+        this.currentHp = maxHp;
+        this.team=team;
     }
 
     damage(enemy:Character) {
@@ -43,7 +45,6 @@ export default class Character {
         }
     }
 
-    specialAbility(character:Character):object{
-        return {}
+    playTurn(){
     }
 }

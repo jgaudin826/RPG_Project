@@ -2,17 +2,19 @@ import Character from "../character.ts"
 export default class augmentor extends Character{
     orbe : string[] =[]
     boostCount:number=0
-    constructor(name :string, attack : number, defense :number , speed : number, maxHp :number,currentHp : number){
-        super(name,attack,defense,speed,maxHp,currentHp)
-    }
+    constructor(name :string="augmentor",
+                team:string,
+                attack : number = Math.floor(Math.random() * 100), 
+                defense : number = Math.floor(Math.random() * 100), 
+                speed : number= Math.floor(Math.random() * 100), 
+                maxHp :number= Math.floor(Math.random() * 100),
+                manaNow : number= Math.floor(Math.random() * 100),
+                manaMax : number= Math.floor(Math.random() * 100)
+                ){
+        super(name,team,attack,defense,speed,maxHp)
+}
     rituel(){
-        if (this.orbe.length<4){
-            for(let i =0; i<2;i++){
-                this.orbe.push("")
-            }
-            this.boost()
-            return true 
-        } else if (this.orbe.length=4){
+        if (this.orbe.length<5){
             this.orbe.push("")
             this.boost()
             return true
