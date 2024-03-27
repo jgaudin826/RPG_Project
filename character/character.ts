@@ -42,4 +42,8 @@ export default class Character {
             console.log("On ne ressucite pas un un personnage déjà vivant !")
         }
     }
+
+    specialAbility(character:Character):object{
+        return {}
+    }
 }
