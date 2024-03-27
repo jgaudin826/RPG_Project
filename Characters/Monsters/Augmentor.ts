@@ -1,4 +1,4 @@
-import Character from "../character.ts";
+import Character from "../Character.ts";
 import Monster from "../monster.ts";
 
 export default class augmentor extends Monster{
@@ -45,7 +45,6 @@ export default class augmentor extends Monster{
         } else {
             intendedCharacter = players[Math.floor(Math.random() * players.length)]
         }
-        
-            this.damage(intendedCharacter)
+        this.damage(intendedCharacter)
     }
 }

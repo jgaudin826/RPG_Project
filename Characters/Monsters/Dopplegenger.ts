@@ -1,4 +1,4 @@
-import Character from "../character.ts";
+import Character from "../Character.ts";
 import Monster from "../monster.ts";
 
 export default class Dopplegenger extends Monster{
