@@ -1,4 +1,4 @@
-import Character from "../character.ts"
+import Character from "./character.ts"
 
 export default class Player extends Character{
     listNameCharacter(characters:Character[]):string[]{
