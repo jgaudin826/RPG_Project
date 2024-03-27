@@ -1,5 +1,5 @@
-import Character from "./character/character.ts"
-import Mage from "./character/player/mage.ts"
+import Character from "../Characters/Character.ts"
+import Mage from "../Characters/Players/Mage.ts"
 
 export  default class Object {
     name : string;

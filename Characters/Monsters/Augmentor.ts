@@ -1,4 +1,4 @@
-import Character from "../character.ts"
+import Character from "../Character.ts"
 export default class augmentor extends Character{
     className:string="augmentor";
     orbe : string[] =[]

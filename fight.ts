@@ -1,4 +1,4 @@
-import Character from "./character/character";
+import Character from "./Characters/Character";
 
 export default class Fight {
     players : Character[]

@@ -1,4 +1,4 @@
-import Character from "../character.ts"
+import Character from "../Character.ts"
 
 export default class Warrior extends Character{
     className:string="Warrior";

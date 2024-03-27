@@ -1,5 +1,5 @@
-import Character from "./character/character.ts"
-import Object from "./Object.ts"
+import Character from "./Characters/Character.ts"
+import Object from "./Objects/Object.ts"
 
 export default class GameManagement {
     private static _game : GameManagement | null = null;

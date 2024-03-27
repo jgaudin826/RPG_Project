@@ -1,4 +1,4 @@
-import Character from "../character/character.ts"
+import Character from "../Characters/Character.ts"
 
 export default interface heal extends Character {
     heal() : void;
