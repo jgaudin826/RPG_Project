@@ -1,5 +1,5 @@
 import Character from "./character/character.ts"
-export class Object {
+export default class Object {
     name : string;
     hpGain : number;
     resurectGain : number;
@@ -12,7 +12,7 @@ export class Object {
         this.manaGain = manaGain
     }
 
-    heal(charcter : Character) {
+    heal(character : Character) {
         if (this.name == "Ether" ) {
             console.log("Ether ne peut pas utiliser la fonction Heal!")
         } else {
@@ -20,14 +20,14 @@ export class Object {
         }
     }
 
-    resurect(charater : Character) {
+    resurect(character : Character) {
         if (this.name == "Ether") {
             console.log("Ether ne peut pas utiliser la fonction Heal!")
         } else {
             if (character.currentHp < 0) {
                 character.heal(this.hpGain)
             } else {
-                character.resurect(this.resurectGain)
+                character.resurection(this.resurectGain)
             }
         }
     }
