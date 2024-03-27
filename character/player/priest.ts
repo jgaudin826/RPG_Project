@@ -6,10 +6,10 @@ export default class Priest extends Player{
     className:string="priest";
     constructor(name :string="priest",
                 team:string="player",
-                attack : number = Math.floor((Math.random() * 100)), 
-                defense : number = Math.floor((Math.random() * 100)), 
-                speed : number= Math.floor((Math.random() * 100)), 
-                maxHp :number= Math.floor((Math.random() * 100))
+                attack : number = Math.floor((Math.random() * 10)+40), 
+                defense : number = Math.floor((Math.random() * 5)+10), 
+                speed : number= Math.floor((Math.random() * 10)+95), 
+                maxHp :number= Math.floor((Math.random() * 20)+190)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
