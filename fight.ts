@@ -20,7 +20,7 @@ export default class Fight {
         }
         console.log("Fight has started!")
         while (this.players.length > 0 || this.monsters.length > 0) {
-            console.log(`it's ${this.order[0].name} turn as a ${this.order[].className}`)
+            console.log(`it's ${this.order[0].name} turn as a ${this.order[0].className}`)
             this.order[0].playTurn(this.players, this.monsters)
             if (this.order[0].currentHp == 0) {
                 this.deadPlayers.push(this.order[0])
