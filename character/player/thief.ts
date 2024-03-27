@@ -6,10 +6,10 @@ export default class Thief extends Player{
     className:string="thief";
     constructor(name :string="thief",
                 team:string="player",
-                attack : number = Math.floor((Math.random() * 100)), 
-                defense : number = Math.floor((Math.random() * 100)), 
-                speed : number= Math.floor((Math.random() * 100)), 
-                maxHp :number= Math.floor((Math.random() * 100))
+                attack : number = Math.floor((Math.random() * 10)+45), 
+                defense : number = Math.floor((Math.random() * 10)+20), 
+                speed : number= Math.floor((Math.random() * 30)+135), 
+                maxHp :number= Math.floor((Math.random() * 20)+165)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
