@@ -20,7 +20,7 @@ export default class GameManagement {
      * GameManager.game.start() : to start game
      */
     public start() {
-
+        
     }
 
     public createTeam() : Character[] {
