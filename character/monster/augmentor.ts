@@ -45,7 +45,6 @@ export default class augmentor extends Monster{
         } else {
             intendedCharacter = players[Math.floor(Math.random() * players.length)]
         }
-        
             this.damage(intendedCharacter)
     }
 }
