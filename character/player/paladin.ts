@@ -1,6 +1,6 @@
 import Character from "../character.ts";
 import Menu from "../../menu.ts";
-import Player from "../player.ts";
+import Player from "../Player.ts";
 
 export default class Paladin extends Player{
     className:string="paladin";

@@ -1,5 +1,5 @@
 import Character from "../character.ts";
-import Monster from "../monster.ts";
+import Monster from "../Monster.ts";
 
 export default class Golem extends Monster{
     className:string="golem";
