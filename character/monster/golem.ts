@@ -1,5 +1,7 @@
-import Character from "../character.ts"
-export default class Golem extends Character{
+import Character from "../character.ts";
+import Monster from "./monster.ts";
+
+export default class Golem extends Monster{
     className:string="golem";
     constructor(name :string="golem",
                 team:string,

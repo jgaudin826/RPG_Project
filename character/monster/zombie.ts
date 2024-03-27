@@ -1,6 +1,7 @@
-import Character from "../character.ts"
+import Character from "../character.ts";
+import Monster from "./monster.ts";
 
-export default class Zombie extends Character{
+export default class Zombie extends Monster{
     className:string="zombie";
     constructor(name :string="zombie",
                 team:string,

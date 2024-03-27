@@ -1,6 +1,7 @@
-import Character from "../character.ts"
+import Character from "../character.ts";
+import Monster from "./monster.ts";
 
-export default class Dopplegenger extends Character{
+export default class Dopplegenger extends Monster{
     className:string="dopplegenger";
     clone :Character
     constructor(name :string="dopplegenger",
