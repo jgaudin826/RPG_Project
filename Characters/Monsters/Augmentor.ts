@@ -1,14 +1,16 @@
-import Character from "../Character.ts"
-export default class augmentor extends Character{
+import Character from "../Character.ts";
+import Monster from "../Monster.ts";
+
+export default class augmentor extends Monster{
     className:string="augmentor";
     orbe : string[] =[]
     boostCount:number=0
     constructor(name :string="augmentor",
                 team:string,
-                attack : number = Math.floor(Math.random() * 100), 
-                defense : number = Math.floor(Math.random() * 100), 
-                speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100)
+                attack : number = Math.floor((Math.random() * 10)+50), 
+                defense : number = Math.floor((Math.random() * 10)+25), 
+                speed : number= Math.floor((Math.random() * 10)+100), 
+                maxHp :number= Math.floor((Math.random() * 10)+195)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
@@ -43,7 +45,6 @@ export default class augmentor extends Character{
         } else {
             intendedCharacter = players[Math.floor(Math.random() * players.length)]
         }
-        
-            this.damage(intendedCharacter)
+        this.damage(intendedCharacter)
     }
 }

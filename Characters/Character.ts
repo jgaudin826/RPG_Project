@@ -28,18 +28,8 @@ export default class Character {
 
     playTurn(player:Character[],monster:Character[]){
     }
+
     specialAttack(enemy:Character):object{
         return {bool:false,stealObject:null}
-    }
-    playerWithLowestHP(characters:Character[]):Character{
-        let player : Character =characters[0]
-        let lowerHP : number = characters[0].currentHp
-        characters.forEach(character => {
-            if (character.currentHp<lowerHP){
-                player=character
-                lowerHP=character.currentHp
-            }
-        });
-        return player
     }
 }

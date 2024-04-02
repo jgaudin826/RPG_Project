@@ -8,7 +8,7 @@ export default class Menu {
         this.options = options
     }
 
-    input() {
+    input() : number {
         //console.log(`
         //╔═════════════════════════════════════════════════════════════════════════════════╗
         //║   1. Attaquer   ║   2. Attaque Spéciale   ║   3. Inventaire   ║   4. Quitter    ║
@@ -22,17 +22,17 @@ export default class Menu {
 
         if(isNaN(input)) {
             console.log("Choix invalide !");
-            this.input();
+            return this.input();
         } else if (Number.isInteger(input) && input > 0) {
             if(input <= this.options.length) {
-                return input
+                return input-1
             } else {
                 console.log("Choix invalide !");
-                this.input();                
+                return this.input();                
             } 
         } else {
             console.log("Choix invalide !");
-            this.input();              
+            return this.input();              
         }
     }
 }

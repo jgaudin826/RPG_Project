@@ -1,14 +1,15 @@
-import Character from "../Character.ts"
+import Character from "../Character.ts";
+import Monster from "../Monster.ts";
 
-export default class Dopplegenger extends Character{
+export default class Dopplegenger extends Monster{
     className:string="dopplegenger";
     clone :Character
     constructor(name :string="dopplegenger",
                 team:string,
-                attack : number = Math.floor(Math.random() * 100), 
-                defense : number = Math.floor(Math.random() * 100), 
-                speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100)
+                attack : number = Math.floor((Math.random() * 10)+45), 
+                defense : number = Math.floor((Math.random() * 10)+35), 
+                speed : number= Math.floor((Math.random() * 10)+95), 
+                maxHp :number= Math.floor((Math.random() * 10)+195)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }

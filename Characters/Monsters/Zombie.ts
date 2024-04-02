@@ -1,13 +1,14 @@
-import Character from "../Character.ts"
+import Character from "../Character.ts";
+import Monster from "../Monster.ts";
 
-export default class Zombie extends Character{
+export default class Zombie extends Monster{
     className:string="zombie";
     constructor(name :string="zombie",
                 team:string,
-                attack : number = Math.floor(Math.random() * 100), 
-                defense : number = Math.floor(Math.random() * 100), 
-                speed : number= Math.floor(Math.random() * 100), 
-                maxHp :number= Math.floor(Math.random() * 100)
+                attack : number = Math.floor((Math.random() * 20)+40), 
+                defense : number = Math.floor((Math.random() * 10)+20), 
+                speed : number= Math.floor((Math.random() * 21)+90), 
+                maxHp :number= Math.floor((Math.random()*41)+180)
                 ){
         super(name,team,attack,defense,speed,maxHp)
     }
