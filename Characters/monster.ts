@@ -1,14 +1,13 @@
-import Character from "./character";
-
+import Character from "./Character.ts";
 
 export default class Monster extends Character{
     playerWithLowestHP(characters:Character[]):Character{
         let player : Character =characters[0]
-        let lowerHP : number = characters[0].currentHp
+        let lowerHP : number = characters[0].currentHP
         characters.forEach(character => {
-            if ((character.currentHp/character.maxHp)*100<(lowerHP/character.maxHp)*100){
+            if ((character.currentHP/character.maxHP)*100<(lowerHP/character.maxHP)*100){
                 player=character
-                lowerHP=character.currentHp
+                lowerHP=character.currentHP
             }
         });
         return player

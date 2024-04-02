@@ -27,7 +27,7 @@ export default class Mage extends Player{
     specialAttack(enemy : Character) : object{
         if (this.manaNow - (this.manaMax*(25/100))>= 0){
             this.manaNow -= (this.manaMax*(25/100))
-            enemy.currentHp -= this.attack
+            enemy.currentHP -= this.attack
             return {play:true,nameMonster:enemy.name}
         }
         return {play:true,stealObject:null}
@@ -42,9 +42,11 @@ export default class Mage extends Player{
                 if (numberMonster===undefined){
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
+                    break;
                 }else{
                     this.damage(monsters[numberMonster])
-                    console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    console.log(`You've made dammage to the ${monsters[numberMonster].name}.`);
+                    break;
                 }
             case 1:
                 menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
@@ -52,12 +54,15 @@ export default class Mage extends Player{
                 if (numberMonster===undefined){
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
+                    break;
                 }else{
                     let action:object=this.specialAttack(monsters[numberMonster])
                     if (action[0]===true){
-                        console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                        console.log(`You've made dammage to the ${monsters[numberMonster].name}.`);
+                        break;
                     } else {
-                        console.log("You can't make this choice, your character has not enougth mana to do his special attack")
+                        console.log("You can't make this choice, your character has not enougth mana to do his special attack");
+                        break;
                     }
                     
                 }

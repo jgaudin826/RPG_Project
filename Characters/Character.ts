@@ -3,8 +3,8 @@ export default class Character {
     attack : number; 
     defense : number;
     speed : number; 
-    maxHp : number;
-    currentHp : number;
+    maxHP : number;
+    currentHP : number;
     team:string;
     className:string=""
 
@@ -13,14 +13,14 @@ export default class Character {
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
-        this.maxHp = maxHp;
-        this.currentHp = maxHp;
+        this.maxHP = maxHp;
+        this.currentHP = maxHp;
         this.team=team;
     }
 
     damage(enemy:Character) {
-        if(this.currentHp > 0) {
-            enemy.currentHp-=(this.attack - this.defense)
+        if(this.currentHP > 0) {
+            enemy.currentHP-=(this.attack - this.defense)
         } else {
             console.log("On n'attaque pas un mort !")
         }
