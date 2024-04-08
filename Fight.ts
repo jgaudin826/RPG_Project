@@ -32,6 +32,7 @@ export default class Fight {
             console.log(`Round ${round}`)
             round++
             console.log(`it's ${this.order[0].className}'s turn`)
+            this.printStats(this.order[0])
             this.order[0].playTurn(this.players, this.monsters)
             if (this.order[0].currentHp == 0) {
                 this.deadPlayers.push(this.order[0])
