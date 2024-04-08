@@ -9,7 +9,7 @@ export default class Dopplegenger extends Monster{
     constructor(name :string="dopplegenger",
                 team:string,
                 attack : number = Math.floor((Math.random() * 10)+45), 
-                defense : number = Math.floor((Math.random() * 10)+35), 
+                defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+95), 
                 maxHp :number= Math.floor((Math.random() * 10)+195),
                 manaMax : number= 100
