@@ -18,6 +18,8 @@ export default class Character {
         this.team=team;
     }
 
+    damageReceve(){}
+
     damage(enemy:Character) {
         if(this.currentHp > 0) {
             if (this.attack <= enemy.defense){

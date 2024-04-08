@@ -42,6 +42,9 @@ export default class Thief extends Player{
                 }else{
                     this.damage(monsters[numberMonster])
                     console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    if (monsters[numberMonster].className==="augmentor"){
+                        monsters[numberMonster].damageReceve()
+                    }
                 }
             case 1:
                 menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))

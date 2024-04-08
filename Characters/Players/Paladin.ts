@@ -30,12 +30,19 @@ export default class Paladin extends Player{
                 }else{
                     this.damage(monsters[numberMonster])
                     console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    if (monsters[numberMonster].className==="augmentor"){
+                        monsters[numberMonster].damageReceve()
+                    }
                 }
             case 1:
                 monsters.forEach(monster=>{
                     this.specialAttack(monster)
+                    if (monster.className==="augmentor"){
+                        monster.damageReceve()
+                    }
                 })
                 console.log(`All enemy have taken damage.`)
+                
             default:
                 console.log("You can't make this choice, choose an other one")
                 this.playTurn(players,monsters)

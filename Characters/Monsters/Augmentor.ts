@@ -34,6 +34,7 @@ export default class augmentor extends Monster{
         if (this.orbe.length>=1){
             this.orbe.pop()
             this.boost()
+            console.log(`The ${this.name} has taken made dammage so he lost an orbe.`)
         }
     }
     playTurn(players:Character[],monsters:Character[]){

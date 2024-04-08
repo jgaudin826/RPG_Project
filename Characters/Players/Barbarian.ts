@@ -34,6 +34,9 @@ export default class Barbarian extends Player{
                 }else{
                     this.damage(monsters[numberMonster])
                     console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    if (monsters[numberMonster].className==="augmentor"){
+                        monsters[numberMonster].damageReceve()
+                    }
                 }
             case 1:
                 menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
@@ -45,6 +48,9 @@ export default class Barbarian extends Player{
                     let action:object=this.specialAttack(monsters[numberMonster])
                     if (action[0]===true){
                         console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                        if (monsters[numberMonster].className==="augmentor"){
+                            monsters[numberMonster].damageReceve()
+                        }
                     } else {
                         console.log("You can't make this choice, your character has not enougth hp to do his special attack")
                     }

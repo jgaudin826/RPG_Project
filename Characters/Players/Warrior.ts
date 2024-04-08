@@ -26,6 +26,9 @@ export default class Warrior extends Player{
                 }else{
                     this.damage(monsters[numberMonster])
                     console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    if (monsters[numberMonster].className==="augmentor"){
+                        monsters[numberMonster].damageReceve()
+                    }
                 }
             default:
                 console.log("You can't make this choice, choose an other one")
