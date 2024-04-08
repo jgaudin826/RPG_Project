@@ -74,7 +74,7 @@ export default class Fight {
         let monsters : Character[] = []
         const monsterList = [Augmentor, Dopplegenger, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
-            monsters.push(new monsterList[Math.floor(Math.random() * 6)]())
+            monsters.push(new monsterList[Math.floor(Math.random() * 5)]())
         }
         return monsters
     }

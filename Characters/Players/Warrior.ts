@@ -14,19 +14,19 @@ export default class Warrior extends Player{
     }
     public playTurn(players:Player[],monsters:Monster[]){
         let menu = new Menu("What do you want to do?", ["Normal Attack","Quit"])
-        const choice=menu.input()
+        let choice=menu.input()
         switch (choice){
             case 0:
                 menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
-                let numberMonster = menu.input()
-                if (numberMonster===undefined){
+                choice = menu.input()
+                if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
                 }else{
-                    this.damage(monsters[numberMonster])
-                    console.log(`You've made dammage to the ${monsters[numberMonster].className}.`)
-                    if (monsters[numberMonster].className==="augmentor"){
-                        monsters[numberMonster].damageReceve()
+                    this.damage(monsters[choice])
+                    console.log(`You've made dammage to the ${monsters[choice].className}.`)
+                    if (monsters[choice].className==="augmentor"){
+                        monsters[choice].damageReceve()
                     }
                 }
                 break
