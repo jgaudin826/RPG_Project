@@ -48,7 +48,7 @@ export default class Fight {
 
     getOrder() : Character[] {
         let orderList : Character[] = this.players.concat(this.monsters)
-        orderList.sort((a, b) => a.speed - b.speed)
+        orderList.sort((a, b) => b.speed - a.speed)
         console.log(orderList)
         console.log("Order List : ")
         for(let character of orderList) {
