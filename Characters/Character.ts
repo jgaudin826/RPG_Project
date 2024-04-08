@@ -1,21 +1,17 @@
 export default class Character {
-    name : string;
     attack : number; 
     defense : number;
     speed : number; 
     maxHp : number;
     currentHp : number;
-    team:string;
     className:string=""
 
-    constructor(name : string, team:string, attack : number, defense : number,speed : number, maxHp : number){
-        this.name = name
+    constructor(attack : number, defense : number,speed : number, maxHp : number){
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
         this.maxHp = maxHp;
         this.currentHp = maxHp;
-        this.team=team;
     }
 
     damageReceve(){}

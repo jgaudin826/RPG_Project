@@ -4,14 +4,12 @@ import Player from "../Player.ts";
 
 export default class Paladin extends Player{
     className:string="paladin";
-    constructor(name :string="paladin",
-                team:string="player",
-                attack : number = Math.floor((Math.random() * 20)+50), 
+    constructor(attack : number = Math.floor((Math.random() * 20)+50), 
                 defense : number = Math.floor((Math.random() * 10)+40), 
                 speed : number= Math.floor((Math.random() * 20)+100), 
                 maxHp :number= Math.floor((Math.random() * 20)+200)
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
     specialAttack(enemy : Character):object {
         enemy.currentHp -= ((this.attack - enemy.defense)*0.4)
@@ -29,7 +27,7 @@ export default class Paladin extends Player{
                     this.playTurn(players,monsters)
                 }else{
                     this.damage(monsters[numberMonster])
-                    console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    console.log(`You've made dammage to the ${monsters[numberMonster].className}.`)
                     if (monsters[numberMonster].className==="augmentor"){
                         monsters[numberMonster].damageReceve()
                     }

@@ -4,20 +4,18 @@ import Player from "../Player.ts";
 
 export default class Barbarian extends Player{
     className:string="barbarian";
-    constructor(name :string="barbarian",
-                team:string="player",
-                attack : number = Math.floor((Math.random() * 20)+70), 
+    constructor(attack : number = Math.floor((Math.random() * 20)+70), 
                 defense : number = Math.floor((Math.random() * 10)+15), 
                 speed : number= Math.floor((Math.random() * 10)+100), 
                 maxHp :number= Math.floor((Math.random() * 10)+200)
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
     specialAttack(enemy:Character):object{
         if (this.currentHp- (this.maxHp*(20/100)) > 0){
             this.currentHp -= (this.maxHp*(20/100))
             enemy.currentHp -= ((this.attack - enemy.defense)*1.3)
-            return {play:true,nameMonster:enemy.name}
+            return {play:true,nameMonster:enemy.className}
         }
         return {play:false,stealObject:null}
     }
@@ -33,7 +31,7 @@ export default class Barbarian extends Player{
                     this.playTurn(players,monsters)
                 }else{
                     this.damage(monsters[numberMonster])
-                    console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    console.log(`You've made dammage to the ${monsters[numberMonster].className}.`)
                     if (monsters[numberMonster].className==="augmentor"){
                         monsters[numberMonster].damageReceve()
                     }
@@ -47,7 +45,7 @@ export default class Barbarian extends Player{
                 }else{
                     let action:object=this.specialAttack(monsters[numberMonster])
                     if (action[0]===true){
-                        console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                        console.log(`You've made dammage to the ${monsters[numberMonster].className}.`)
                         if (monsters[numberMonster].className==="augmentor"){
                             monsters[numberMonster].damageReceve()
                         }

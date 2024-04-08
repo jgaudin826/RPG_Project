@@ -6,15 +6,13 @@ export default class Mage extends Player{
     className:string="mage";
     manaNow : number;
     manaMax : number;
-    constructor(name :string="mage",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+35), 
+    constructor(attack : number = Math.floor((Math.random() * 10)+35), 
                 defense : number = Math.floor((Math.random() * 5)+10), 
                 speed : number= Math.floor((Math.random() * 10)+115), 
                 maxHp :number= Math.floor((Math.random() * 20)+190),
                 manaMax : number= 100
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
         this.manaMax = manaMax
         this.manaNow = manaMax
     }
@@ -28,7 +26,7 @@ export default class Mage extends Player{
         if (this.manaNow - (this.manaMax*(35/100))>= 0){
             this.manaNow -= (this.manaMax*(35/100))
             enemy.currentHp -= this.attack
-            return {play:true,nameMonster:enemy.name}
+            return {play:true,nameMonster:enemy.className}
         }
         return {play:true,stealObject:null}
     }
@@ -45,7 +43,7 @@ export default class Mage extends Player{
                     this.playTurn(players,monsters)
                 }else{
                     this.damage(monsters[numberMonster])
-                    console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    console.log(`You've made dammage to the ${monsters[numberMonster].className}.`)
                     if (monsters[numberMonster].className==="augmentor"){
                         monsters[numberMonster].damageReceve()
                     }
@@ -59,7 +57,7 @@ export default class Mage extends Player{
                 }else{
                     let action:object=this.specialAttack(monsters[numberMonster])
                     if (action[0]===true){
-                        console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                        console.log(`You've made dammage to the ${monsters[numberMonster].className}.`)
                         if (monsters[numberMonster].className==="augmentor"){
                             monsters[numberMonster].damageReceve()
                         }

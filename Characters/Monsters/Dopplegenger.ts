@@ -6,15 +6,13 @@ export default class Dopplegenger extends Monster{
     clone :Character;
     manaNow : number;
     manaMax : number;
-    constructor(name :string="dopplegenger",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+45), 
+    constructor(attack : number = Math.floor((Math.random() * 10)+45), 
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+95), 
                 maxHp :number= Math.floor((Math.random() * 10)+195),
                 manaMax : number= 100
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
         this.manaMax = manaMax
         this.manaNow = manaMax
     }

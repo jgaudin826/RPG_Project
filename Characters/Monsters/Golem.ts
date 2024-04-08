@@ -3,14 +3,12 @@ import Monster from "../Monster.ts";
 
 export default class Golem extends Monster{
     className:string="golem";
-    constructor(name :string="golem",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+60), 
+    constructor(attack : number = Math.floor((Math.random() * 10)+60), 
                 defense : number = Math.floor((Math.random() * 10)+45), 
                 speed : number= Math.floor((Math.random() * 20)+50), 
                 maxHp :number= Math.floor((Math.random() * 50)+400)
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
     specialAttack(enemy:Character):object{
         enemy.currentHp -= ((this.attack - enemy.defense)*0.6)
