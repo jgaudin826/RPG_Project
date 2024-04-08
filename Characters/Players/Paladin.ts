@@ -1,9 +1,10 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
+import Monster from "../Monster.ts";
 import Player from "../Player.ts";
 
 export default class Paladin extends Player{
-    className:string="paladin";
+    public className:string="Paladin";
     constructor(attack : number = Math.floor((Math.random() * 20)+50), 
                 defense : number = Math.floor((Math.random() * 10)+40), 
                 speed : number= Math.floor((Math.random() * 20)+100), 
@@ -11,11 +12,11 @@ export default class Paladin extends Player{
                 ){
         super(attack,defense,speed,maxHp)
     }
-    specialAttack(enemy : Character):object {
+    public specialAttack(enemy : Character):object {
         enemy.currentHp -= ((this.attack - enemy.defense)*0.4)
         return {play:true,stealObject:null} 
     }
-    playTurn(players:Character[],monsters:Character[]){
+    public playTurn(players:Player[],monsters:Monster[]){
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
         const choice=menu.input()
         switch (choice){

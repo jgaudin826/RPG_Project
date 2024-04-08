@@ -1,17 +1,18 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
+import Monster from "../Monster.ts";
 import Player from "../Player.ts";
 
 export default class Thief extends Player{
-    className:string="thief";
-    constructor(attack : number = Math.floor((Math.random() * 10)+45), 
+    public className:string="Thief";
+    public constructor(attack : number = Math.floor((Math.random() * 10)+45), 
                 defense : number = Math.floor((Math.random() * 10)+20), 
                 speed : number= Math.floor((Math.random() * 30)+135), 
                 maxHp :number= Math.floor((Math.random() * 20)+165)
                 ){
         super(attack,defense,speed,maxHp)
     }
-    specialAttack(enemy:Character):object{
+    public specialAttack(enemy:Character):object{
         let stealObject : string | null
         let stealNumber : number = Math.floor(Math.random() * 100);
         if (stealNumber<5){
@@ -27,7 +28,7 @@ export default class Thief extends Player{
         }
         return {play:true,stealObject:stealObject}
     }
-    playTurn(players:Character[],monsters:Character[]){
+    public playTurn(players:Player[],monsters:Monster[]){
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
         const choice=menu.input()
         switch (choice){

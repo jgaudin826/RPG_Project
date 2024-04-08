@@ -1,12 +1,13 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
+import Monster from "../Monster.ts";
 import Player from "../Player.ts";
 
 export default class Mage extends Player{
-    className:string="mage";
-    manaNow : number;
-    manaMax : number;
-    constructor(attack : number = Math.floor((Math.random() * 10)+35), 
+    public className:string="Mage";
+    private manaNow : number;
+    private manaMax : number;
+    public constructor(attack : number = Math.floor((Math.random() * 10)+35), 
                 defense : number = Math.floor((Math.random() * 5)+10), 
                 speed : number= Math.floor((Math.random() * 10)+115), 
                 maxHp :number= Math.floor((Math.random() * 20)+190),
@@ -16,13 +17,11 @@ export default class Mage extends Player{
         this.manaMax = manaMax
         this.manaNow = manaMax
     }
-    gainMana(percent : number){
+    public gainMana(percent : number){
         this.manaNow += (this.manaMax*(percent/100))
-        if (this.manaNow > this.manaMax){
-            this.manaNow = this.manaMax
-        }
+        if (this.manaNow > this.manaMax) this.manaNow = this.manaMax
     }
-    specialAttack(enemy : Character) : object{
+    public specialAttack(enemy : Character) : object{
         if (this.manaNow - (this.manaMax*(35/100))>= 0){
             this.manaNow -= (this.manaMax*(35/100))
             enemy.currentHp -= this.attack
@@ -30,7 +29,7 @@ export default class Mage extends Player{
         }
         return {play:true,stealObject:null}
     }
-    playTurn(players:Character[],monsters:Character[]){
+    public playTurn(players:Player[],monsters:Monster[]){
         this.gainMana(10)
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
         const choice=menu.input()

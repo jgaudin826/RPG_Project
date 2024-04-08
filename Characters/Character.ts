@@ -1,12 +1,12 @@
 export default class Character {
-    attack : number; 
-    defense : number;
-    speed : number; 
-    maxHp : number;
-    currentHp : number;
-    className:string=""
+    protected attack : number; 
+    public defense : number;
+    protected speed : number; 
+    public maxHp : number;
+    public currentHp : number;
+    public className:string=""
 
-    constructor(attack : number, defense : number,speed : number, maxHp : number){
+    public constructor(attack : number, defense : number,speed : number, maxHp : number){
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
@@ -14,9 +14,7 @@ export default class Character {
         this.currentHp = maxHp;
     }
 
-    damageReceve(){}
-
-    damage(enemy:Character) {
+    protected damage(enemy:Character) {
         if(this.currentHp > 0) {
             if (this.attack <= enemy.defense){
                 enemy.currentHp-=(this.attack - enemy.defense)
@@ -28,10 +26,10 @@ export default class Character {
         }
     }
 
-    playTurn(player:Character[],monster:Character[]){
+    protected playTurn(player:Character[],monster:Character[]){
     }
 
-    specialAttack(enemy:Character):object{
+    public specialAttack(enemy:Character):object{
         return {bool:false,stealObject:null}
     }
 }

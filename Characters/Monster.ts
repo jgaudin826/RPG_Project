@@ -2,7 +2,9 @@ import Character from "./Character.ts";
 
 
 export default class Monster extends Character{
-    playerWithLowestHP(characters:Character[]):Character{
+    public damageReceve(){}
+    
+    protected playerWithLowestHP(characters:Character[]):Character{
         let player : Character =characters[0]
         let lowerHP : number = characters[0].currentHp
         characters.forEach(character => {

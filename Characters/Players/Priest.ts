@@ -1,17 +1,18 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
+import Monster from "../Monster.ts";
 import Player from "../Player.ts";
 
 export default class Priest extends Player{
-    className:string="priest";
-    constructor(attack : number = Math.floor((Math.random() * 10)+40), 
+    public className:string="Priest";
+    public constructor(attack : number = Math.floor((Math.random() * 10)+40), 
                 defense : number = Math.floor((Math.random() * 5)+10), 
                 speed : number= Math.floor((Math.random() * 10)+95), 
                 maxHp :number= Math.floor((Math.random() * 20)+190)
                 ){
         super(attack,defense,speed,maxHp)
     }
-    specialAttack(ally : Character):object{
+    public specialAttack(ally : Character):object{
         if(ally.currentHp <= 0){
             console.log("On ne soigne pas un mort !")
         } else {
@@ -23,7 +24,7 @@ export default class Priest extends Player{
         }
         return {play:true,namePlayer:ally.className}
     }
-    playTurn(players:Character[],monsters:Character[]){
+    public playTurn(players:Player[],monsters:Monster[]){
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
         const choice=menu.input()
         switch (choice){
