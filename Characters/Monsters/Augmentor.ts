@@ -18,9 +18,6 @@ export default class augmentor extends Monster{
         if (this.orbe.length<5){
             this.orbe.push("")
             this.boost()
-            return true
-        } else {
-            return false
         }
     }
     boost(){
