@@ -53,8 +53,8 @@ export default class Barbarian extends Player{
                         }
                     } else {
                         console.log("You can't make this choice, your character has not enougth hp to do his special attack")
+                        this.playTurn(players,monsters)
                     }
-                    
                 }
                 break
             default:

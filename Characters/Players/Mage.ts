@@ -63,6 +63,7 @@ export default class Mage extends Player{
                         }
                     } else {
                         console.log("You can't make this choice, your character has not enougth mana to do his special attack")
+                        this.playTurn(players,monsters)
                     }
                 }
                 break
