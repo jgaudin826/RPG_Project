@@ -45,6 +45,7 @@ export default class Thief extends Player{
                         monsters[numberMonster].damageReceve()
                     }
                 }
+                break
             case 1:
                 menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
                 numberMonster = menu.input()
@@ -59,6 +60,7 @@ export default class Thief extends Player{
                         console.log(`You've stole the object : ${action[1]}.`)
                     }
                 }
+                break
             default:
                 console.log("You can't make this choice, choose an other one")
                 this.playTurn(players,monsters)

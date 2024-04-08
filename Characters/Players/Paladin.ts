@@ -33,6 +33,7 @@ export default class Paladin extends Player{
                         monsters[numberMonster].damageReceve()
                     }
                 }
+                break
             case 1:
                 monsters.forEach(monster=>{
                     this.specialAttack(monster)
@@ -41,7 +42,7 @@ export default class Paladin extends Player{
                     }
                 })
                 console.log(`All enemy have taken damage.`)
-                
+                break
             default:
                 console.log("You can't make this choice, choose an other one")
                 this.playTurn(players,monsters)

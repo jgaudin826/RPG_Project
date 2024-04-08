@@ -47,6 +47,7 @@ export default class Mage extends Player{
                         monsters[numberMonster].damageReceve()
                     }
                 }
+                break
             case 1:
                 menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
                 numberMonster = menu.input()
@@ -63,8 +64,8 @@ export default class Mage extends Player{
                     } else {
                         console.log("You can't make this choice, your character has not enougth mana to do his special attack")
                     }
-                    
                 }
+                break
             default:
                 console.log("You can't make this choice, choose an other one")
                 this.playTurn(players,monsters)

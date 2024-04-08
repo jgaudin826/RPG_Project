@@ -29,10 +29,10 @@ export default class Warrior extends Player{
                         monsters[numberMonster].damageReceve()
                     }
                 }
+                break
             default:
                 console.log("You can't make this choice, choose an other one")
-                this.playTurn(players,monsters)
-                
+                this.playTurn(players,monsters)      
         }
     }
 }

@@ -1,7 +1,10 @@
+/**
+ * 
+ */
 export default class Character {
-    protected attack : number; 
+    public attack : number; 
     public defense : number;
-    protected speed : number; 
+    public speed : number; 
     public maxHp : number;
     public currentHp : number;
     public className:string=""
