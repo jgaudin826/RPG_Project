@@ -47,26 +47,14 @@ export default class Fight {
     }
 
     getOrder() : Character[] {
-        let orderList : Character[] = []
-        let i = 0;
-        let j = 0;
-        while (i < this.players.length && j < this.monsters.length) {  
-            if (this.players[i].speed < this.monsters[j].speed) {
-                orderList.push(this.players[i])
-                i++;
-            } else {
-                orderList.push(this.monsters[j])
-                j++;
-            }
+        let orderList : Character[] = this.players.concat(this.monsters)
+        orderList.sort((a, b) => a.speed - b.speed)
+        console.log(orderList)
+        console.log("Order List : ")
+        for(let character of orderList) {
+            console.log(character.className, character.speed)
         }
-        while (i < this.players.length) {
-            orderList.push(this.players[i])
-            i++;
-        }
-        while (j < this.monsters.length) {
-            orderList.push(this.monsters[j])
-            j++
-        }
+
         return orderList
     }
 
@@ -74,7 +62,7 @@ export default class Fight {
         let monsters : Character[] = []
         const monsterList = [Augmentor, Dopplegenger, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
-            monsters.push(new monsterList[Math.floor(Math.random() * 6)]())
+            monsters.push(new monsterList[Math.floor(Math.random() * 5)]())
         }
         return monsters
     }

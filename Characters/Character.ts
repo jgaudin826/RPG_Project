@@ -29,7 +29,7 @@ export default class Character {
         }
     }
 
-    protected playTurn(player:Character[],monster:Character[]){
+    public playTurn(player:Character[],monster:Character[]){
     }
 
     public specialAttack(enemy:Character):object{
