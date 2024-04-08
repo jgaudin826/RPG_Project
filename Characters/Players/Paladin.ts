@@ -13,7 +13,7 @@ export default class Paladin extends Player{
         super(attack,defense,speed,maxHp)
     }
     public specialAttack(enemy : Character):object {
-        enemy.currentHp -= ((this.attack - enemy.defense)*0.4)
+        enemy.currentHp -= (Math.round((this.attack - enemy.defense)*0.4))
         return {play:true,stealObject:null} 
     }
     public playTurn(players:Player[],monsters:Monster[]){
@@ -21,6 +21,7 @@ export default class Paladin extends Player{
         let choice=menu.input()
         switch (choice){
             case 0:
+                console.log("here")
                 menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
                 choice = menu.input()
                 if (choice===undefined){
@@ -45,8 +46,7 @@ export default class Paladin extends Player{
                 break
             default:
                 console.log("You can't make this choice, choose an other one")
-                this.playTurn(players,monsters)
-                
+                this.playTurn(players,monsters)    
         }
     }
 }
