@@ -1,5 +1,4 @@
 import Character from "./Characters/Character.ts"
-import Object from "./Inventory.ts"
 import Menu from "./menu.ts";
 import Warrior from "./Characters/Players/Warrior"
 import Mage from "./Characters/Players/Mage"
