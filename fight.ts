@@ -22,7 +22,7 @@ export default class Fight {
         while (this.players.length > 0 || this.monsters.length > 0) {
             console.log(`it's ${this.order[0].name} turn as a ${this.order[0].className}`)
             this.order[0].playTurn(this.players, this.monsters)
-            if (this.order[0].currentHp == 0) {
+            if (this.order[0].currentHP == 0) {
                 this.deadPlayers.push(this.order[0])
             } else {
                 this.order.push(this.order[0])
@@ -63,7 +63,7 @@ export default class Fight {
 
     checkDeadCharacters() {
         for (let i = 0; i < this.order.length; i++) {
-            if (this.order[i].currentHp == 0){
+            if (this.order[i].currentHP == 0){
                 this.deadPlayers.push(this.order[i])
                 this.order.splice(i, 1)
             }
