@@ -1,19 +1,20 @@
 import Character from "./Characters/Character.ts"
-import Menu from "./menu.ts";
-import Warrior from "./Characters/Players/Warrior"
-import Mage from "./Characters/Players/Mage"
-import Paladin from "./Characters/Players/Paladin"
+import Menu from "./Menu.ts";
+import Warrior from "./Characters/Players/Warrior.ts"
+import Mage from "./Characters/Players/Mage.ts"
+import Paladin from "./Characters/Players/Paladin.ts"
 import Barbarian from "./Characters/Players/Barbarian.ts"
 import Priest from "./Characters/Players/Priest.ts"
 import Thief from "./Characters/Players/Thief.ts"
 import Inventory from "./Inventory.ts";
+import Fight from "./fight.ts";
 
 export default class GameManagement {
     private static _game : GameManagement | null = null;
-    private players : Character[] = [];
-    private deadPlayers : Character[] = [];
+    players : Character[] = [];
+    deadPlayers : Character[] = [];
 
-    public static get game() {
+    static get game() {
         if (!this._game) {
             this._game = new GameManagement()
         }
@@ -25,12 +26,19 @@ export default class GameManagement {
     /**
      * GameManager.game.start() : to start game
      */
-    public start() {
+    start() {
         console.log("Game Started")
         this.players=this.createTeam()
+        for (let i=0; i<3; i++) {
+            console.log("go to fight")
+            this.players, this.deadPlayers = new Fight().startFight()
+            console.log("go to chest room (not implemented)")
+        }
+        
+
     }
 
-    private createTeam() : Character[] {
+    createTeam() : Character[] {
         let playerTeam : Character[] = []
         const options = [Warrior, Mage, Paladin, Barbarian, Priest, Thief]
         for (let i=1; i <= 3; i++) {
@@ -38,5 +46,9 @@ export default class GameManagement {
             playerTeam.push(new options[answer]())
         }
         return playerTeam
+    }
+
+    chestRoom(){
+        
     }
 }
