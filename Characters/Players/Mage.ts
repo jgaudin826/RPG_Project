@@ -25,14 +25,15 @@ export default class Mage extends Player{
         }
     }
     specialAttack(enemy : Character) : object{
-        if (this.manaNow - (this.manaMax*(25/100))>= 0){
-            this.manaNow -= (this.manaMax*(25/100))
+        if (this.manaNow - (this.manaMax*(35/100))>= 0){
+            this.manaNow -= (this.manaMax*(35/100))
             enemy.currentHp -= this.attack
             return {play:true,nameMonster:enemy.name}
         }
         return {play:true,stealObject:null}
     }
     playTurn(players:Character[],monsters:Character[]){
+        this.gainMana(10)
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
         const choice=menu.input()
         switch (choice){
