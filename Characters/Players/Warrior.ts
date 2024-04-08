@@ -14,7 +14,7 @@ export default class Warrior extends Player{
         super(name,team,attack,defense,speed,maxHp)
     }
     playTurn(players:Character[],monsters:Character[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Inventary","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","Quit"])
         const choice=menu.input()
         switch (choice){
             case 0:

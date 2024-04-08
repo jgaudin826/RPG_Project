@@ -33,7 +33,7 @@ export default class Mage extends Player{
         return {play:true,stealObject:null}
     }
     playTurn(players:Character[],monsters:Character[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Inventary","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
         const choice=menu.input()
         switch (choice){
             case 0:
