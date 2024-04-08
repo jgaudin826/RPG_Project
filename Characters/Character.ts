@@ -20,7 +20,11 @@ export default class Character {
 
     damage(enemy:Character) {
         if(this.currentHp > 0) {
-            enemy.currentHp-=(this.attack - this.defense)
+            if (this.attack <= enemy.defense){
+                enemy.currentHp-=(this.attack - enemy.defense)
+            } else {
+                enemy.currentHp-=2
+            }
         } else {
             console.log("On n'attaque pas un mort !")
         }
