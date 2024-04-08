@@ -4,17 +4,15 @@ import Player from "../Player.ts";
 
 export default class Warrior extends Player{
     className:string="Warrior";
-    constructor(name :string="Warrior",
-                team:string="player",
-                attack : number = Math.floor((Math.random() * 20)+60), 
+    constructor(attack : number = Math.floor((Math.random() * 20)+60), 
                 defense : number = Math.floor((Math.random() * 10)+35), 
                 speed : number= Math.floor((Math.random() * 11)+95), 
                 maxHp :number= Math.floor((Math.random() * 20)+190)
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
     playTurn(players:Character[],monsters:Character[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Inventary","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","Quit"])
         const choice=menu.input()
         switch (choice){
             case 0:
@@ -25,7 +23,10 @@ export default class Warrior extends Player{
                     this.playTurn(players,monsters)
                 }else{
                     this.damage(monsters[numberMonster])
-                    console.log(`You've made dammage to the ${monsters[numberMonster].name}.`)
+                    console.log(`You've made dammage to the ${monsters[numberMonster].className}.`)
+                    if (monsters[numberMonster].className==="augmentor"){
+                        monsters[numberMonster].damageReceve()
+                    }
                 }
             default:
                 console.log("You can't make this choice, choose an other one")

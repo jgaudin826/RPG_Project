@@ -5,22 +5,17 @@ export default class augmentor extends Monster{
     className:string="augmentor";
     orbe : string[] =[]
     boostCount:number=0
-    constructor(name :string="augmentor",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+50), 
+    constructor(attack : number = Math.floor((Math.random() * 10)+50), 
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+100), 
                 maxHp :number= Math.floor((Math.random() * 10)+195)
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
     rituel(){
         if (this.orbe.length<5){
             this.orbe.push("")
             this.boost()
-            return true
-        } else {
-            return false
         }
     }
     boost(){
@@ -34,6 +29,7 @@ export default class augmentor extends Monster{
         if (this.orbe.length>=1){
             this.orbe.pop()
             this.boost()
+            console.log(`The ${this.className} has taken made dammage so he lost an orbe.`)
         }
     }
     playTurn(players:Character[],monsters:Character[]){

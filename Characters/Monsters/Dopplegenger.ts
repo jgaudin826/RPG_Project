@@ -3,15 +3,18 @@ import Monster from "../Monster.ts";
 
 export default class Dopplegenger extends Monster{
     className:string="dopplegenger";
-    clone :Character
-    constructor(name :string="dopplegenger",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+45), 
-                defense : number = Math.floor((Math.random() * 10)+35), 
+    clone :Character;
+    manaNow : number;
+    manaMax : number;
+    constructor(attack : number = Math.floor((Math.random() * 10)+45), 
+                defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+95), 
-                maxHp :number= Math.floor((Math.random() * 10)+195)
+                maxHp :number= Math.floor((Math.random() * 10)+195),
+                manaMax : number= 100
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
+        this.manaMax = manaMax
+        this.manaNow = manaMax
     }
     playTurn(players:Character[],monsters:Character[]){
         this.clone= players[Math.floor(Math.random() * players.length)]

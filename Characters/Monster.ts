@@ -1,4 +1,4 @@
-import Character from "./character";
+import Character from "./Character.ts";
 
 
 export default class Monster extends Character{
