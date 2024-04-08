@@ -65,7 +65,7 @@ export default class Inventory {
 
     private heal(character : Character, percent : number) {
         if(character.currentHP <= 0){
-            console.log("On ne soigne pas un mort !")
+            console.log("You can't heal a dead character !")
         } else {
             if(character.currentHP > character.currentHP + character.maxHP*(percent/100)) {
                 character.currentHP = character.maxHP
@@ -79,7 +79,7 @@ export default class Inventory {
         if(character.currentHP <= 0) {
             character.currentHP += character.maxHP*(percent/100)
         } else {
-            console.log("On ne ressucite pas un un personnage déjà vivant !")
+            console.log("You can't resurrect a character who's already alive !")
         }
     }
 }
