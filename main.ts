@@ -1,2 +1,2 @@
-import GameManagement from "./GameManager.ts";
+import GameManagement from "./gameManager"
 GameManagement.game.start()
