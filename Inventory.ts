@@ -60,6 +60,7 @@ export default class Inventory {
             character.gainMana(30)
         } else {
             console.log("You can't use ethers with this character")
+            
         }
     }
 

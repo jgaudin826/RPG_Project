@@ -1,42 +1,39 @@
 import Character from "../Character.ts";
 import Monster from "../Monster.ts";
+import Player from "../Player.ts";
 
 export default class augmentor extends Monster{
-    className:string="augmentor";
-    orbe : string[] =[]
-    boostCount:number=0
-    constructor(name :string="augmentor",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+50), 
+    public className:string="Augmentor";
+    public orbe : string[] =[]
+    public boostCount:number=0
+    public constructor(attack : number = Math.floor((Math.random() * 10)+50), 
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+100), 
                 maxHp :number= Math.floor((Math.random() * 10)+195)
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
-    rituel(){
+    private rituel(){
         if (this.orbe.length<5){
             this.orbe.push("")
             this.boost()
-            return true
-        } else {
-            return false
         }
     }
-    boost(){
+    private boost(){
         this.maxHp=this.maxHp-(3*this.boostCount)+(3*this.orbe.length)
         this.currentHp=this.currentHp-(3*this.boostCount)+(3*this.orbe.length)
         this.attack=this.attack-(3*this.boostCount)+(3*this.orbe.length)
         this.defense=this.defense-(3*this.boostCount)+(3*this.orbe.length)
         this.boostCount = this.orbe.length
     }
-    damageReceve(){
+    public damageReceve(){
         if (this.orbe.length>=1){
             this.orbe.pop()
             this.boost()
+            console.log(`The ${this.className} has taken made dammage so he lost an orbe.`)
         }
     }
-    playTurn(players:Character[],monsters:Character[]){
+    public playTurn(players:Player[],monsters:Monster[]){
         this.rituel()
         let intendedCharacter : Character = players[0]
         let whichEnnemi :number = Math.floor(Math.random() * 10)
@@ -46,5 +43,6 @@ export default class augmentor extends Monster{
             intendedCharacter = players[Math.floor(Math.random() * players.length)]
         }
         this.damage(intendedCharacter)
+        console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
     }
 }
