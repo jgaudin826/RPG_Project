@@ -16,7 +16,7 @@ export default class Priest extends Player{
         if(ally.currentHp <= 0){
             console.log("On ne soigne pas un mort !")
         } else {
-            if(ally.currentHp > ally.currentHp + ally.maxHp*(25/100)) {
+            if(ally.maxHp < ally.currentHp + ally.maxHp*(25/100)) {
                 ally.currentHp = ally.maxHp
             } else {
                 ally.currentHp += ally.maxHp*(25/100)
