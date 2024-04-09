@@ -1,6 +1,7 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
+import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
 
 export default class Barbarian extends Player{
@@ -21,7 +22,7 @@ export default class Barbarian extends Player{
         return {play:false,stealObject:null}
     }
     public playTurn(players:Player[],monsters:Monster[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
         let choice=menu.input()
         switch (choice){
             case 0:
@@ -55,6 +56,11 @@ export default class Barbarian extends Player{
                         console.log("You can't make this choice, your character has not enougth hp to do his special attack")
                         this.playTurn(players,monsters)
                     }
+                }
+                break
+            case 2:
+                if(!Inventory.inventory.inventoryManager()){
+                    this.playTurn(players,monsters)
                 }
                 break
             default:

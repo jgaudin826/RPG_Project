@@ -1,6 +1,7 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
+import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
 
 export default class Priest extends Player{
@@ -25,7 +26,7 @@ export default class Priest extends Player{
         return {play:true,namePlayer:ally.className}
     }
     public playTurn(players:Player[],monsters:Monster[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
         let choice=menu.input()
         switch (choice){
             case 0:
@@ -51,6 +52,11 @@ export default class Priest extends Player{
                 }else{
                     let action:object=this.specialAttack(players[numberPlayer])
                     console.log(`You've healed the ${action[1]}.`)
+                }
+                break
+            case 2:
+                if(!Inventory.inventory.inventoryManager()){
+                    this.playTurn(players,monsters)
                 }
                 break
             default:

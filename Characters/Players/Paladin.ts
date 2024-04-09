@@ -2,6 +2,7 @@ import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
 import Player from "../Player.ts";
+import Inventory from "../../Inventory.ts";
 
 export default class Paladin extends Player{
     public className:string="Paladin";
@@ -17,7 +18,7 @@ export default class Paladin extends Player{
         return {play:true,stealObject:null} 
     }
     public playTurn(players:Player[],monsters:Monster[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
         let choice=menu.input()
         switch (choice){
             case 0:
@@ -43,6 +44,11 @@ export default class Paladin extends Player{
                     }
                 })
                 console.log(`All enemy have taken damage.`)
+                break
+            case 2:
+                if(!Inventory.inventory.inventoryManager()){
+                    this.playTurn(players,monsters)
+                }
                 break
             default:
                 console.log("You can't make this choice, choose an other one")

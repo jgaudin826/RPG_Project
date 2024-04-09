@@ -1,6 +1,6 @@
-import Character from "../Character.ts"
 import Menu from "../../Menu.ts"
 import Player from "../Player.ts";
+import Inventory from "../../Inventory.ts";
 import Monster from "../Monster.ts";
 
 export default class Warrior extends Player{
@@ -13,7 +13,7 @@ export default class Warrior extends Player{
         super(attack,defense,speed,maxHp)
     }
     public playTurn(players:Player[],monsters:Monster[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","inventary"])
         let choice=menu.input()
         switch (choice){
             case 0:
@@ -28,6 +28,11 @@ export default class Warrior extends Player{
                     if (monsters[choice].className==="augmentor"){
                         monsters[choice].damageReceve()
                     }
+                }
+                break
+            case 1:
+                if(!Inventory.inventory.inventoryManager()){
+                    this.playTurn(players,monsters)
                 }
                 break
             default:

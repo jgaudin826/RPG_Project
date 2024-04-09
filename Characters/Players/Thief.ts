@@ -1,6 +1,7 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
+import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
 
 export default class Thief extends Player{
@@ -29,7 +30,7 @@ export default class Thief extends Player{
         return {play:true,stealObject:stealObject}
     }
     public playTurn(players:Player[],monsters:Monster[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","Quit"])
+        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
         let choice=menu.input()
         switch (choice){
             case 0:
@@ -59,6 +60,11 @@ export default class Thief extends Player{
                     } else {
                         console.log(`You've stole the object : ${action[1]}.`)
                     }
+                }
+                break
+            case 2:
+                if(!Inventory.inventory.inventoryManager()){
+                    this.playTurn(players,monsters)
                 }
                 break
             default:

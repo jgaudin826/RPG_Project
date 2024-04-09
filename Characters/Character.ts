@@ -1,5 +1,5 @@
 /**
- * 
+ * a
  */
 export default class Character {
     public attack : number; 
