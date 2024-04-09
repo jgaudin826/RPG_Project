@@ -18,14 +18,14 @@ export default class Character {
     }
 
     protected damage(enemy:Character) {
-        if(this.currentHp > 0) {
-            if (this.attack > enemy.defense){
-                enemy.currentHp-=(this.attack - enemy.defense)
-            } else {
-                enemy.currentHp-=2
-            }
+        enemy.currentHp=enemy.healthLosed(this.attack)
+    }
+
+    public healthLosed(receveDamage:number):number{
+        if (this.attack > this.defense+2){
+            return Math.max(this.currentHp-(receveDamage - this.defense),0)
         } else {
-            console.log("On n'attaque pas un mort !")
+            return Math.max(this.currentHp-2,0)
         }
     }
 
