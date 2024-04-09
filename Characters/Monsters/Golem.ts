@@ -20,6 +20,7 @@ export default class Golem extends Monster{
         if (whichAttack===0){
             players.forEach(player=>{
                 this.specialAttack(player)
+                console.log(`${this.className} has made dammage to the ${player.className}:`+(Math.round((this.attack - player.defense)*0.6))+".")
             })
         }else{
             let intendedCharacter : Character = players[0]
@@ -30,6 +31,7 @@ export default class Golem extends Monster{
                 intendedCharacter = players[Math.floor(Math.random() * players.length)]
             }
             this.damage(intendedCharacter)
+            console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
         }
     }
 }

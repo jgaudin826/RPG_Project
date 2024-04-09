@@ -19,7 +19,7 @@ export default class Character {
 
     protected damage(enemy:Character) {
         if(this.currentHp > 0) {
-            if (this.attack <= enemy.defense){
+            if (this.attack > enemy.defense){
                 enemy.currentHp-=(this.attack - enemy.defense)
             } else {
                 enemy.currentHp-=2

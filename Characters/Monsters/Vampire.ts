@@ -30,5 +30,6 @@ export default class vampire extends Monster{
         }else{
             this.damage(intendedCharacter)
         }
+        console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
     }
 }

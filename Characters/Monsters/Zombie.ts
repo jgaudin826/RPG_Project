@@ -19,6 +19,7 @@ export default class Zombie extends Monster{
         } else {
             intendedCharacter = players[Math.floor(Math.random() * players.length)]
         }
-            this.damage(intendedCharacter)
+        this.damage(intendedCharacter)
+        console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
     }
 }
