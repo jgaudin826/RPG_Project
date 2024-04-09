@@ -4,7 +4,7 @@ import Dopplegenger from "./Characters/Monsters/Dopplegenger.ts"
 import Golem from "./Characters/Monsters/Golem.ts"
 import Vampire from "./Characters/Monsters/Vampire.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
-import GameManagement from "./GameManager.ts"
+import GameManagement from "./gameManager.ts"
 import Mage from "./Characters/Players/Mage.ts"
 
 export default class Fight {
@@ -13,9 +13,9 @@ export default class Fight {
     order : Character[]
     deadPlayers : Character[]
 
-    constructor() {
+    constructor(boss? : Character[]) {
         this.players = GameManagement.game.players
-        this.monsters = this.createMonsters()
+        this.monsters = boss || this.createMonsters()
         this.order = this.getOrder()
         this.deadPlayers = []
     }
@@ -49,7 +49,6 @@ export default class Fight {
     getOrder() : Character[] {
         let orderList : Character[] = this.players.concat(this.monsters)
         orderList.sort((a, b) => b.speed - a.speed)
-        console.log(orderList)
         console.log("Order List : ")
         for(let character of orderList) {
             console.log(character.className, character.speed)

@@ -56,7 +56,7 @@ export default class Inventory {
         if (this.nEthers <= 0){
             console.log('Not enough ethers !')
         } else if (character.className == 'Mage'){
-
+            
         }
     }
 
