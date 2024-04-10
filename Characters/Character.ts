@@ -35,4 +35,12 @@ export default class Character {
     public specialAttack(enemy:Character):object{
         return {bool:false,stealObject:null}
     }
+
+    private getName():string{
+        let name = "";
+        const names = ["Cat Edral","Chat Po","Chat Moussa","Chat Teau","Chat Peliet","Chat Odo","Chat Pito","Chat Mourail","Chat Féplèze","Cat Aliseurre","Cat Olic","Chat Cal","Chat Creubleu","Chat Racreauch","Chat Meaux","Chat Rebond","Cat Aracte","Cat Astraufik","Chat Maleau","Cat Treuh","Cat Taugrafi","Cat Pouchinau","Cat Hin","Chat Soeur", "Chat Prystit"];
+        const index = Math.floor(Math.random()*names.length);
+        name = names[index];
+        return name
+    }
 }
