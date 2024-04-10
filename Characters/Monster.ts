@@ -1,7 +1,7 @@
 import Character from "./Character.ts";
 
 
-export default class Monster extends Character{
+export default abstract class Monster extends Character{
     public damageReceve(){}
     
     protected playerWithLowestHP(characters:Character[]):Character{

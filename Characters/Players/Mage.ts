@@ -1,5 +1,5 @@
 import Character from "../Character.ts";
-import Menu from "../../Menu.ts";
+import Menu from "../Menu.ts";
 import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
@@ -41,6 +41,7 @@ export default class Mage extends Player{
                 if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
+                    break;
                 }else{
                     this.damage(monsters[choice])
                     console.log(`You've made dammage to the ${monsters[choice].className}.`)
@@ -55,6 +56,7 @@ export default class Mage extends Player{
                 if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
+                    break;
                 }else{
                     let action:object=this.specialAttack(monsters[choice])
                     if (action['play']===true){
