@@ -1,35 +1,38 @@
+/**
+ * 
+ */
 export default class Character {
-    name : string;
-    attack : number; 
-    defense : number;
-    speed : number; 
-    maxHP : number;
-    currentHP : number;
-    team:string;
-    className:string=""
+    public attack : number; 
+    public defense : number;
+    public speed : number; 
+    public maxHp : number;
+    public currentHp : number;
+    public className:string=""
 
-    constructor(name : string, team:string, attack : number, defense : number,speed : number, maxHp : number){
-        this.name = name
+    public constructor(attack : number, defense : number,speed : number, maxHp : number){
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
-        this.maxHP = maxHp;
-        this.currentHP = maxHp;
-        this.team=team;
+        this.maxHp = maxHp;
+        this.currentHp = maxHp;
     }
 
-    damage(enemy:Character) {
-        if(this.currentHP > 0) {
-            enemy.currentHP-=(this.attack - this.defense)
+    protected damage(enemy:Character) {
+        enemy.currentHp=enemy.healthLosed(this.attack)
+    }
+
+    public healthLosed(receveDamage:number):number{
+        if (this.attack > this.defense+2){
+            return Math.max(this.currentHp-(receveDamage - this.defense),0)
         } else {
-            console.log("On n'attaque pas un mort !")
+            return Math.max(this.currentHp-2,0)
         }
     }
 
-    playTurn(player:Character[],monster:Character[]){
+    public playTurn(player:Character[],monster:Character[]){
     }
 
-    specialAttack(enemy:Character):object{
+    public specialAttack(enemy:Character):object{
         return {bool:false,stealObject:null}
     }
 }

@@ -1,7 +1,7 @@
-import Character from "./Character.ts";
+import Character from "./Character.ts"
 
 export default class Player extends Character{
-    listNameCharacter(characters:Character[]):string[]{
+    protected listNameCharacter(characters:Character[]):string[]{
         let listName:string[]=[]
         characters.forEach(Element => {
             listName.push(Element.className)

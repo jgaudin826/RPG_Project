@@ -1,19 +1,18 @@
 import Character from "../Character.ts";
 import Monster from "../Monster.ts";
+import Player from "../Player.ts";
 
 export default class Dopplegenger extends Monster{
-    className:string="dopplegenger";
-    clone :Character
-    constructor(name :string="dopplegenger",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+45), 
-                defense : number = Math.floor((Math.random() * 10)+35), 
+    public className:string="Dopplegenger";
+    public clone :Character;
+    public constructor(attack : number = Math.floor((Math.random() * 10)+45), 
+                defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+95), 
-                maxHp :number= Math.floor((Math.random() * 10)+195)
+                maxHp :number= Math.floor((Math.random() * 10)+195),
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
-    playTurn(players:Character[],monsters:Character[]){
+    public playTurn(players:Player[],monsters:Monster[]){
         this.clone= players[Math.floor(Math.random() * players.length)]
         let intendedCharacter : Character = players[0]
         let whichEnnemi :number = Math.floor(Math.random() * 10)
@@ -31,5 +30,6 @@ export default class Dopplegenger extends Monster{
         }else{
             this.damage(intendedCharacter)
         }
+        console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
     }
 }

@@ -1,26 +1,26 @@
 import Character from "../Character.ts";
 import Monster from "../Monster.ts";
+import Player from "../Player.ts";
 
 export default class Golem extends Monster{
-    className:string="golem";
-    constructor(name :string="golem",
-                team:string,
-                attack : number = Math.floor((Math.random() * 10)+60), 
+    public className:string="Golem";
+    public constructor(attack : number = Math.floor((Math.random() * 10)+60), 
                 defense : number = Math.floor((Math.random() * 10)+45), 
                 speed : number= Math.floor((Math.random() * 20)+50), 
                 maxHp :number= Math.floor((Math.random() * 50)+400)
                 ){
-        super(name,team,attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp)
     }
-    specialAttack(enemy:Character):object{
-        enemy.currentHp -= ((this.attack - enemy.defense)*0.6)
+    public specialAttack(enemy:Character):object{
+        enemy.currentHp -= (Math.round((this.attack - enemy.defense)*0.6))
         return {play:true,stealObject:null}
     }
-    playTurn(players:Character[],monsters:Character[]){
+    public playTurn(players:Player[],monsters:Monster[]){
         let whichAttack :number = Math.floor(Math.random() * 3)
         if (whichAttack===0){
             players.forEach(player=>{
                 this.specialAttack(player)
+                console.log(`${this.className} has made dammage to the ${player.className}:`+(Math.round((this.attack - player.defense)*0.6))+".")
             })
         }else{
             let intendedCharacter : Character = players[0]
@@ -31,6 +31,7 @@ export default class Golem extends Monster{
                 intendedCharacter = players[Math.floor(Math.random() * players.length)]
             }
             this.damage(intendedCharacter)
+            console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
         }
     }
 }
