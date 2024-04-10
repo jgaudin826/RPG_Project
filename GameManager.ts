@@ -1,5 +1,5 @@
 import Character from "./Characters/Character.ts"
-import Menu from "./Menu.ts"
+import Menu from "./menu.ts"
 import Warrior from "./Characters/Players/Warrior.ts"
 import Mage from "./Characters/Players/Mage.ts"
 import Paladin from "./Characters/Players/Paladin.ts"
