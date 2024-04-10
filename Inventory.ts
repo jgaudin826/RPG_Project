@@ -17,10 +17,6 @@ export default class Inventory {
         return this._Inventory
     }
 
-    public inventoryManager() {
-
-    }
-
     public usePotion(character : Character) {
         if (this.nPotions <= 0){
             console.log('Not enough potions !')
