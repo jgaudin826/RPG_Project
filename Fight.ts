@@ -16,7 +16,7 @@ export default class Fight {
     constructor(boss? : Character[]) {
         this.players = GameManagement.game.players
         this.monsters = boss || this.createMonsters()
-        this.order = this.getOrder()
+        this.order = this.getOrder(this.players.concat(this.monsters))
         this.deadPlayers = []
     }
 
@@ -36,22 +36,28 @@ export default class Fight {
             this.order[0].playTurn(this.players, this.monsters)
             if (this.order[0].currentHp == 0) {
                 this.deadPlayers.push(this.order[0])
+                this.checkDeadCharacters()
+                this.order.shift()
             } else {
-                this.order.push(this.order[0])
+                for (let i =0;i<this.order.length;i++){
+                    if (i==0){
+                        this.order[i].speedPosition=0
+                    } else {
+                        this.order[i].speedPosition += (this.order[i].speed)
+                    }
+                }
+                this.order=this.getOrder(this.order)
             }
-            this.order.shift()
-            this.checkDeadCharacters()
         }
         console.log("fight over")
         return this.players, this.deadPlayers
     }
 
-    getOrder() : Character[] {
-        let orderList : Character[] = this.players.concat(this.monsters)
-        orderList.sort((a, b) => b.speed - a.speed)
+    getOrder(orderList : Character[]) : Character[] {
+        orderList.sort((a, b) => b.speedPosition - a.speedPosition)
         console.log("Order List : ")
         for(let character of orderList) {
-            console.log(character.className, character.speed)
+            console.log(character.className, character.speedPosition)
         }
 
         return orderList
@@ -89,9 +95,6 @@ export default class Fight {
             console.log(`
             Max Mana : ${character.manaNow}\n
             Current Mana : ${character.manaNow}\n`)
-        } else if (character instanceof Ogre) {
-            console.log(`
-            Clone : ${character.clone}\n`)
         } else if (character instanceof Augmentor) {
             console.log(`
             Orbs : ${character.orbe.length}\n`)

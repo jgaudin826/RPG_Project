@@ -6,6 +6,7 @@ import Player from "../Player.ts";
 
 export default class Priest extends Player{
     public className:string="Priest";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 10)+40), 
                 defense : number = Math.floor((Math.random() * 5)+10), 
                 speed : number= Math.floor((Math.random() * 10)+95), 

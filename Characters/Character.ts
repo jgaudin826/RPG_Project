@@ -8,6 +8,7 @@ export default abstract class Character {
     public maxHp : number;
     public currentHp : number;
     public className:string=""
+    public speedPosition:number=0;
 
     public constructor(attack : number, defense : number,speed : number, maxHp : number){
         this.attack = attack;

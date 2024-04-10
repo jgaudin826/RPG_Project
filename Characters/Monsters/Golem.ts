@@ -4,6 +4,7 @@ import Player from "../Player.ts";
 
 export default class Golem extends Monster{
     public className:string="Golem";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 10)+60), 
                 defense : number = Math.floor((Math.random() * 10)+45), 
                 speed : number= Math.floor((Math.random() * 20)+50), 

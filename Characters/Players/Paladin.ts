@@ -6,6 +6,7 @@ import Inventory from "../../Inventory.ts";
 
 export default class Paladin extends Player{
     public className:string="Paladin";
+    public speedPosition:number=this.speed;
     constructor(attack : number = Math.floor((Math.random() * 20)+50), 
                 defense : number = Math.floor((Math.random() * 10)+40), 
                 speed : number= Math.floor((Math.random() * 20)+100), 

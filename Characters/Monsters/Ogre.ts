@@ -4,6 +4,7 @@ import Player from "../Player.ts";
 
 export default class Ogre extends Monster{
     public className:string="Ogre";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 10)+55), 
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+75), 

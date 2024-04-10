@@ -6,6 +6,7 @@ import Player from "../Player.ts";
 
 export default class Barbarian extends Player{
     public className:string="Barbarian";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 20)+70), 
                 defense : number = Math.floor((Math.random() * 10)+15), 
                 speed : number= Math.floor((Math.random() * 10)+100), 

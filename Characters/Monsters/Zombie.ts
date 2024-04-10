@@ -4,6 +4,7 @@ import Player from "../Player.ts";
 
 export default class Zombie extends Monster{
     public className:string="Zombie";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 20)+40), 
                 defense : number = Math.floor((Math.random() * 10)+20), 
                 speed : number= Math.floor((Math.random() * 21)+90), 

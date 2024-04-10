@@ -6,6 +6,7 @@ export default class augmentor extends Monster{
     public className:string="Augmentor";
     public orbe : string[] =[]
     public boostCount:number=0
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 10)+50), 
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+100), 

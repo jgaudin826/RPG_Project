@@ -5,6 +5,7 @@ import Monster from "../Monster.ts";
 
 export default class Warrior extends Player{
     public className:string="Warrior";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 20)+60), 
                 defense : number = Math.floor((Math.random() * 10)+35), 
                 speed : number= Math.floor((Math.random() * 11)+95), 

@@ -4,6 +4,7 @@ import Player from "../Player.ts";
 
 export default class vampire extends Monster{
     public className:string="Vampire";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 20)+70), 
                 defense : number = Math.floor((Math.random() * 5)+15), 
                 speed : number= Math.floor((Math.random() * 10)+95), 

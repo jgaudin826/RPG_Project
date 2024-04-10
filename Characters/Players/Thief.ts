@@ -6,6 +6,7 @@ import Player from "../Player.ts";
 
 export default class Thief extends Player{
     public className:string="Thief";
+    public speedPosition:number=this.speed;
     public constructor(attack : number = Math.floor((Math.random() * 10)+45), 
                 defense : number = Math.floor((Math.random() * 10)+20), 
                 speed : number= Math.floor((Math.random() * 30)+135), 
@@ -55,7 +56,7 @@ export default class Thief extends Player{
                     this.playTurn(players,monsters)
                 }else{
                     let action:object=this.specialAttack(monsters[choice])
-                    if (action[1]===null){
+                    if (action['stealObject']===null){
                         console.log(`You've stole nothing, you character missed!}`)
                     } else {
                         console.log(`You've stole the object : ${action[1]}.`)
