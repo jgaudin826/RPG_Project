@@ -14,7 +14,7 @@ export default class Paladin extends Player{
         super(attack,defense,speed,maxHp)
     }
     public specialAttack(enemy : Character):object {
-        enemy.currentHp -= (Math.round((this.attack - enemy.defense)*0.4))
+        this.damage(enemy,0.4)
         return {play:true,stealObject:null} 
     }
     public playTurn(players:Player[],monsters:Monster[]){

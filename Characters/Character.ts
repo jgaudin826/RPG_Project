@@ -17,22 +17,38 @@ export default abstract class Character {
         this.currentHp = maxHp;
     }
 
-    protected damage(enemy:Character) {
-        enemy.currentHp=enemy.healthLosed(this.attack)
+    protected damage(enemy:Character,multiplicate:number=1) {
+        enemy.healthLosed(this.attack,multiplicate)
     }
 
-    public healthLosed(receveDamage:number):number{
+    public healthLosed(receveDamage:number,multiplicate:number){
         if (this.attack > this.defense+2){
-            return Math.max(this.currentHp-(receveDamage - this.defense),0)
+            this.currentHp= Math.max(this.currentHp-(Math.round((receveDamage - this.defense)*multiplicate)),0)
         } else {
-            return Math.max(this.currentHp-2,0)
+            this.currentHp= Math.max(this.currentHp-2,0)
         }
     }
 
-    public playTurn(player:Character[],monster:Character[]){
-    }
+    public abstract playTurn(player:Character[],monster:Character[])
 
-    public specialAttack(enemy:Character):object{
-        return {bool:false,stealObject:null}
+    public abstract specialAttack(enemy:Character):object
+
+    public heal(percent : number,typeHeal:string="heal") {
+        if(typeHeal==="heal"){
+            console.log("You can't heal a dead character !")
+        } else {
+            if(this.currentHp > this.currentHp + this.maxHp*(percent/100)) {
+                this.currentHp = this.maxHp
+            } else {
+                this.currentHp += this.maxHp*(percent/100)
+            }
+        }
+    }
+    public resurrect(percent : number) {
+        if(this.currentHp <= 0) {
+            this.heal(percent,"resurrect")
+        } else {
+            console.log("You can't resurrect a character who's already alive !")
+        }
     }
 }

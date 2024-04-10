@@ -16,7 +16,7 @@ export default class Barbarian extends Player{
     public specialAttack(enemy:Character):object{
         if (this.currentHp- (this.maxHp*(20/100)) > 0){
             this.currentHp -= (this.maxHp*(20/100))
-            enemy.currentHp -= ((this.attack - enemy.defense)*1.3)
+            this.damage(enemy,1.3)
             return {play:true,nameMonster:enemy.className}
         }
         return {play:false,stealObject:null}

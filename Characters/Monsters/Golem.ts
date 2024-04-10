@@ -12,7 +12,7 @@ export default class Golem extends Monster{
         super(attack,defense,speed,maxHp)
     }
     public specialAttack(enemy:Character):object{
-        enemy.currentHp -= (Math.round((this.attack - enemy.defense)*0.6))
+        this.damage(enemy,0.3)
         return {play:true,stealObject:null}
     }
     public playTurn(players:Player[],monsters:Monster[]){

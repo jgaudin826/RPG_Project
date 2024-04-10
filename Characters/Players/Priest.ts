@@ -14,15 +14,7 @@ export default class Priest extends Player{
         super(attack,defense,speed,maxHp)
     }
     public specialAttack(ally : Character):object{
-        if(ally.currentHp <= 0){
-            console.log("On ne soigne pas un mort !")
-        } else {
-            if(ally.maxHp < ally.currentHp + ally.maxHp*(25/100)) {
-                ally.currentHp = ally.maxHp
-            } else {
-                ally.currentHp += ally.maxHp*(25/100)
-            }
-        }
+        ally.heal(25)
         return {play:true,namePlayer:ally.className}
     }
     public playTurn(players:Player[],monsters:Monster[]){

@@ -12,6 +12,7 @@ export default class Warrior extends Player{
                 ){
         super(attack,defense,speed,maxHp)
     }
+
     public playTurn(players:Player[],monsters:Monster[]){
         let menu = new Menu("What do you want to do?", ["Normal Attack","inventary"])
         let choice=menu.input()
