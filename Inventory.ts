@@ -30,7 +30,7 @@ export default class Inventory {
                 if(!this.usePotion(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
-                    return false
+                    return true
                 }
             case 1:
                  menu = new Menu("On who do you want to use it?",this.listNameCharacter(GameManagement.game.players))
@@ -38,7 +38,7 @@ export default class Inventory {
                  if(!this.useStarFragment(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
-                    return false
+                    return true
                 }
             case 2:
                 menu = new Menu("On who do you want to use it?",this.listNameCharacter(GameManagement.game.players))
@@ -46,7 +46,7 @@ export default class Inventory {
                 if(!this.useHalfStar(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
-                    return false
+                    return true
                 }
             case 3:
                 menu = new Menu("On who do you want to use it?",this.listNameCharacter(GameManagement.game.players))
@@ -54,20 +54,23 @@ export default class Inventory {
                 if(!this.useEther(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
-                    return false
+                    return true
                 }
             case 4:
-                return true
+                return false
             default:
                 console.log("You can't make this choice, choose an other one")
                 this.inventoryManager()
         }
-        return false
+        return true
     }
 
     public usePotion(character : Character):boolean {
         if (this.nPotions <= 0){
             console.log('Not enough potions !')
+            return false
+        }else if (character.currentHp==character.maxHp){
+            console.log(`the ${character.className} has to much hp, you can't use this item`)
             return false
         } else {
             character.heal(50)
@@ -78,6 +81,9 @@ export default class Inventory {
     public useStarFragment(character : Character):boolean {
         if (this.nStarFragments <= 0){
             console.log('Not enough star fragments !')
+            return false
+        }else if (character.currentHp==character.maxHp){
+            console.log(`the ${character.className} has to much hp, you can't use this item`)
             return false
         } else {
             if (character.currentHp <= 0){
@@ -93,6 +99,9 @@ export default class Inventory {
         if (this.nHalfStars <= 0){
             console.log('Not enough half stars !')
             return false
+        }else if (character.currentHp==character.maxHp){
+            console.log(`the ${character.className} has to much hp, you can't use this item`)
+            return false
         } else {
             if (character.currentHp <= 0){
                 character.resurrect(100)
@@ -106,6 +115,9 @@ export default class Inventory {
     public useEther(character : Character):boolean {
         if (this.nEthers <= 0){
             console.log('Not enough ethers !')
+            return false
+        } else if (character instanceof Mage && character.manaNow==character.manaMax){
+            console.log("the mage has to much mana, you can't use this item")
             return false
         } else if (character instanceof Mage){
             character.gainMana(30)

@@ -7,7 +7,7 @@ import Player from "../Player.ts";
 export default class Mage extends Player{
     public className:string="Mage";
     public manaNow : number;
-    private manaMax : number;
+    public manaMax : number;
     public constructor(attack : number = Math.floor((Math.random() * 10)+35), 
                 defense : number = Math.floor((Math.random() * 5)+10), 
                 speed : number= Math.floor((Math.random() * 10)+115), 
