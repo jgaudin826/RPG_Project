@@ -2,7 +2,6 @@ import Character from "./Characters/Character.ts"
 import Mage from "./Characters/Players/Mage.ts"
 import Menu from "./Menu.ts";
 import GameManagement from "./GameManager.ts";
-import Player from "./Characters/Player.ts";
 
 export default class Inventory {
     public nPotions : number = 2;
