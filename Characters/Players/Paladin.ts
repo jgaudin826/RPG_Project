@@ -23,7 +23,7 @@ export default class Paladin extends Player{
         switch (choice){
             case 0:
                 console.log("here")
-                menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
+                menu = new Menu("who do you want to attack?", Inventory.inventory.listNameCharacter(monsters))
                 choice = menu.input()
                 if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")

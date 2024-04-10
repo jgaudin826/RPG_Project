@@ -18,7 +18,7 @@ export default class Warrior extends Player{
         let choice=menu.input()
         switch (choice){
             case 0:
-                menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
+                menu = new Menu("who do you want to attack?", Inventory.inventory.listNameCharacter(monsters))
                 choice = menu.input()
                 if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")

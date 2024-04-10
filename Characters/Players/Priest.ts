@@ -14,7 +14,7 @@ export default class Priest extends Player{
         super(attack,defense,speed,maxHp)
     }
     public specialAttack(ally : Character):object{
-        ally.heal(25)
+            ally.heal(25)
         return {play:true,namePlayer:ally.className}
     }
     public playTurn(players:Player[],monsters:Monster[]){
@@ -22,7 +22,7 @@ export default class Priest extends Player{
         let choice=menu.input()
         switch (choice){
             case 0:
-                menu = new Menu("who do you want to attack?", this.listNameCharacter(monsters))
+                menu = new Menu("who do you want to attack?", Inventory.inventory.listNameCharacter(monsters))
                 choice = menu.input()
                 if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")
@@ -36,7 +36,7 @@ export default class Priest extends Player{
                 }
                 break
             case 1:
-                menu = new Menu("who do you want to heal?", this.listNameCharacter(players))
+                menu = new Menu("who do you want to heal?", Inventory.inventory.listNameCharacter(players))
                 let numberPlayer = menu.input()
                 if (numberPlayer===undefined){
                     console.log("You can't make this choice, choose an other one")
