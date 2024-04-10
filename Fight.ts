@@ -1,10 +1,10 @@
 import Character from "./Characters/Character.ts"
 import Augmentor from "./Characters/Monsters/Augmentor.ts"
-import Dopplegenger from "./Characters/Monsters/Dopplegenger.ts"
+import Ogre from "./Characters/Monsters/Ogre.ts"
 import Golem from "./Characters/Monsters/Golem.ts"
 import Vampire from "./Characters/Monsters/Vampire.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
-import GameManagement from "./gameManager.ts"
+import GameManagement from "./GameManager.ts"
 import Mage from "./Characters/Players/Mage.ts"
 
 export default class Fight {
@@ -59,7 +59,7 @@ export default class Fight {
 
     createMonsters() : Character[] {
         let monsters : Character[] = []
-        const monsterList = [Augmentor, Dopplegenger, Golem, Vampire, Zombie]
+        const monsterList = [Augmentor, Ogre, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
             monsters.push(new monsterList[Math.floor(Math.random() * 5)]())
         }
@@ -89,7 +89,7 @@ export default class Fight {
             console.log(`
             Max Mana : ${character.manaNow}\n
             Current Mana : ${character.manaNow}\n`)
-        } else if (character instanceof Dopplegenger) {
+        } else if (character instanceof Ogre) {
             console.log(`
             Clone : ${character.clone}\n`)
         } else if (character instanceof Augmentor) {

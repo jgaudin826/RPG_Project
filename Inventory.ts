@@ -1,5 +1,6 @@
 import Character from "./Characters/Character.ts"
 import Mage from "./Characters/Players/Mage.ts"
+//import Menu from "./Menu.ts";
 
 export default class Inventory {
     public nPotions : number = 2;
@@ -18,7 +19,8 @@ export default class Inventory {
     }
 
     public inventoryManager() : boolean{
-        
+        /*menu = new Menu("who do you want to heal?",[])
+        let numberPlayer = menu.input()*/
         return true
     }
 
@@ -26,7 +28,7 @@ export default class Inventory {
         if (this.nPotions <= 0){
             console.log('Not enough potions !')
         } else {
-            this.heal(character, 50)
+            character.heal(50)
         }
     }
 
@@ -35,9 +37,9 @@ export default class Inventory {
             console.log('Not enough star fragments !')
         } else {
             if (character.currentHp <= 0){
-                this.resurrect(character, 20)
+                character.resurrect(20)
             } else {
-                this.heal(character, 50)
+                character.heal(50)
             }
         }
     }
@@ -47,9 +49,9 @@ export default class Inventory {
             console.log('Not enough half stars !')
         } else {
             if (character.currentHp <= 0){
-                this.resurrect(character, 100)
+                character.resurrect(100)
             } else {
-                this.heal(character, 100)
+                character.heal(100)
             }
         }
     }
@@ -65,24 +67,6 @@ export default class Inventory {
         }
     }
 
-    private heal(character : Character, percent : number) {
-        if(character.currentHp <= 0){
-            console.log("You can't heal a dead character !")
-        } else {
-            if(character.currentHp > character.currentHp + character.maxHp*(percent/100)) {
-                character.currentHp = character.maxHp
-            } else {
-                character.currentHp += character.maxHp*(percent/100)
-            }
-        }
-    }
-
-    private resurrect(character : Character, percent : number) {
-        if(character.currentHp <= 0) {
-            character.currentHp += character.maxHp*(percent/100)
-        } else {
-            console.log("You can't resurrect a character who's already alive !")
-        }
-    }
+    
 }
 
