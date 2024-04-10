@@ -16,8 +16,9 @@ export default class Inventory {
         return this._Inventory
     }
 
-    public inventoryManager() {
-
+    public inventoryManager() : boolean{
+        
+        return true
     }
 
     public usePotion(character : Character) {

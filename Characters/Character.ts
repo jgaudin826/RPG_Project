@@ -1,7 +1,7 @@
 /**
  * 
  */
-export default class Character {
+export default abstract class Character {
     public attack : number; 
     public defense : number;
     public speed : number; 
