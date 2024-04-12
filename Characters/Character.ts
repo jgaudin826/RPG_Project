@@ -74,7 +74,7 @@ export default abstract class Character {
      * @param typeHeal The type of healing (default: "heal").
      */
     public heal(percent : number,typeHeal:string="heal") {
-        if(typeHeal==="heal"){
+        if(typeHeal==="heal" && this.currentHp<=0){
             console.log("You can't heal a dead character !")
         } else {
             if(this.currentHp > this.currentHp + this.maxHp*(percent/100)) {

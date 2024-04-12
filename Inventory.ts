@@ -29,6 +29,7 @@ export default class Inventory {
                 if(!this.usePotion(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
+                    this.nPotions-=1
                     return true
                 }
             case 1:
@@ -37,6 +38,7 @@ export default class Inventory {
                  if(!this.useStarFragment(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
+                    this.nStarFragments-=1
                     return true
                 }
             case 2:
@@ -45,6 +47,7 @@ export default class Inventory {
                 if(!this.useHalfStar(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
+                    this.nHalfStars-=1
                     return true
                 }
             case 3:
@@ -53,6 +56,7 @@ export default class Inventory {
                 if(!this.useEther(GameManagement.game.players[choice])){
                     this.inventoryManager()
                 }else{
+                    this.nEthers-=1
                     return true
                 }
             case 4:
