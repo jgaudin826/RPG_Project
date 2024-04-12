@@ -29,7 +29,7 @@ export default class Inventory {
         if (this.nStarFragments <= 0){
             console.log('Not enough star fragments !')
         } else {
-            if (character.currentHP <= 0){
+            if (character.currentHp <= 0){
                 this.resurrect(character, 20)
             } else {
                 this.heal(character, 50)
@@ -41,7 +41,7 @@ export default class Inventory {
         if (this.nHalfStars <= 0){
             console.log('Not enough half stars !')
         } else {
-            if (character.currentHP <= 0){
+            if (character.currentHp <= 0){
                 this.resurrect(character, 100)
             } else {
                 this.heal(character, 100)
@@ -56,25 +56,24 @@ export default class Inventory {
             character.gainMana(30)
         } else {
             console.log("You can't use ethers with this character")
-            
         }
     }
 
     private heal(character : Character, percent : number) {
-        if(character.currentHP <= 0){
+        if(character.currentHp <= 0){
             console.log("You can't heal a dead character !")
         } else {
-            if(character.currentHP > character.currentHP + character.maxHP*(percent/100)) {
-                character.currentHP = character.maxHP
+            if(character.currentHp > character.currentHp + character.maxHp*(percent/100)) {
+                character.currentHp = character.maxHp
             } else {
-                character.currentHP += character.maxHP*(percent/100)
+                character.currentHp += character.maxHp*(percent/100)
             }
         }
     }
 
     private resurrect(character : Character, percent : number) {
-        if(character.currentHP <= 0) {
-            character.currentHP += character.maxHP*(percent/100)
+        if(character.currentHp <= 0) {
+            character.currentHp += character.maxHp*(percent/100)
         } else {
             console.log("You can't resurrect a character who's already alive !")
         }
