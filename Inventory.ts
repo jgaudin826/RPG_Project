@@ -2,6 +2,7 @@ import Character from "./Characters/Character.ts"
 import Mage from "./Characters/Players/Mage.ts"
 import Menu from "./Menu.ts";
 import GameManagement from "./GameManager.ts";
+import Fight from "./Fight.ts";
 
 export default class Inventory {
     public nPotions : number = 2;
@@ -9,6 +10,7 @@ export default class Inventory {
     public nHalfStars : number = 0;
     public nEthers : number = 1;
     private static _Inventory : Inventory | null = null
+    private fight = new Fight
 
     private constructor() {}
 
@@ -24,36 +26,36 @@ export default class Inventory {
         let choice = menu.input()
         switch (choice){
             case 0:
-                menu = new Menu("On who do you want to use it?",this.listNameCharacter(GameManagement.game.players))
+                menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players))
                 choice=menu.input()
-                if(!this.usePotion(GameManagement.game.players[choice])){
+                if(!this.usePotion(this.fight.players[choice])){
                     this.inventoryManager()
                 }else{
                     this.nPotions-=1
                     return true
                 }
             case 1:
-                 menu = new Menu("On who do you want to use it?",this.listNameCharacter(GameManagement.game.players))
+                 menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players.concat(this.fight.deadPlayers)))
                  choice=menu.input()
-                 if(!this.useStarFragment(GameManagement.game.players[choice])){
+                 if(!this.useStarFragment(this.fight.players.concat(this.fight.deadPlayers)[choice])){
                     this.inventoryManager()
                 }else{
                     this.nStarFragments-=1
                     return true
                 }
             case 2:
-                menu = new Menu("On who do you want to use it?",this.listNameCharacter(GameManagement.game.players))
+                menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players.concat(this.fight.deadPlayers)))
                 choice=menu.input()
-                if(!this.useHalfStar(GameManagement.game.players[choice])){
+                if(!this.useHalfStar(this.fight.players.concat(this.fight.deadPlayers)[choice])){
                     this.inventoryManager()
                 }else{
                     this.nHalfStars-=1
                     return true
                 }
             case 3:
-                menu = new Menu("On who do you want to use it?",this.listNameCharacter(GameManagement.game.players))
+                menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players))
                 choice=menu.input()
-                if(!this.useEther(GameManagement.game.players[choice])){
+                if(!this.useEther(this.fight.players[choice])){
                     this.inventoryManager()
                 }else{
                     this.nEthers-=1

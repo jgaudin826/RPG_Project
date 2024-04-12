@@ -6,6 +6,8 @@ import Vampire from "./Characters/Monsters/Vampire.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 import GameManagement from "./GameManager.ts"
 import Mage from "./Characters/Players/Mage.ts"
+import Monster from "./Characters/Monster.ts"
+import Player from "./Characters/Player.ts"
 
 export default class Fight {
     players : Character[]
@@ -35,9 +37,8 @@ export default class Fight {
             this.printStats(this.order[0])
             this.order[0].playTurn(this.players, this.monsters)
             if (this.order[0].currentHp == 0) {
-                this.deadPlayers.push(this.order[0])
                 this.checkDeadCharacters()
-                this.order.shift()
+                this.order.splice(0,1)
             } else {
                 for (let i =0;i<this.order.length;i++){
                     if (i==0){
@@ -63,8 +64,8 @@ export default class Fight {
         return orderList
     }
 
-    createMonsters() : Character[] {
-        let monsters : Character[] = []
+    createMonsters() : Monster[] {
+        let monsters : Monster[] = []
         const monsterList = [Augmentor, Ogre, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
             monsters.push(new monsterList[Math.floor(Math.random() * 5)]())
@@ -73,13 +74,18 @@ export default class Fight {
     }
 
     checkDeadCharacters() {
-        for (let i = 0; i < this.order.length; i++) {
-            if (this.order[i].currentHp == 0){
-                console.log(`${this.order[i].className} is dead, what a loser!`)
-                this.deadPlayers.push(this.order[i])
-                this.order.splice(i, 1)
+            for (let i=0;i<this.players.length;i++){
+                if (this.players[i].currentHp <= 0){
+                    this.deadPlayers.push(this.players[i])
+                    this.players.splice(i,1)
+                }
             }
-        }
+            for (let i=0;i<this.monsters.length;i++){
+                if (this.monsters[i].currentHp <= 0){
+                    //this.deadMonsters.push(this.players[i])
+                    this.monsters.splice(i,1)
+                }
+            }
     }
 
     printStats(character : Character) {
@@ -93,7 +99,7 @@ export default class Fight {
             Current HP : ${character.currentHp}\n`)
         if (character instanceof Mage){
             console.log(`
-            Max Mana : ${character.manaNow}\n
+            Max Mana : ${character.manaMax}\n
             Current Mana : ${character.manaNow}\n`)
         } else if (character instanceof Augmentor) {
             console.log(`
