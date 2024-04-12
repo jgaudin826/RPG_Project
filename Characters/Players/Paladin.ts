@@ -4,9 +4,21 @@ import Monster from "../Monster.ts";
 import Player from "../Player.ts";
 import Inventory from "../../Inventory.ts";
 
+/**
+ * Class representing a paladin player character, inheriting from Player.
+ */
 export default class Paladin extends Player{
     public className:string="Paladin";
     public speedPosition:number=this.speed;
+
+    /**
+     * Creates an instance of Paladin with random or specified attributes.
+     * 
+     * @param attack The attack value of the paladin (default: random value between 50 and 69).
+     * @param defense The defense value of the paladin (default: random value between 40 and 49).
+     * @param speed The speed value of the paladin (default: random value between 100 and 119).
+     * @param maxHp The maximum HP of the paladin (default: random value between 200 and 219).
+     */
     constructor(attack : number = Math.floor((Math.random() * 20)+50), 
                 defense : number = Math.floor((Math.random() * 10)+40), 
                 speed : number= Math.floor((Math.random() * 20)+100), 
@@ -14,10 +26,24 @@ export default class Paladin extends Player{
                 ){
         super(attack,defense,speed,maxHp)
     }
+
+    /**
+     * Performs a special attack on all enemy characters.
+     * 
+     * @param enemy The character to target with the special attack.
+     * @returns An object describing the result of the special attack.
+     */
     public specialAttack(enemy : Character):object {
         this.damage(enemy,0.4)
         return {play:true,stealObject:null} 
     }
+
+    /**
+     * Defines the behavior of the paladin character during its turn in combat.
+     * 
+     * @param players An array of player characters.
+     * @param monsters An array of monster characters.
+     */
     public playTurn(players:Player[],monsters:Monster[]){
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
         let choice=menu.input()

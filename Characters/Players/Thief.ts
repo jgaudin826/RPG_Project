@@ -4,9 +4,21 @@ import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
 
+/**
+ * Class representing a thief player character, inheriting from Player.
+ */
 export default class Thief extends Player{
     public className:string="Thief";
     public speedPosition:number=this.speed;
+
+    /**
+     * Creates an instance of Thief with random or specified attributes.
+     * 
+     * @param attack The attack value of the thief (default: random value between 45 and 54).
+     * @param defense The defense value of the thief (default: random value between 20 and 29).
+     * @param speed The speed value of the thief (default: random value between 135 and 164).
+     * @param maxHp The maximum HP of the thief (default: random value between 165 and 184).
+     */
     public constructor(attack : number = Math.floor((Math.random() * 10)+45), 
                 defense : number = Math.floor((Math.random() * 10)+20), 
                 speed : number= Math.floor((Math.random() * 30)+135), 
@@ -14,6 +26,13 @@ export default class Thief extends Player{
                 ){
         super(attack,defense,speed,maxHp)
     }
+
+    /**
+     * Performs a special attack on the specified enemy character.
+     * 
+     * @param enemy The character to target with the special attack.
+     * @returns An object describing the result of the special attack.
+     */
     public specialAttack(enemy:Character):object{
         let stealObject : string | null
         let stealNumber : number = Math.floor(Math.random() * 100);
@@ -30,6 +49,13 @@ export default class Thief extends Player{
         }
         return {play:true,stealObject:stealObject}
     }
+
+    /**
+     * Defines the behavior of the thief character during its turn in combat.
+     * 
+     * @param players An array of player characters.
+     * @param monsters An array of monster characters.
+     */
     public playTurn(players:Player[],monsters:Monster[]){
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
         let choice=menu.input()

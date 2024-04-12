@@ -1,9 +1,29 @@
 import Character from "./Character.ts";
 
-
+/**
+ * Abstract class representing a monster character, inheriting from Character.
+ */
 export default abstract class Monster extends Character{
+    
+    /**
+     * Placeholder method for receiving damage. Implement in derived classes as needed.
+     */
     public damageReceve(){}
+
+    /**
+     * Performs a special attack on the specified enemy character.
+     * 
+     * @param enemy The character to target with the special attack.
+     * @returns An object describing the result of the special attack.
+     */
     public specialAttack(enemy : Character):object {return {play:false,object:enemy}}
+
+    /**
+     * Finds and returns the player character with the lowest current HP.
+     * 
+     * @param characters An array of characters to search.
+     * @returns The player character with the lowest current HP.
+     */
     protected playerWithLowestHP(characters:Character[]):Character{
         let player : Character =characters[0]
         let lowerHP : number = characters[0].currentHp
