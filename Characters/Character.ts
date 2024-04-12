@@ -8,6 +8,7 @@ export default abstract class Character {
     public maxHp : number;
     public currentHp : number;
     public className:string=""
+    public name : string="Name"
 
     public constructor(attack : number, defense : number,speed : number, maxHp : number){
         this.attack = attack;
@@ -15,6 +16,7 @@ export default abstract class Character {
         this.speed = speed;
         this.maxHp = maxHp;
         this.currentHp = maxHp;
+        this.name = this.getName()
     }
 
     protected damage(enemy:Character) {
@@ -34,5 +36,9 @@ export default abstract class Character {
 
     public specialAttack(enemy:Character):object{
         return {bool:false,stealObject:null}
+    }
+
+    getName():string{
+        return "Temp Name"
     }
 }

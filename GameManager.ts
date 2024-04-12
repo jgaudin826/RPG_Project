@@ -17,7 +17,7 @@ export default class GameManagement {
     deadPlayers : Character[] = [];
 
     static get game() {
-        if (!this._game) {
+        if (this._game == null) {
             this._game = new GameManagement()
         }
         return this._game
@@ -41,7 +41,7 @@ export default class GameManagement {
         this.chestRoom()
         console.log("go to boss fight")
         let boss = [new Zombie()]
-        this.players, this.deadPlayers = new Fight(boss).startFight()
+        this.players, this.deadPlayers = new Fight().startFight()
 
     }
     

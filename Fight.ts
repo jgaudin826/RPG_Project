@@ -4,43 +4,39 @@ import Dopplegenger from "./Characters/Monsters/Dopplegenger.ts"
 import Golem from "./Characters/Monsters/Golem.ts"
 import Vampire from "./Characters/Monsters/Vampire.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
-import GameManagement from "./gameManager.ts"
+import GameManagement from "./GameManager.ts"
 import Mage from "./Characters/Players/Mage.ts"
+import Player from "./Characters/Player.ts"
+import Screen from "./Screen.ts"
 
 export default class Fight {
     players : Character[]
     monsters : Character[]
     order : Character[]
+    allCharacters : Character[]
     deadPlayers : Character[]
+    deadMonsters : Character[]
 
-    constructor(boss? : Character[]) {
+    constructor( boss? : Character[],) {
         this.players = GameManagement.game.players
         this.monsters = boss || this.createMonsters()
         this.order = this.getOrder()
-        this.deadPlayers = []
+        this.deadPlayers = GameManagement.game.deadPlayers
+        this.deadMonsters = []
+        this.allCharacters = this.players.concat(this.deadPlayers.concat(this.monsters.concat(this.deadMonsters)))
     }
 
     startFight() : Character[] {
-        console.log("fight started")
-        console.log("here is the list of monsters")
-        for (let monster of this.monsters) {
-            console.log(`${monster.className}`)
-        }
-        console.log("Fight has started!")
-        let round = 1
         while (this.players.length > 0 || this.monsters.length > 0) {
-            console.log(`Round ${round}`)
-            round++
+            Screen.screen.displayFight(this.allCharacters, this.order)
             console.log(`it's ${this.order[0].className}'s turn`)
-            this.printStats(this.order[0])
+            //this.printStats(this.order[0])  // Test 
             this.order[0].playTurn(this.players, this.monsters)
-            if (this.order[0].currentHp == 0) {
-                this.deadPlayers.push(this.order[0])
-            } else {
+            if (this.order[0].currentHp != 0) {
                 this.order.push(this.order[0])
             }
-            this.order.shift()
             this.checkDeadCharacters()
+            this.order.shift()
         }
         console.log("fight over")
         return this.players, this.deadPlayers
@@ -49,11 +45,6 @@ export default class Fight {
     getOrder() : Character[] {
         let orderList : Character[] = this.players.concat(this.monsters)
         orderList.sort((a, b) => b.speed - a.speed)
-        console.log("Order List : ")
-        for(let character of orderList) {
-            console.log(character.className, character.speed)
-        }
-
         return orderList
     }
 
@@ -70,7 +61,10 @@ export default class Fight {
         for (let i = 0; i < this.order.length; i++) {
             if (this.order[i].currentHp == 0){
                 console.log(`${this.order[i].className} is dead, what a loser!`)
-                this.deadPlayers.push(this.order[i])
+                if (this.order[i] instanceof Player){
+                    this.deadPlayers.push(this.order[i])
+                }
+                this.deadMonsters.push(this.order[i])
                 this.order.splice(i, 1)
             }
         }

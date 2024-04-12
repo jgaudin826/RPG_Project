@@ -1,5 +1,5 @@
 import Character from "../Character.ts";
-import Menu from "../Menu.ts";
+import Menu from "../../menu.ts";
 import Monster from "../Monster.ts";
 import Player from "../Player.ts";
 

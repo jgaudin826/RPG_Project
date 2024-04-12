@@ -1,4 +1,1 @@
-import Menu from "./Menu.ts";
-
-const testmenu = new Menu("test", ["attaquer","quitter"])
-console.log(testmenu.input())
+console.log("ywetyr\x1b[32m####################\x1b[0merretwt")
