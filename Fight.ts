@@ -43,13 +43,13 @@ export default class Fight {
     }
 
     getOrder() : Character[] {
-        let orderList : Character[] = this.players.concat(this.monsters)
+        const orderList : Character[] = this.players.concat(this.monsters)
         orderList.sort((a, b) => b.speed - a.speed)
         return orderList
     }
 
     createMonsters() : Character[] {
-        let monsters : Character[] = []
+        const monsters : Character[] = []
         const monsterList = [Augmentor, Dopplegenger, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
             monsters.push(new monsterList[Math.floor(Math.random() * 5)]())

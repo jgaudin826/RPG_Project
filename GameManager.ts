@@ -7,7 +7,7 @@ import Barbarian from "./Characters/Players/Barbarian.ts"
 import Priest from "./Characters/Players/Priest.ts"
 import Thief from "./Characters/Players/Thief.ts"
 import Inventory from "./Inventory.ts"
-import Fight from "./fight.ts"
+import Fight from "./Fight.ts"
 import Player from "./Characters/Player.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 
@@ -40,7 +40,7 @@ export default class GameManagement {
         console.log("go to chest room 2")
         this.chestRoom()
         console.log("go to boss fight")
-        let boss = [new Zombie()]
+        const boss = [new Zombie()]
         this.players, this.deadPlayers = new Fight().startFight()
 
     }
@@ -49,7 +49,7 @@ export default class GameManagement {
      * 
      */
     createTeam() : Character[] {
-        let playerTeam : Character[] = []
+        const playerTeam : Character[] = []
         const options = [Warrior, Mage, Paladin, Barbarian, Priest, Thief]
         for (let i=1; i <= 3; i++) {
             const answer = new Menu(`Choose the class of adventurer ${i}`,["Warrior", "Mage", "Paladin", "Barbarian", "Priest", "Thief"]).input()
@@ -59,13 +59,13 @@ export default class GameManagement {
     }
 
     chestRoom(){
-        let menu = new Menu("Do you want to open the mysterious chest?", ["Open Chest", "Skip Room", "Quit"])
-        let choice = menu.input()
+        const menu = new Menu("Do you want to open the mysterious chest?", ["Open Chest", "Skip Room", "Quit"])
+        const choice = menu.input()
         if (choice == 1){
-            let trapProbability : number = Math.floor(Math.random() * 100)
+            const trapProbability : number = Math.floor(Math.random() * 100)
             if (trapProbability < 30) {
                 for (let i=0; i<this.players.length; i++) {
-                    let dammage : number = Math.floor(Math.random() * 100)/2
+                    const dammage : number = Math.floor(Math.random() * 100)/2
                     this.players[i].currentHp -= (this.players[i].maxHp*dammage - this.players[i].defense)
                     if (this.players[i].currentHp < 0) {
                         this.players[i].currentHp = 0
@@ -74,7 +74,7 @@ export default class GameManagement {
                 this.checkDeadCharacters()
             } else {
                 let stealObject : string | null
-                let stealNumber : number = Math.floor(Math.random() * 100)
+                const stealNumber : number = Math.floor(Math.random() * 100)
                 if (stealNumber<5){
                     stealObject = "halfStar"
                 } else if(5<=stealNumber && stealNumber<20) {

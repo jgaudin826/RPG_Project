@@ -1,3 +1,4 @@
+import { readKeypress } from "https://deno.land/x/keypress@0.0.11/mod.ts";
 import Character from "./Characters/Character.ts"
 
 export default class Screen {
@@ -23,13 +24,18 @@ export default class Screen {
     //Inventory
     //Options
 
-    createScreen(message: string, allCharacters : Character[], order : Character[], input? : []) {
-    
-    }
-    displayFight(allCharacters : Character[],order : Character[]) {
+    DisplayScreen(message: string, allCharacters : Character[], order : Character[], input? : []) {
         console.clear
         console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗")
         console.log(this.spaceBar)
+        if (allCharacters.length == 4) {
+            this.displayBoss(allCharacters,order)
+        } else {
+            this.displayFight(allCharacters,order)
+        }
+
+    }
+    displayFight(allCharacters : Character[],order : Character[]) {
         console.log(this.getMonsters(allCharacters,order))
 
         for (let i=0; i<8; i++) {
@@ -39,9 +45,6 @@ export default class Screen {
         console.log(this.getPlayers(allCharacters,order))
     }
     displayBoss(allCharacters : Character[],order : Character[]) {
-        console.clear
-        console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-        console.log(this.spaceBar)
         console.log(this.getBoss(allCharacters,order))
         console.log(this.getPlayers(allCharacters,order))
     }
@@ -102,7 +105,6 @@ export default class Screen {
             }
             fightScreen += line + "║\n"
         }
-        fightScreen += this.spaceBar
         return fightScreen
     }
 
@@ -220,15 +222,39 @@ export default class Screen {
 
     printMessage(message : string) {
         let line = "║     Game : "
-        while (message.length>0) {
-            if (message.length>110) {
-                line += message.slice(0,110) + "             ║"
-            }
+        if (message.length>110) {
+            line += message.slice(0,110) + "             ║"
             console.log(line)
             line = "║            "
-        }
-    }
-    inventory() {
+            line += message.slice(110)
+            line += this.getSpaces(135-line.length) + "║\n"
+            console.log(line)
+        } else {
+            line += message
+            line += this.getSpaces(135-message.length) + "║\n"
+            console.log(line)
+            console.log("║" + this.getSpaces(135) + "║\n")
 
+        }
+
+    }
+    async inventoryInput() {
+        let inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╣","║        1. 🧪 Potion      ║    2. ✨ Star fragment   ║      3. 🌟 Half star     ║         4. 🔮 Ether      ║            Q. Quit       ║","╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╝"] 
+        for (let i=0; i<3; i++) {
+            console.log(inventory[i])
+        }
+        for await (const keypress of readKeypress()) {
+            console.log(keypress)
+
+            switch (keypress.key) {
+                case "1": {
+                    return 
+                }
+            }
+        
+            if (keypress.ctrlKey && keypress.key === 'c') {
+                Deno.exit(0);
+            }
+        }
     }
 }   
