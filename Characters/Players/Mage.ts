@@ -1,9 +1,5 @@
 import Character from "../Character.ts";
-<<<<<<< HEAD
-import Menu from "../../menu.ts";
-=======
 import Menu from "../../Menu.ts";
->>>>>>> main
 import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
@@ -99,7 +95,7 @@ export default class Mage extends Player{
                     this.playTurn(players,monsters)
                     break;
                 }else{
-                    let action:object=this.specialAttack(monsters[choice])
+                    const action:object=this.specialAttack(monsters[choice])
                     if (action['play']===true){
                         console.log(`You've made dammage to the ${monsters[choice].className}.`)
                         if (monsters[choice].className==="augmentor"){

@@ -65,10 +65,10 @@ export default class augmentor extends Monster{
      * @param players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public playTurn(players:Player[],monsters:Monster[]){
+    public playTurn(players:Player[],_monsters:Monster[]){
         this.rituel()
         let intendedCharacter : Character = players[0]
-        let whichEnnemi :number = Math.floor(Math.random() * 10)
+        const whichEnnemi :number = Math.floor(Math.random() * 10)
         if (whichEnnemi>3 && whichEnnemi<6){
             intendedCharacter = this.playerWithLowestHP(players)
         } else {

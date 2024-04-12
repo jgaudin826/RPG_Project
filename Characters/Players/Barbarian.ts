@@ -73,7 +73,7 @@ export default class Barbarian extends Player{
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
                 }else{
-                    let action:object=this.specialAttack(monsters[choice])
+                    const action:object=this.specialAttack(monsters[choice])
                     if (action['play']===true){
                         console.log(`You've made dammage to the ${monsters[choice].className}.`)
                         if (monsters[choice].className==="augmentor"){
