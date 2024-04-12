@@ -1,5 +1,8 @@
 import Character from "./Characters/Character.ts"
 import Mage from "./Characters/Players/Mage.ts"
+import Menu from "./Menu.ts";
+import GameManagement from "./GameManager.ts";
+import Fight from "./Fight.ts";
 
 export default class Inventory {
     public nPotions : number = 2;
@@ -7,6 +10,7 @@ export default class Inventory {
     public nHalfStars : number = 0;
     public nEthers : number = 1;
     private static _Inventory : Inventory | null = null
+    private fight = new Fight
 
     private constructor() {}
 
@@ -18,71 +22,123 @@ export default class Inventory {
     }
 
     public inventoryManager() : boolean{
-        
+        let menu = new Menu("What do you want to use?",["Potion","Star Fragment", "Half Star","Ether", "Quit the Inventory"])
+        let choice = menu.input()
+        switch (choice){
+            case 0:
+                menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players))
+                choice=menu.input()
+                if(!this.usePotion(this.fight.players[choice])){
+                    this.inventoryManager()
+                }else{
+                    this.nPotions-=1
+                    return true
+                }
+            case 1:
+                 menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players.concat(this.fight.deadPlayers)))
+                 choice=menu.input()
+                 if(!this.useStarFragment(this.fight.players.concat(this.fight.deadPlayers)[choice])){
+                    this.inventoryManager()
+                }else{
+                    this.nStarFragments-=1
+                    return true
+                }
+            case 2:
+                menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players.concat(this.fight.deadPlayers)))
+                choice=menu.input()
+                if(!this.useHalfStar(this.fight.players.concat(this.fight.deadPlayers)[choice])){
+                    this.inventoryManager()
+                }else{
+                    this.nHalfStars-=1
+                    return true
+                }
+            case 3:
+                menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players))
+                choice=menu.input()
+                if(!this.useEther(this.fight.players[choice])){
+                    this.inventoryManager()
+                }else{
+                    this.nEthers-=1
+                    return true
+                }
+            case 4:
+                return false
+            default:
+                console.log("You can't make this choice, choose an other one")
+                this.inventoryManager()
+        }
         return true
     }
 
-    public usePotion(character : Character) {
+    public usePotion(character : Character):boolean {
         if (this.nPotions <= 0){
             console.log('Not enough potions !')
+            return false
+        }else if (character.currentHp==character.maxHp){
+            console.log(`the ${character.className} has to much hp, you can't use this item`)
+            return false
         } else {
-            this.heal(character, 50)
+            character.heal(50)
+            return true
         }
     }
 
-    public useStarFragment(character : Character) {
+    public useStarFragment(character : Character):boolean {
         if (this.nStarFragments <= 0){
             console.log('Not enough star fragments !')
+            return false
+        }else if (character.currentHp==character.maxHp){
+            console.log(`the ${character.className} has to much hp, you can't use this item`)
+            return false
         } else {
             if (character.currentHp <= 0){
-                this.resurrect(character, 20)
+                character.resurrect(20)
             } else {
-                this.heal(character, 50)
+                character.heal(50)
             }
+            return true
         }
     }
 
-    public useHalfStar(character : Character) {
+    public useHalfStar(character : Character):boolean {
         if (this.nHalfStars <= 0){
             console.log('Not enough half stars !')
+            return false
+        }else if (character.currentHp==character.maxHp){
+            console.log(`the ${character.className} has to much hp, you can't use this item`)
+            return false
         } else {
             if (character.currentHp <= 0){
-                this.resurrect(character, 100)
+                character.resurrect(100)
             } else {
-                this.heal(character, 100)
+                character.heal(100)
             }
+            return true
         }
     }
 
-    public useEther(character : Mage) {
+    public useEther(character : Character):boolean {
         if (this.nEthers <= 0){
             console.log('Not enough ethers !')
-        } else if (character.className == 'Mage'){
+            return false
+        } else if (character instanceof Mage && character.manaNow==character.manaMax){
+            console.log("the mage has to much mana, you can't use this item")
+            return false
+        } else if (character instanceof Mage){
             character.gainMana(30)
+            return true
         } else {
             console.log("You can't use ethers with this character")
-            
+            return false
         }
     }
 
-    private heal(character : Character, percent : number) {
-        if(character.currentHp <= 0){
-            console.log("You can't heal a dead character !")
-        } else {
-            if(character.currentHp > character.currentHp + character.maxHp*(percent/100)) {
-                character.currentHp = character.maxHp
-            } else {
-                character.currentHp += character.maxHp*(percent/100)
-            }
-        }
-    }
-
-    private resurrect(character : Character, percent : number) {
-        if(character.currentHp <= 0) {
-            character.currentHp += character.maxHp*(percent/100)
-        } else {
-            console.log("You can't resurrect a character who's already alive !")
-        }
+    public listNameCharacter(characters:Character[]):string[]{
+        let listName:string[]=[]
+        characters.forEach(Element => {
+            listName.push(Element.className)
+        });
+        return listName
     }
 }
 

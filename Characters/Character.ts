@@ -1,5 +1,5 @@
 /**
- * 
+ * The abstract class Character sets the common data for all characters (player and monster).
  */
 export default abstract class Character {
     public attack : number; 
@@ -9,7 +9,16 @@ export default abstract class Character {
     public currentHp : number;
     public className:string=""
     public name : string="Name"
+    public speedPosition:number=0;
 
+    /**
+     * Creates an instance of Character with the specified attributes.
+     * 
+     * @param attack The attack value of the character.
+     * @param defense The defense value of the character.
+     * @param speed The speed value of the character.
+     * @param maxHp The maximum HP of the character.
+     */
     public constructor(attack : number, defense : number,speed : number, maxHp : number){
         this.attack = attack;
         this.defense = defense;
@@ -19,23 +28,76 @@ export default abstract class Character {
         this.name = this.getName()
     }
 
-    protected damage(enemy:Character) {
-        enemy.currentHp=enemy.healthLosed(this.attack)
+    /**
+     * Inflicts damage to an enemy character by calling the enemy methode healthlosed.
+     * 
+     * @param enemy The character to inflict damage upon.
+     * @param multiplicate The multiplier to apply to the damage (default: 1).
+     */
+    protected damage(enemy:Character,multiplicate:number=1) {
+        enemy.healthLosed(this.attack,multiplicate)
     }
 
-    public healthLosed(receveDamage:number):number{
+    /**
+     * Calculates the amount of health lost by the character based on received damage.
+     * 
+     * @param receiveDamage The amount of damage received.
+     * @param multiplicate The multiplier to apply to the received damage.
+     */
+    public healthLosed(receveDamage:number,multiplicate:number){
         if (this.attack > this.defense+2){
-            return Math.max(this.currentHp-(receveDamage - this.defense),0)
+            this.currentHp= Math.max(this.currentHp-(Math.round((receveDamage - this.defense)*multiplicate)),0)
         } else {
-            return Math.max(this.currentHp-2,0)
+            this.currentHp= Math.max(this.currentHp-2,0)
         }
     }
 
-    public playTurn(player:Character[],monster:Character[]){
+    /**
+     * Defines the behavior of the character during its turn in combat.
+     * 
+     * @param player An array of player characters.
+     * @param monster An array of monster characters.
+     */
+    public abstract playTurn(player:Character[],monster:Character[])
+
+
+    /**
+     * Performs a special attack on the specified enemy character.
+     * 
+     * @param enemy The character to target with the special attack.
+     * @returns An object describing the result of the special attack.
+     */
+    public abstract specialAttack(enemy:Character):object
+
+    /**
+     * Restores a percentage of the character's health.
+     * 
+     * @param percent The percentage of health to restore.
+     * @param typeHeal The type of healing (default: "heal").
+     */
+    public heal(percent : number,typeHeal:string="heal") {
+        if(typeHeal==="heal" && this.currentHp<=0){
+            console.log("You can't heal a dead character !")
+        } else {
+            if(this.currentHp < this.currentHp + this.maxHp*(percent/100)) {
+                this.currentHp = this.maxHp
+            } else {
+                this.currentHp += this.maxHp*(percent/100)
+            }
+        }
     }
 
-    public specialAttack(enemy:Character):object{
-        return {bool:false,stealObject:null}
+    /**
+     * Resurrects the character if it is dead and call the method heal to restore hp to the character.
+     * 
+     * @param percent The percentage of health to restore upon resurrection.
+     */
+    public resurrect(percent : number) {
+        if(this.currentHp <= 0) {
+            this.heal(percent,"resurrect")
+        } else {
+            console.log("You can't resurrect a character who's already alive !")
+        }
     }
 
     getName():string{

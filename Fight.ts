@@ -1,13 +1,13 @@
 import Character from "./Characters/Character.ts"
 import Augmentor from "./Characters/Monsters/Augmentor.ts"
-import Dopplegenger from "./Characters/Monsters/Dopplegenger.ts"
+import Ogre from "./Characters/Monsters/Ogre.ts"
 import Golem from "./Characters/Monsters/Golem.ts"
 import Vampire from "./Characters/Monsters/Vampire.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 import GameManagement from "./GameManager.ts"
 import Mage from "./Characters/Players/Mage.ts"
-import Player from "./Characters/Player.ts"
 import Screen from "./Screen.ts"
+import Monster from "./Characters/Monster.ts"
 
 export default class Fight {
     players : Character[]
@@ -20,7 +20,7 @@ export default class Fight {
     constructor( boss? : Character[],) {
         this.players = GameManagement.game.players
         this.monsters = boss || this.createMonsters()
-        this.order = this.getOrder()
+        this.order = this.getOrder(this.players.concat(this.monsters))
         this.deadPlayers = GameManagement.game.deadPlayers
         this.deadMonsters = []
         this.allCharacters = this.players.concat(this.deadPlayers.concat(this.monsters.concat(this.deadMonsters)))
@@ -32,25 +32,37 @@ export default class Fight {
             console.log(`it's ${this.order[0].className}'s turn`)
             //this.printStats(this.order[0])  // Test 
             this.order[0].playTurn(this.players, this.monsters)
-            if (this.order[0].currentHp != 0) {
-                this.order.push(this.order[0])
+            if (this.order[0].currentHp == 0) {
+                this.checkDeadCharacters()
+                this.order.splice(0,1)
+            } else {
+                for (let i =0;i<this.order.length;i++){
+                    if (i==0){
+                        this.order[i].speedPosition=0
+                    } else {
+                        this.order[i].speedPosition += (this.order[i].speed)
+                    }
+                }
+                this.order=this.getOrder(this.order)
             }
-            this.checkDeadCharacters()
-            this.order.shift()
         }
         console.log("fight over")
         return this.players, this.deadPlayers
     }
 
-    getOrder() : Character[] {
-        const orderList : Character[] = this.players.concat(this.monsters)
-        orderList.sort((a, b) => b.speed - a.speed)
+    getOrder(orderList : Character[]) : Character[] {
+        orderList.sort((a, b) => b.speedPosition - a.speedPosition)
+        console.log("Order List : ")
+        for(let character of orderList) {
+            console.log(character.className, character.speedPosition)
+        }
+
         return orderList
     }
 
-    createMonsters() : Character[] {
-        const monsters : Character[] = []
-        const monsterList = [Augmentor, Dopplegenger, Golem, Vampire, Zombie]
+    createMonsters() : Monster[] {
+        let monsters : Monster[] = []
+        const monsterList = [Augmentor, Ogre, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
             monsters.push(new monsterList[Math.floor(Math.random() * 5)]())
         }
@@ -58,16 +70,18 @@ export default class Fight {
     }
 
     checkDeadCharacters() {
-        for (let i = 0; i < this.order.length; i++) {
-            if (this.order[i].currentHp == 0){
-                console.log(`${this.order[i].className} is dead, what a loser!`)
-                if (this.order[i] instanceof Player){
-                    this.deadPlayers.push(this.order[i])
+            for (let i=0;i<this.players.length;i++){
+                if (this.players[i].currentHp <= 0){
+                    this.deadPlayers.push(this.players[i])
+                    this.players.splice(i,1)
                 }
-                this.deadMonsters.push(this.order[i])
-                this.order.splice(i, 1)
             }
-        }
+            for (let i=0;i<this.monsters.length;i++){
+                if (this.monsters[i].currentHp <= 0){
+                    //this.deadMonsters.push(this.players[i])
+                    this.monsters.splice(i,1)
+                }
+            }
     }
 
     printStats(character : Character) {
@@ -81,11 +95,8 @@ export default class Fight {
             Current HP : ${character.currentHp}\n`)
         if (character instanceof Mage){
             console.log(`
-            Max Mana : ${character.manaNow}\n
+            Max Mana : ${character.manaMax}\n
             Current Mana : ${character.manaNow}\n`)
-        } else if (character instanceof Dopplegenger) {
-            console.log(`
-            Clone : ${character.clone}\n`)
         } else if (character instanceof Augmentor) {
             console.log(`
             Orbs : ${character.orbe.length}\n`)

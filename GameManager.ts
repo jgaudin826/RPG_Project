@@ -1,5 +1,5 @@
 import Character from "./Characters/Character.ts"
-import Menu from "./menu.ts"
+import Menu from "./Menu.ts"
 import Warrior from "./Characters/Players/Warrior.ts"
 import Mage from "./Characters/Players/Mage.ts"
 import Paladin from "./Characters/Players/Paladin.ts"
@@ -91,14 +91,12 @@ export default class GameManagement {
     }
 
     checkDeadCharacters() {
-        for (let i = 0; i < this.players.length; i++) {
+        for (let i=0;i<this.players.length;i++){
             if (this.players[i].currentHp <= 0){
-                console.log(`${this.players[i].className} is dead, what a loser!`)
                 this.deadPlayers.push(this.players[i])
-                this.players.splice(i, 1)
+                this.players.splice(i,1)
             }
         }
     }
-
 }
 
