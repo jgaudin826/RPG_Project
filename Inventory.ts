@@ -84,7 +84,7 @@ export default class Inventory {
             this.nEthers-=1
             return `You have successfuly added mana to ${character.name} (${character.className})`
         } else {
-            Screen.screen.displayScreen(`${character.name} (${character.className}) is not a mage, you can't use this ether  on a a ${character.className}.`)
+            Screen.screen.displayScreen(`${character.name} (${character.className}) is not a mage, you can't use this ether on a a ${character.className}.`)
             return ""
         }
     }

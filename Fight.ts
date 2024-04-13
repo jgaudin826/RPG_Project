@@ -31,7 +31,7 @@ export default class Fight {
         let message = "Game has Started"
         while (this.players.length > 0 || this.monsters.length > 0) {
             Screen.screen.displayScreen(message, this.allCharacters, this.order)
-            console.log(`it's ${this.order[0].className}'s turn`)
+            Screen.screen.displayScreen(`it's ${this.order[0].className}'s turn`, this.allCharacters, this.order)
             message = await this.order[0].playTurn(this.players, this.monsters)
             if (this.order[0].currentHp == 0) {
                 this.checkDeadCharacters()

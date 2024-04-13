@@ -50,7 +50,7 @@ export default class Priest extends Player{
             let choice = await Screen.screen.input("What do you want to do?",["Normal Attack","Special Attack","Inventory"])
             switch (choice){
                 case 0: {
-                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
+                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
                     if (choice == 3){
                         break
                     }else{
@@ -62,7 +62,7 @@ export default class Priest extends Player{
                     }
                 }
                 case 1: {
-                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
+                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
                     if (choice == 3){
                         break
                     }else{

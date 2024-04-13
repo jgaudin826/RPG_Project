@@ -6,9 +6,7 @@ import Paladin from "./Characters/Players/Paladin.ts"
 import Barbarian from "./Characters/Players/Barbarian.ts"
 import Priest from "./Characters/Players/Priest.ts"
 import Thief from "./Characters/Players/Thief.ts"
-import Inventory from "./Inventory.ts"
 import Fight from "./Fight.ts"
-import Player from "./Characters/Player.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 
 export default class GameManagement {
@@ -28,20 +26,20 @@ export default class GameManagement {
     /**
      * GameManager.game.start() : to start game
      */
-    start(){
+    async start(){
         console.log("Game Started")
         this.players=this.createTeam()
         console.log("go to fight 1")
-        this.players, this.deadPlayers = new Fight().startFight()
+        this.players, this.deadPlayers = await new Fight().startFight()
         console.log("go to chest room 1")
         this.chestRoom()
         console.log("go to fight 2")
-        this.players, this.deadPlayers = new Fight().startFight()
+        this.players, this.deadPlayers = await new Fight().startFight()
         console.log("go to chest room 2")
         this.chestRoom()
         console.log("go to boss fight")
         const boss = [new Zombie()]
-        this.players, this.deadPlayers = new Fight().startFight()
+        this.players, this.deadPlayers = await new Fight(boss).startFight()
 
     }
     
