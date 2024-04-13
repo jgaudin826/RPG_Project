@@ -36,8 +36,8 @@ export default class Priest extends Player{
      * @returns An object describing the result of the special healing.
      */
     public specialAttack(ally : Character):ObjectReturn{
-            ally.heal(25)
-        return {play:true,object:ally.className}
+            const healed=ally.heal(25)
+        return {play:healed,object:ally.className}
     }
 
     /**
@@ -72,7 +72,11 @@ export default class Priest extends Player{
                     this.playTurn(players,monsters)
                 }else{
                     const action:ObjectReturn=this.specialAttack(players[choice])
-                    console.log(`You've healed the ${action['object']}.`)
+                    if (action['play']===false){
+                        this.playTurn(players,monsters)
+                    }else {
+                        console.log(`You've healed the ${action['object']}.`)
+                    }
                 }
                 break
             case 2:
