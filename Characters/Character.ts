@@ -10,6 +10,7 @@ export default abstract class Character {
     public className:string=""
     public name : string="Name"
     public speedPosition:number=0;
+    
 
     /**
      * Creates an instance of Character with the specified attributes.
@@ -44,7 +45,7 @@ export default abstract class Character {
      * @param receiveDamage The amount of damage received.
      * @param multiplicate The multiplier to apply to the received damage.
      */
-    public healthLosed(receveDamage:number,multiplicate:number){
+    public healthLosed(receveDamage:number,multiplicate:number):void{
         if (this.attack > this.defense+2){
             this.currentHp= Math.max(this.currentHp-(Math.round((receveDamage - this.defense)*multiplicate)),0)
         } else {
@@ -58,7 +59,7 @@ export default abstract class Character {
      * @param player An array of player characters.
      * @param monster An array of monster characters.
      */
-    public abstract playTurn(player:Character[],monster:Character[])
+    public abstract playTurn(player:Character[],monster:Character[]):void
 
 
     /**
@@ -75,7 +76,7 @@ export default abstract class Character {
      * @param percent The percentage of health to restore.
      * @param typeHeal The type of healing (default: "heal").
      */
-    public heal(percent : number,typeHeal:string="heal") {
+    public heal(percent : number,typeHeal:string="heal"):void {
         if(typeHeal==="heal" && this.currentHp<=0){
             console.log("You can't heal a dead character !")
         } else {
@@ -92,7 +93,7 @@ export default abstract class Character {
      * 
      * @param percent The percentage of health to restore upon resurrection.
      */
-    public resurrect(percent : number) {
+    public resurrect(percent : number):void {
         if(this.currentHp <= 0) {
             this.heal(percent,"resurrect")
         } else {

@@ -33,9 +33,9 @@ export default class Thief extends Player{
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public specialAttack(enemy:Character):object{
+    public specialAttack(_enemy:Character):object{
         let stealObject : string | null
-        let stealNumber : number = Math.floor(Math.random() * 100);
+        const stealNumber : number = Math.floor(Math.random() * 100);
         if (stealNumber<5){
             stealObject = "halfStar"
         } else if(5<=stealNumber && stealNumber<20) {
@@ -81,7 +81,7 @@ export default class Thief extends Player{
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
                 }else{
-                    let action:object=this.specialAttack(monsters[choice])
+                    const action:object=this.specialAttack(monsters[choice])
                     if (action['stealObject']===null){
                         console.log(`You've stole nothing, you character missed!}`)
                     } else {

@@ -53,8 +53,6 @@ export default class Warrior extends Player{
             case 1:
                 if(!Inventory.inventory.inventoryManager()){
                     this.playTurn(players,monsters)
-                }else {
-
                 }
                 break
             default:

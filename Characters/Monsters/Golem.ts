@@ -42,8 +42,8 @@ export default class Golem extends Monster{
      * @param players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public playTurn(players:Player[],monsters:Monster[]){
-        let whichAttack :number = Math.floor(Math.random() * 3)
+    public playTurn(players:Player[],_monsters:Monster[]){
+        const whichAttack :number = Math.floor(Math.random() * 3)
         if (whichAttack===0){
             players.forEach(player=>{
                 this.specialAttack(player)
@@ -51,7 +51,7 @@ export default class Golem extends Monster{
             })
         }else{
             let intendedCharacter : Character = players[0]
-            let whichEnnemi :number = Math.floor(Math.random() * 10)
+            const whichEnnemi :number = Math.floor(Math.random() * 10)
             if (whichEnnemi>3 && whichEnnemi<6){
                 intendedCharacter = this.playerWithLowestHP(players)
             } else {

@@ -95,7 +95,7 @@ export default class Mage extends Player{
                     this.playTurn(players,monsters)
                     break;
                 }else{
-                    let action:object=this.specialAttack(monsters[choice])
+                    const action:object=this.specialAttack(monsters[choice])
                     if (action['play']===true){
                         console.log(`You've made dammage to the ${monsters[choice].className}.`)
                         if (monsters[choice].className==="augmentor"){

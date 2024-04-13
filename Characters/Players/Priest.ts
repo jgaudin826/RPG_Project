@@ -64,13 +64,13 @@ export default class Priest extends Player{
                 break
             case 1:
                 menu = new Menu("who do you want to heal?", Inventory.inventory.listNameCharacter(players))
-                let numberPlayer = menu.input()
-                if (numberPlayer===undefined){
+                choice = menu.input()
+                if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
                 }else{
-                    let action:object=this.specialAttack(players[numberPlayer])
-                    console.log(`You've healed the ${action[1]}.`)
+                    const action:object=this.specialAttack(players[choice])
+                    console.log(`You've healed the ${action['namePlayer']}.`)
                 }
                 break
             case 2:
