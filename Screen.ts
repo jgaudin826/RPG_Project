@@ -1,7 +1,7 @@
-import { readKeypress } from "https://deno.land/x/keypress@0.0.11/mod.ts";
+import { readKeypress } from "https://deno.land/x/keypress@0.0.11/mod.ts"
 import Character from "./Characters/Character.ts"
-import Inventory from "./Inventory.ts";
-import Fight from "./Fight.ts";
+import Inventory from "./Inventory.ts"
+import Fight from "./Fight.ts"
 
 export default class Screen {
     private static _screen : Screen | null = null
@@ -250,7 +250,7 @@ export default class Screen {
      * USE AWAIT TO CALL THIS FUNCTION
      * @returns true if player used an item and flase if he canceled
      */
-    async inventory(): Promise<boolean>{
+    async inventory(): Promise<string>{
         this.displayScreen()
         this.printMessage("You are in the Inventory, Select the item you wish to use or press 'q' to go cancel")
         const inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╣",`║      1: 🧪 Potion (${Inventory.inventory.nPotions})    ║ 2: ✨ Star fragment (${Inventory.inventory.nStarFragments})  ║    3: 🌟 Half star (${Inventory.inventory.nHalfStars})   ║      4: 🔮 Ether (${Inventory.inventory.nEthers})     ║           q: Quit        ║`,"╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╝"] 
@@ -258,32 +258,43 @@ export default class Screen {
             console.log(inventory[i])
         }
 
-        let action = false
-        while (!action) {
+        while (true) {
             for await (const keypress of readKeypress()) {
                 switch (keypress.key) {
                     case "1": {
                         const input = await this.input("Which character do you wish to use the potion on",this.fight.players.map((v) => `${v.name} (${v.className})`))
-                        action = Inventory.inventory.usePotion(this.fight.players[input])
+                        const action = Inventory.inventory.usePotion(this.fight.players[input])
+                        if (action.length != 0) {
+                            return action
+                        }
                         break
                     }
                     case "2": {
                         const player : Character = this.fight.players.concat(this.fight.deadPlayers)[0]
-                        action = Inventory.inventory.useStarFragment(player)
+                        const action = Inventory.inventory.useStarFragment(player)
+                        if (action.length != 0) {
+                            return action
+                        }
                         break
                     }
                     case "3": {
                         const player : Character = this.fight.players.concat(this.fight.deadPlayers)[0]
-                        action = Inventory.inventory.useHalfStar(player)
+                        const action = Inventory.inventory.useHalfStar(player)
+                        if (action.length != 0) {
+                            return action
+                        }
                         break
                     }
                     case "4": {
                         const player : Character = this.fight.players[0]
-                        action  = Inventory.inventory.useEther(player)
+                        const action  = Inventory.inventory.useEther(player)
+                        if (action.length != 0) {
+                            return action
+                        }
                         break
                     }
                     case "q": {
-                        return false
+                        return ""
                     }
                 }
             
@@ -292,7 +303,6 @@ export default class Screen {
                 }
             }
         }
-        return true
     }
 
     /**

@@ -53,11 +53,6 @@ export default class Fight {
 
     getOrder(orderList : Character[]) : Character[] {
         orderList.sort((a, b) => b.speedPosition - a.speedPosition)
-        console.log("Order List : ")
-        for(const character of orderList) {
-            console.log(character.className, character.speedPosition)
-        }
-
         return orderList
     }
 

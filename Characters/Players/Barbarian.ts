@@ -53,7 +53,7 @@ export default class Barbarian extends Player{
         while (true) {
             let choice = await Screen.screen.input("What do you want to do?",["Normal Attack","Special Attack","Inventory"])
             switch (choice){
-                case 0:
+                case 0: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
                     if (choice == 3){
                         break
@@ -64,7 +64,8 @@ export default class Barbarian extends Player{
                         }
                         return `You've made dammage to the ${monsters[choice].className}.`
                     }
-                case 1:
+                }
+                case 1: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
                     if (choice == 3){
                         break
@@ -80,11 +81,15 @@ export default class Barbarian extends Player{
                             break
                         }
                     }
-                case 2:
-                    if(!Inventory.inventory.inventoryManager()){
-                        this.playTurn(players,monsters)
+                }
+                case 2: {
+                    const action = await Screen.screen.inventory()
+                    if(action.length != 0) {
+                        return `You have used an item`
                     }
                     break
+                }
+                
             }
         }
     }
