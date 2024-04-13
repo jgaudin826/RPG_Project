@@ -53,7 +53,7 @@ export default class Mage extends Player{
      */
     public specialAttack(enemy : Character) : ObjectReturn{
         if (this.manaNow - (this.manaMax*(35/100))>= 0){
-            this.manaNow -= (this.manaMax*(35/100))
+            this.manaNow = Math.max(this.manaNow -this.manaMax*(35/100),0)
             enemy.currentHp -= this.attack
             return {play:true,object:enemy.className}
         }
@@ -67,7 +67,6 @@ export default class Mage extends Player{
      * @param monsters An array of monster characters.
      */
     public async playTurn(players:Player[],monsters:Monster[]) : Promise<string> {
-        this.gainMana(10)
         while (true) {
             let choice = await Screen.screen.input("What do you want to do?",["Normal Attack","Special Attack","Inventory"])
             switch (choice){
@@ -75,10 +74,10 @@ export default class Mage extends Player{
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
                     if (choice===undefined){
                         console.log("You can't make this choice, choose an other one")
-                        this.manaNow-=((10/100)*this.manaMax)
                         this.playTurn(players,monsters)
                         break;
                     }else {
+                        this.gainMana(10)
                         this.damage(monsters[choice])
                         if (monsters[choice] instanceof Augmentor){
                             monsters[choice].damageReceve()
@@ -89,7 +88,6 @@ export default class Mage extends Player{
                 case 1: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
                     if (choice == 3){
-                        this.manaNow-=((10/100)*this.manaMax)
                         break
                     }else{
                         const action:ObjectReturn=this.specialAttack(monsters[choice])
@@ -100,7 +98,6 @@ export default class Mage extends Player{
                             return `You've made dammage to the ${monsters[choice].className}.`
                         } else {
                             Screen.screen.displayScreen("You can't make this choice, your character has not enougth mana to do his special attack")
-                            this.manaNow-=((10/100)*this.manaMax)
                             break
                         }
                     }
@@ -110,7 +107,6 @@ export default class Mage extends Player{
                     if(action.length != 0) {
                         return `You have used an item`
                     }
-                    this.manaNow-=((10/100)*this.manaMax)
                     break
                 }
             } 

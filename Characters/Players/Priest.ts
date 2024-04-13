@@ -35,8 +35,8 @@ export default class Priest extends Player{
      * @returns An object describing the result of the special healing.
      */
     public specialAttack(ally : Character):ObjectReturn{
-            ally.heal(25)
-        return {play:true,object:ally.className}
+            const healed=ally.heal(25)
+        return {play:healed,object:ally.className}
     }
 
     /**
@@ -67,10 +67,14 @@ export default class Priest extends Player{
                         break
                     }else{
                         const action:ObjectReturn=this.specialAttack(players[choice])
-                        return `You've healed the ${action['object']}.` //Needs to handle error
+                        if (action['play']===false){
+                            break
+                        }else {
+                            return `You've healed the ${action['object']}.`
+                        }
                     }
                 }
-                case 2:{
+                case 2: {
                     const action = await Screen.screen.inventory()
                     if(action.length != 0) {
                         return `You have used an item`
