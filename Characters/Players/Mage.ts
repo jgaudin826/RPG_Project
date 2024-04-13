@@ -54,7 +54,7 @@ export default class Mage extends Player{
      */
     public specialAttack(enemy : Character) : ObjectReturn{
         if (this.manaNow - (this.manaMax*(35/100))>= 0){
-            this.manaNow -= (this.manaMax*(35/100))
+            this.manaNow = Math.max(this.manaNow -this.manaMax*(35/100),0)
             enemy.currentHp -= this.attack
             return {play:true,object:enemy.className}
         }
@@ -68,7 +68,6 @@ export default class Mage extends Player{
      * @param monsters An array of monster characters.
      */
     public playTurn(players:Player[],monsters:Monster[]){
-        this.gainMana(10)
         let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
         let choice=menu.input()
         switch (choice){
@@ -77,10 +76,10 @@ export default class Mage extends Player{
                 choice = menu.input()
                 if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")
-                    this.manaNow-=((10/100)*this.manaMax)
                     this.playTurn(players,monsters)
                     break;
                 }else{
+                    this.gainMana(10)
                     this.damage(monsters[choice])
                     console.log(`You've made dammage to the ${monsters[choice].className}.`)
                     if (monsters[choice] instanceof Augmentor){
@@ -93,10 +92,10 @@ export default class Mage extends Player{
                 choice = menu.input()
                 if (choice===undefined){
                     console.log("You can't make this choice, choose an other one")
-                    this.manaNow-=((10/100)*this.manaMax)
                     this.playTurn(players,monsters)
                     break;
                 }else{
+                    this.gainMana(10)
                     const action:ObjectReturn=this.specialAttack(monsters[choice])
                     if (action['play']===true){
                         console.log(`You've made dammage to the ${monsters[choice].className}.`)
@@ -112,13 +111,11 @@ export default class Mage extends Player{
                 break
             case 2:
                 if(!Inventory.inventory.inventoryManager()){
-                    this.manaNow-=((10/100)*this.manaMax)
                     this.playTurn(players,monsters)
                 }
                 break
             default:
                 console.log("You can't make this choice, choose an other one")
-                this.manaNow-=((10/100)*this.manaMax)
                 this.playTurn(players,monsters)
                 
         }
