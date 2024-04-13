@@ -1,9 +1,5 @@
 import Character from "../Character.ts";
-<<<<<<< HEAD
-import Menu from "../../menu.ts";
-=======
 import Menu from "../../Menu.ts";
->>>>>>> main
 import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";

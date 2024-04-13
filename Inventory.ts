@@ -2,7 +2,6 @@ import Character from "./Characters/Character.ts"
 import Mage from "./Characters/Players/Mage.ts"
 import Menu from "./Menu.ts";
 import GameManagement from "./GameManager.ts";
-import Fight from "./Fight.ts";
 
 export default class Inventory {
     public nPotions : number = 2;
@@ -10,7 +9,6 @@ export default class Inventory {
     public nHalfStars : number = 0;
     public nEthers : number = 1;
     private static _Inventory : Inventory | null = null
-    private fight = new Fight
 
     private constructor() {}
 
@@ -34,6 +32,7 @@ export default class Inventory {
                     this.nPotions-=1
                     return true
                 }
+                break
             case 1:
                  menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players.concat(this.fight.deadPlayers)))
                  choice=menu.input()
@@ -43,6 +42,7 @@ export default class Inventory {
                     this.nStarFragments-=1
                     return true
                 }
+                break
             case 2:
                 menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players.concat(this.fight.deadPlayers)))
                 choice=menu.input()
@@ -52,6 +52,7 @@ export default class Inventory {
                     this.nHalfStars-=1
                     return true
                 }
+                break
             case 3:
                 menu = new Menu("On who do you want to use it?",this.listNameCharacter(this.fight.players))
                 choice=menu.input()
@@ -61,6 +62,7 @@ export default class Inventory {
                     this.nEthers-=1
                     return true
                 }
+                break
             case 4:
                 return false
             default:

@@ -1,5 +1,6 @@
 import { readKeypress } from "https://deno.land/x/keypress@0.0.11/mod.ts";
 import Character from "./Characters/Character.ts"
+import Inventory from "./Inventory.ts";
 
 export default class Screen {
     private static _screen : Screen | null = null
@@ -86,7 +87,7 @@ export default class Screen {
                 }
                 tempLine += "\x1b[0m"
             }
-            let healthText = ` ${allCharacters[i+3].currentHp}/${allCharacters[i+3].maxHp}`
+            const healthText = ` ${allCharacters[i+3].currentHp}/${allCharacters[i+3].maxHp}`
             tempLine += healthText + this.getSpaces(15-healthText.length) 
             line += tempLine
         }
@@ -128,7 +129,7 @@ export default class Screen {
         line = `║${this.getSpaces(10)}`
         for (let i=0;i<3;i++){
             let tempLine = ""
-            let health = Math.round((allCharacters[i].currentHp/allCharacters[i].maxHp)*20)
+            const health = Math.round((allCharacters[i].currentHp/allCharacters[i].maxHp)*20)
             if (health == 0) {
                 tempLine += "\x1b[31m████████████████████\x1b[0m"
             } else if (health == 100){
@@ -144,7 +145,7 @@ export default class Screen {
                 }
                 tempLine += "\x1b[0m"
             }
-            let healthText = ` ${allCharacters[i].currentHp}/${allCharacters[i].maxHp}`
+            const healthText = ` ${allCharacters[i].currentHp}/${allCharacters[i].maxHp}`
             tempLine += healthText + this.getSpaces(15-healthText.length) 
             line += tempLine
         }
@@ -181,7 +182,7 @@ export default class Screen {
         //Line 2
         line = `║${this.getSpaces(95)}`
         tempLine = ""
-        let health = Math.round((allCharacters[3].currentHp/allCharacters[3].maxHp)*20)
+        const health = Math.round((allCharacters[3].currentHp/allCharacters[3].maxHp)*20)
         if (health == 0) {
             tempLine += "\x1b[31m████████████████████\x1b[0m"
         } else if (health == 100){
@@ -197,7 +198,7 @@ export default class Screen {
             }
             tempLine += "\x1b[0m"
         }
-        let healthText = ` ${allCharacters[3].currentHp}/${allCharacters[3].maxHp}`
+        const healthText = ` ${allCharacters[3].currentHp}/${allCharacters[3].maxHp}`
         tempLine += healthText + this.getSpaces(20-healthText.length) 
         line += tempLine
         fightScreen += line + "║\n"
@@ -239,16 +240,34 @@ export default class Screen {
 
     }
     async inventoryInput() {
-        let inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╣","║        1. 🧪 Potion      ║    2. ✨ Star fragment   ║      3. 🌟 Half star     ║         4. 🔮 Ether      ║            Q. Quit       ║","╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╝"] 
+        const inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╣","║        1. 🧪 Potion      ║    2. ✨ Star fragment   ║      3. 🌟 Half star     ║         4. 🔮 Ether      ║            q. Quit       ║","╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╝"] 
         for (let i=0; i<3; i++) {
             console.log(inventory[i])
         }
-        for await (const keypress of readKeypress()) {
-            console.log(keypress)
 
+        let action = false
+        while (!action)
+        for await (const keypress of readKeypress()) {
             switch (keypress.key) {
                 case "1": {
-                    return 
+                    action = Inventory.inventory.usePotion()
+                    break
+                }
+                case "2": {
+                    action = Inventory.inventory.useStarFragment()
+                    break
+                }
+                case "3": {
+                    action = Inventory.inventory.useHalfStar()
+                    break
+                }
+                case "4": {
+                    action  = Inventory.inventory.useEther()
+                    break
+                }
+                case "q": {
+                    action = true
+                    break
                 }
             }
         
@@ -256,5 +275,17 @@ export default class Screen {
                 Deno.exit(0);
             }
         }
+    }
+    async input(options : Array<string>) :Promise<number> {
+        
+        for await (const keypress of readKeypress()) {
+            if (Number.isNaN(Number(keypress.key))) {
+               return this.input(options) 
+            } else if (Number(keypress.key) > options.length){
+                return this.input(options)
+            }
+            return Number(keypress.key)
+        }
+        return 0
     }
 }   
