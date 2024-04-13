@@ -1,3 +1,4 @@
+import { ObjectReturn } from "./objectReturn.ts";
 /**
  * The abstract class Character sets the common data for all characters (player and monster).
  */
@@ -27,8 +28,9 @@ export default abstract class Character {
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         this.name = this.getName()
+        
     }
-
+    
     /**
      * Inflicts damage to an enemy character by calling the enemy methode healthlosed.
      * 
@@ -69,7 +71,7 @@ export default abstract class Character {
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public abstract specialAttack(enemy:Character):object
+    public abstract specialAttack(enemy:Character):ObjectReturn
 
     /**
      * Restores a percentage of the character's health.
@@ -105,4 +107,6 @@ export default abstract class Character {
     getName():string{
         return "Temp Name"
     }
+
+    public damageReceve(){}
 }

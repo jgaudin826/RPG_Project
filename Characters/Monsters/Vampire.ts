@@ -1,6 +1,7 @@
 import Character from "../Character.ts";
 import Monster from "../Monster.ts";
 import Player from "../Player.ts";
+import { ObjectReturn } from "../objectReturn.ts";
 
 
 /**
@@ -32,10 +33,10 @@ export default class vampire extends Monster{
      * @param enemy The character to attack.
      * @returns An object indicating the success of the special attack (always true) and no stolen object.
      */
-    public specialAttack(enemy:Character):object{
+    public specialAttack(enemy:Character):ObjectReturn{
         this.damage(enemy)
         this.heal((Math.floor(Math.random() * 6)+5))
-        return {play:true,stealObject:null}
+        return {play:true,object:null}
     }
 
     /**

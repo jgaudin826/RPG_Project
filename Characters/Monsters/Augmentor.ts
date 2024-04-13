@@ -5,7 +5,7 @@ import Player from "../Player.ts";
 /**
  * Class representing an augmentor monster character, inheriting from Monster.
  */
-export default class augmentor extends Monster{
+export default class Augmentor extends Monster{
     public className:string="Augmentor";
     public orbe : string[] =[]
     public boostCount:number=0

@@ -1,8 +1,9 @@
 import Character from "../Character.ts";
-import Menu from "../../Menu.ts";
-import Monster from "../Monster.ts";
-import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
+import { ObjectReturn } from "../objectReturn.ts";
+import Augmentor from "../Monsters/Augmentor.ts";
+import Monster from "../Monster.ts"
+import Screen from "../../Screen.ts";
 
 /**
  * Class representing a thief player character, inheriting from Player.
@@ -33,7 +34,7 @@ export default class Thief extends Player{
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public specialAttack(_enemy:Character):object{
+    public specialAttack(_enemy:Character):ObjectReturn{
         let stealObject : string | null
         const stealNumber : number = Math.floor(Math.random() * 100);
         if (stealNumber<5){
@@ -47,57 +48,52 @@ export default class Thief extends Player{
         } else {
             stealObject = null
         }
-        return {play:true,stealObject:stealObject}
+        return {play:true,object:stealObject}
     }
 
     /**
      * Defines the behavior of the thief character during its turn in combat.
      * 
-     * @param players An array of player characters.
+     * @param _players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public playTurn(players:Player[],monsters:Monster[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
-        let choice=menu.input()
-        switch (choice){
-            case 0:
-                menu = new Menu("who do you want to attack?", Inventory.inventory.listNameCharacter(monsters))
-                choice = menu.input()
-                if (choice===undefined){
-                    console.log("You can't make this choice, choose an other one")
-                    this.playTurn(players,monsters)
-                }else{
-                    this.damage(monsters[choice])
-                    console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                    if (monsters[choice].className==="augmentor"){
-                        monsters[choice].damageReceve()
+    public async playTurn(_players:Player[],monsters:Monster[]) : Promise<string> {
+        while (true) {
+            let choice = await Screen.screen.input("What do you want to do?",["Normal Attack","Special Attack","Inventory"])
+            switch (choice){
+                case 0: {
+                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
+                    if (choice == 3){
+                        break
+                    }else{
+                        this.damage(monsters[choice])
+                        if (monsters[choice] instanceof Augmentor){
+                            monsters[choice].damageReceve()
+                        }
+                        return `You've made dammage to the ${monsters[choice].className}.`
                     }
                 }
-                break
-            case 1:
-                menu = new Menu("who do you want to attack?", Inventory.inventory.listNameCharacter(monsters))
-                choice = menu.input()
-                if (choice===undefined){
-                    console.log("You can't make this choice, choose an other one")
-                    this.playTurn(players,monsters)
-                }else{
-                    const action:object=this.specialAttack(monsters[choice])
-                    if (action['stealObject']===null){
-                        console.log(`You've stole nothing, you character missed!}`)
-                    } else {
-                        console.log(`You've stole the object : ${action[1]}.`)
+                case 1: {
+                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
+                    if (choice == 3){
+                        break
+                    }else{
+                        const action:ObjectReturn=this.specialAttack(monsters[choice])
+                        if (action['object'] === null) {
+                            return `You've stole nothing, your character missed!`
+                        } else {
+                            return `You've stole the object: ${action['object']}.`
+                        }
                     }
                 }
-                break
-            case 2:
-                if(!Inventory.inventory.inventoryManager()){
-                    this.playTurn(players,monsters)
+                case 2: {
+                    const action = await Screen.screen.inventory()
+                    if(action.length != 0) {
+                        return `You have used an item`
+                    }
+                    break
                 }
-                break
-            default:
-                console.log("You can't make this choice, choose an other one")
-                this.playTurn(players,monsters)
-                
+            }  
         }
     }
 }

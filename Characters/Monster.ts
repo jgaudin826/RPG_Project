@@ -1,4 +1,5 @@
 import Character from "./Character.ts";
+import { ObjectReturn } from "./objectReturn.ts";
 
 /**
  * Abstract class representing a monster character, inheriting from Character.
@@ -16,7 +17,7 @@ export default abstract class Monster extends Character{
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public specialAttack(enemy : Character):object {return {play:false,object:enemy}}
+    public specialAttack(enemy : Character):ObjectReturn {return {play:false,object:enemy.name}}
 
     /**
      * Finds and returns the player character with the lowest current HP.

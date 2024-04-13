@@ -1,9 +1,9 @@
 import Character from "../Character.ts";
-import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
-import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
 import Screen from "../../Screen.ts";
+import Augmentor from "../Monsters/Augmentor.ts";
+import { ObjectReturn } from "../objectReturn.ts";
 
 /**
  * Class representing a barbarian player character, inheriting from Player.
@@ -34,22 +34,22 @@ export default class Barbarian extends Player{
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public specialAttack(enemy:Character):object{
+    public specialAttack(enemy:Character):ObjectReturn{
         if (this.currentHp- (this.maxHp*(20/100)) > 0){
             this.currentHp -= (this.maxHp*(20/100))
             this.damage(enemy,1.3)
-            return {play : true, nameMonster : enemy.className}
+            return {play:true,object:enemy.className}
         }
-        return {play : false, stealObject : null}
+        return {play:false,object:null}
     }
 
     /**
      * Defines the behavior of the barbarian character during its turn in combat.
      * 
-     * @param players An array of player characters.
+     * @param _players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public async playTurn(players:Player[],monsters:Monster[]) : Promise<string>{
+    public async playTurn(_players:Player[],monsters:Monster[]) : Promise<string>{
         while (true) {
             let choice = await Screen.screen.input("What do you want to do?",["Normal Attack","Special Attack","Inventory"])
             switch (choice){
@@ -59,7 +59,7 @@ export default class Barbarian extends Player{
                         break
                     }else{
                         this.damage(monsters[choice])
-                        if (monsters[choice].className==="augmentor"){
+                        if (monsters[choice] instanceof Augmentor){
                             monsters[choice].damageReceve()
                         }
                         return `You've made dammage to the ${monsters[choice].className}.`
@@ -70,8 +70,8 @@ export default class Barbarian extends Player{
                     if (choice == 3){
                         break
                     }else{
-                        const action : object = this.specialAttack(monsters[choice])
-                        if (action['play']  === true) {
+                        const action:ObjectReturn=this.specialAttack(monsters[choice])
+                        if (action['play']===true){
                             if (monsters[choice].className==="Augmentor"){
                                 monsters[choice].damageReceve()
                             }

@@ -1,6 +1,7 @@
 import Character from "../Character.ts";
 import Monster from "../Monster.ts";
 import Player from "../Player.ts";
+import { ObjectReturn } from "../objectReturn.ts";
 
 /**
  * Class representing an ogre monster character, inheriting from Monster.
@@ -31,9 +32,9 @@ export default class Ogre extends Monster{
      * @param enemy The character to attack.
      * @returns An object indicating the failure of the special attack (always false) and no stolen object.
      */
-    public specialAttack(enemy:Character):object{
+    public specialAttack(enemy:Character):ObjectReturn{
         this.damage(enemy,1.5)   
-        return {play:false,stealObject:null}
+        return {play:false,object:null}
     }
 
     /**
