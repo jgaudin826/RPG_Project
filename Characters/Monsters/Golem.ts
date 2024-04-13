@@ -42,13 +42,13 @@ export default class Golem extends Monster{
      * @param players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public playTurn(players:Player[],_monsters:Monster[]){
+    public playTurn(players:Player[],_monsters:Monster[]) : string{
         const whichAttack :number = Math.floor(Math.random() * 3)
         if (whichAttack===0){
             players.forEach(player=>{
                 this.specialAttack(player)
-                console.log(`${this.className} has made dammage to the ${player.className}:`+(Math.round((this.attack - player.defense)*0.6))+".")
             })
+            return `${this.className} has made dammage to all of you players`
         }else{
             let intendedCharacter : Character = players[0]
             const whichEnnemi :number = Math.floor(Math.random() * 10)
@@ -58,7 +58,7 @@ export default class Golem extends Monster{
                 intendedCharacter = players[Math.floor(Math.random() * players.length)]
             }
             this.damage(intendedCharacter)
-            console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
+            return `${this.className} has made dammage to the ${intendedCharacter.className}: ${this.attack - intendedCharacter.defense}.`
         }
     }
 }

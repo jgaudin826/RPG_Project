@@ -31,7 +31,7 @@ export default class Zombie extends Monster{
      * @param players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public playTurn(players:Player[],_monsters:Monster[]){
+    public playTurn(players:Player[],_monsters:Monster[]) : string{
         let intendedCharacter : Character = players[0]
         const whichEnnemi :number = Math.floor(Math.random() * 10)
         if (whichEnnemi>3 && whichEnnemi<6){
@@ -40,6 +40,6 @@ export default class Zombie extends Monster{
             intendedCharacter = players[Math.floor(Math.random() * players.length)]
         }
         this.damage(intendedCharacter)
-        console.log(`${this.className} has made dammage to the ${intendedCharacter.className}:`+(this.attack - intendedCharacter.defense)+".")
+        return `${this.className} has made dammage to the ${intendedCharacter.className}: ${this.attack - intendedCharacter.defense}.`
     }
 }

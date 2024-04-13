@@ -26,12 +26,13 @@ export default class Fight {
         this.allCharacters = this.players.concat(this.deadPlayers.concat(this.monsters.concat(this.deadMonsters)))
     }
 
-    startFight() : Character[] {
+    async startFight() : Promise<Character[]> {
+        Screen.screen.fight = this
+        let message = "Game has Started"
         while (this.players.length > 0 || this.monsters.length > 0) {
-            Screen.screen.displayFight(this.allCharacters, this.order)
+            Screen.screen.displayScreen(message, this.allCharacters, this.order)
             console.log(`it's ${this.order[0].className}'s turn`)
-            //this.printStats(this.order[0])  // Test 
-            this.order[0].playTurn(this.players, this.monsters)
+            message = await this.order[0].playTurn(this.players, this.monsters)
             if (this.order[0].currentHp == 0) {
                 this.checkDeadCharacters()
                 this.order.splice(0,1)
@@ -53,7 +54,7 @@ export default class Fight {
     getOrder(orderList : Character[]) : Character[] {
         orderList.sort((a, b) => b.speedPosition - a.speedPosition)
         console.log("Order List : ")
-        for(let character of orderList) {
+        for(const character of orderList) {
             console.log(character.className, character.speedPosition)
         }
 
@@ -61,7 +62,7 @@ export default class Fight {
     }
 
     createMonsters() : Monster[] {
-        let monsters : Monster[] = []
+        const monsters : Monster[] = []
         const monsterList = [Augmentor, Ogre, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
             monsters.push(new monsterList[Math.floor(Math.random() * 5)]())

@@ -3,6 +3,7 @@ import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
+import Screen from "../../Screen.ts";
 
 /**
  * Class representing a barbarian player character, inheriting from Player.
@@ -37,9 +38,9 @@ export default class Barbarian extends Player{
         if (this.currentHp- (this.maxHp*(20/100)) > 0){
             this.currentHp -= (this.maxHp*(20/100))
             this.damage(enemy,1.3)
-            return {play:true,nameMonster:enemy.className}
+            return {play : true, nameMonster : enemy.className}
         }
-        return {play:false,stealObject:null}
+        return {play : false, stealObject : null}
     }
 
     /**
@@ -48,52 +49,43 @@ export default class Barbarian extends Player{
      * @param players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public playTurn(players:Player[],monsters:Monster[]){
-        let menu = new Menu("What do you want to do?", ["Normal Attack","Special Attack","inventary"])
-        let choice=menu.input()
-        switch (choice){
-            case 0:
-                menu = new Menu("who do you want to attack?", Inventory.inventory.listNameCharacter(monsters))
-                choice = menu.input()
-                if (choice===undefined){
-                    console.log("You can't make this choice, choose an other one")
-                    this.playTurn(players,monsters)
-                }else{
-                    this.damage(monsters[choice])
-                    console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                    if (monsters[choice].className==="augmentor"){
-                        monsters[choice].damageReceve()
-                    }
-                }
-                break
-            case 1:
-                menu = new Menu("who do you want to attack?", Inventory.inventory.listNameCharacter(monsters))
-                choice = menu.input()
-                if (choice===undefined){
-                    console.log("You can't make this choice, choose an other one")
-                    this.playTurn(players,monsters)
-                }else{
-                    const action:object=this.specialAttack(monsters[choice])
-                    if (action['play']===true){
-                        console.log(`You've made dammage to the ${monsters[choice].className}.`)
+    public async playTurn(players:Player[],monsters:Monster[]) : Promise<string>{
+        while (true) {
+            let choice = await Screen.screen.input("What do you want to do?",["Normal Attack","Special Attack","Inventory"])
+            switch (choice){
+                case 0:
+                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
+                    if (choice == 3){
+                        break
+                    }else{
+                        this.damage(monsters[choice])
                         if (monsters[choice].className==="augmentor"){
                             monsters[choice].damageReceve()
                         }
-                    } else {
-                        console.log("You can't make this choice, your character has not enougth hp to do his special attack")
+                        return `You've made dammage to the ${monsters[choice].className}.`
+                    }
+                case 1:
+                    choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className})`).concat(["Go back"]))
+                    if (choice == 3){
+                        break
+                    }else{
+                        const action : object = this.specialAttack(monsters[choice])
+                        if (action['play']  === true) {
+                            if (monsters[choice].className==="Augmentor"){
+                                monsters[choice].damageReceve()
+                            }
+                            return `You've made dammage to the ${monsters[choice].className}.`
+                        } else {
+                            Screen.screen.displayScreen("You can't make this choice, your character has not enougth hp to do his special attack")
+                            break
+                        }
+                    }
+                case 2:
+                    if(!Inventory.inventory.inventoryManager()){
                         this.playTurn(players,monsters)
                     }
-                }
-                break
-            case 2:
-                if(!Inventory.inventory.inventoryManager()){
-                    this.playTurn(players,monsters)
-                }
-                break
-            default:
-                console.log("You can't make this choice, choose an other one")
-                this.playTurn(players,monsters)
-                
+                    break
+            }
         }
     }
 }

@@ -58,8 +58,9 @@ export default abstract class Character {
      * 
      * @param player An array of player characters.
      * @param monster An array of monster characters.
+     * @returns the message/ description of the actions played (who attacked who)
      */
-    public abstract playTurn(player:Character[],monster:Character[]):void
+    public abstract playTurn(player:Character[],monster:Character[]):Promise<string> | string
 
 
     /**

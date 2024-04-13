@@ -1,14 +1,16 @@
 import { readKeypress } from "https://deno.land/x/keypress@0.0.11/mod.ts";
 import Character from "./Characters/Character.ts"
 import Inventory from "./Inventory.ts";
+import Fight from "./Fight.ts";
 
 export default class Screen {
     private static _screen : Screen | null = null
     playerSprite : Array<Array<string>> = [["       /\\__/\\       ","      ( •ㅅ• )      ","      /      \\      "],["       /\\__/\\       ","      ( XㅅX )      ","      /      \\      "]]
     monsterSprite : Array<Array<string>>  = [["       /\\__/\\       ","      (=•==•=)``    ","       \\_ㅅ_/       "],["       /\\__/\\       ","      (=X==X=)``    ","       \\_ㅅ_/       "]]
     bossSprite : Array<string> = ["      (\\__/)        ","      (•ㅅ•)        ","   ＿ノヽ ノ＼＿    "," /  `/ ⌒ Ｙ⌒ Ｙ`ヽ  ","(   (三ヽ人   /   | ", "|  ﾉ⌒＼ ￣￣ヽ  ノ  ","ヽ＿＿＿＞､＿_／    ","   ｜( 王 ﾉ〈 (\\__/)","   /ﾐ`ー ― 彡\\(•ㅅ•)","  /  ╰    ╯   /    \\"]
-    spaceBar = "║                                                                                                                                       ║"
+    spaceBar = "║                                                                                                                                       ║\n"
     fightScene : string = ""
+    fight : Fight = new Fight()
 
     private constructor() {}
 
@@ -25,29 +27,36 @@ export default class Screen {
     //Inventory
     //Options
 
-    DisplayScreen(message: string, allCharacters : Character[], order : Character[], input? : []) {
+    displayScreen(message? : string, allCharacters? : Character[], order? : Character[]) {
         console.clear
-        console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗")
-        console.log(this.spaceBar)
-        if (allCharacters.length == 4) {
-            this.displayBoss(allCharacters,order)
-        } else {
-            this.displayFight(allCharacters,order)
+        if (allCharacters !== undefined && order !== undefined) {
+            this.fightScene = ""
+            this.fightScene += "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
+            this.fightScene += this.spaceBar
+            if (allCharacters.length == 4) {
+                this.displayBoss(allCharacters,order)
+            } else {
+                this.displayFight(allCharacters,order)
+            }
         }
-
+        console.log(this.fightScene)
+        if (message !== undefined) {
+            this.printMessage(message)
+            console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+        }
     }
     displayFight(allCharacters : Character[],order : Character[]) {
-        console.log(this.getMonsters(allCharacters,order))
+        this.fightScene += this.getMonsters(allCharacters,order)
 
         for (let i=0; i<8; i++) {
-            console.log(this.spaceBar)
+            this.fightScene += this.spaceBar
         }
 
-        console.log(this.getPlayers(allCharacters,order))
+        this.fightScene += this.getPlayers(allCharacters,order)
     }
     displayBoss(allCharacters : Character[],order : Character[]) {
-        console.log(this.getBoss(allCharacters,order))
-        console.log(this.getPlayers(allCharacters,order))
+        this.fightScene += this.getBoss(allCharacters,order)
+        this.fightScene += this.getPlayers(allCharacters,order)
     }
 
     getMonsters(allCharacters : Character[],order : Character[]): string{
@@ -71,7 +80,7 @@ export default class Screen {
         line = `║${this.getSpaces(30)}`
         for (let i=0;i<3;i++){
             let tempLine = ""
-            let health = Math.round((allCharacters[i+3].currentHp/allCharacters[i+3].maxHp)*20)
+            const health = Math.round((allCharacters[i+3].currentHp/allCharacters[i+3].maxHp)*20)
             if (health == 0) {
                 tempLine += "\x1b[31m████████████████████\x1b[0m"
             } else if (health == 100){
@@ -164,9 +173,8 @@ export default class Screen {
             }
             fightScreen += line + this.getSpaces(20) + "║\n"
         }
-        fightScreen += this.spaceBar + "\n"
+        fightScreen += this.spaceBar
         fightScreen += "╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
-        this.fightScene = fightScreen
         return fightScreen
     }
     getBoss(allCharacters : Character[],order : Character[]): string {
@@ -235,57 +243,110 @@ export default class Screen {
             line += this.getSpaces(135-message.length) + "║\n"
             console.log(line)
             console.log("║" + this.getSpaces(135) + "║\n")
-
         }
-
     }
-    async inventoryInput() {
-        const inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╣","║        1. 🧪 Potion      ║    2. ✨ Star fragment   ║      3. 🌟 Half star     ║         4. 🔮 Ether      ║            q. Quit       ║","╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╝"] 
+
+    /**
+     * USE AWAIT TO CALL THIS FUNCTION
+     * @returns true if player used an item and flase if he canceled
+     */
+    async inventory(): Promise<boolean>{
+        this.displayScreen()
+        this.printMessage("You are in the Inventory, Select the item you wish to use or press 'q' to go cancel")
+        const inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╣",`║      1: 🧪 Potion (${Inventory.inventory.nPotions})    ║ 2: ✨ Star fragment (${Inventory.inventory.nStarFragments})  ║    3: 🌟 Half star (${Inventory.inventory.nHalfStars})   ║      4: 🔮 Ether (${Inventory.inventory.nEthers})     ║           q: Quit        ║`,"╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╝"] 
         for (let i=0; i<3; i++) {
             console.log(inventory[i])
         }
 
         let action = false
-        while (!action)
-        for await (const keypress of readKeypress()) {
-            switch (keypress.key) {
-                case "1": {
-                    action = Inventory.inventory.usePotion()
-                    break
+        while (!action) {
+            for await (const keypress of readKeypress()) {
+                switch (keypress.key) {
+                    case "1": {
+                        const input = await this.input("Which character do you wish to use the potion on",this.fight.players.map((v) => `${v.name} (${v.className})`))
+                        action = Inventory.inventory.usePotion(this.fight.players[input])
+                        break
+                    }
+                    case "2": {
+                        const player : Character = this.fight.players.concat(this.fight.deadPlayers)[0]
+                        action = Inventory.inventory.useStarFragment(player)
+                        break
+                    }
+                    case "3": {
+                        const player : Character = this.fight.players.concat(this.fight.deadPlayers)[0]
+                        action = Inventory.inventory.useHalfStar(player)
+                        break
+                    }
+                    case "4": {
+                        const player : Character = this.fight.players[0]
+                        action  = Inventory.inventory.useEther(player)
+                        break
+                    }
+                    case "q": {
+                        return false
+                    }
                 }
-                case "2": {
-                    action = Inventory.inventory.useStarFragment()
-                    break
+            
+                if (keypress.ctrlKey && keypress.key === 'c') {
+                    Deno.exit(0);
                 }
-                case "3": {
-                    action = Inventory.inventory.useHalfStar()
-                    break
-                }
-                case "4": {
-                    action  = Inventory.inventory.useEther()
-                    break
-                }
-                case "q": {
-                    action = true
-                    break
-                }
-            }
-        
-            if (keypress.ctrlKey && keypress.key === 'c') {
-                Deno.exit(0);
             }
         }
+        return true
     }
-    async input(options : Array<string>) :Promise<number> {
+
+    /**
+     * USE AWAIT TO CALL THIS FUNCTION
+     * @param message 
+     * @param optionsList 
+     * @returns index of option seleced
+     */
+    async input(message : string, optionsList : Array<string>) :Promise<number> {
+        this.displayScreen()
+        this.printMessage(message)
+        const options = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╣","╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╝"] 
         
-        for await (const keypress of readKeypress()) {
-            if (Number.isNaN(Number(keypress.key))) {
-               return this.input(options) 
-            } else if (Number(keypress.key) > options.length){
-                return this.input(options)
+        console.log(options[0])
+        let line = "║"
+        for (let i=0; i<optionsList.length; i++) {
+            if (optionsList.length % 2 == 0) {
+                line += `${this.getSpaces(26-((optionsList.length / 2)-2))}${i+1}: ${optionsList[i]}${this.getSpaces(26-((optionsList.length / 2)-1))}║`
+            } else {
+                line += `${this.getSpaces(26-(Math.floor(optionsList.length / 2)-2))}${i+1}: ${optionsList[i]}${this.getSpaces(26-(Math.floor(optionsList.length / 2)))}║`
             }
-            return Number(keypress.key)
         }
-        return 0
+
+        // if empty less than 4 options fill them with empty spaces
+        for (let i=0; i<4-optionsList.length; i++) {
+            line += `                          ║`
+        }
+
+        line += `         q: Quit          ║`
+        console.log(line)
+        console.log(options[2])
+
+        let valid = false
+        let input = 0
+        while (!valid) {
+            for await (const keypress of readKeypress()) {
+                if (Number.isNaN(Number(keypress.key))) {
+                    valid = false 
+                } else if (Number(keypress.key) > optionsList.length) {
+                    valid = false
+                } else {
+                    valid = true
+                    input = Number(keypress.key)
+                }
+
+                if (keypress.key === 'q') {
+                  return 0 // back to start  
+                }
+
+                if (keypress.ctrlKey && keypress.key === 'c') {
+                    Deno.exit(0)
+                }
+            }
+        }
+        return input
     }
 }   
