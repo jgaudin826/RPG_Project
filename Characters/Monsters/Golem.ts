@@ -1,6 +1,7 @@
 import Character from "../Character.ts";
 import Monster from "../Monster.ts";
 import Player from "../Player.ts";
+import { ObjectReturn } from "../objectReturn.ts";
 
 /**
  * Class representing a golem monster character, inheriting from Monster.
@@ -31,9 +32,9 @@ export default class Golem extends Monster{
      * @param enemy The character to attack.
      * @returns An object indicating the success of the special attack (always true) and no stolen object.
      */
-    public specialAttack(enemy:Character):object{
+    public specialAttack(enemy:Character):ObjectReturn{
         this.damage(enemy,0.3)
-        return {play:true,stealObject:null}
+        return {play:true,object:null}
     }
 
     /**

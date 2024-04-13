@@ -1,8 +1,10 @@
 import Character from "../Character.ts";
 import Menu from "../../Menu.ts";
-import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
+import { ObjectReturn } from "../objectReturn.ts";
+import Augmentor from "../Monsters/Augmentor.ts";
+import Monster from "../Monster.ts"
 
 /**
  * Class representing a thief player character, inheriting from Player.
@@ -33,7 +35,7 @@ export default class Thief extends Player{
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public specialAttack(_enemy:Character):object{
+    public specialAttack(_enemy:Character):ObjectReturn{
         let stealObject : string | null
         const stealNumber : number = Math.floor(Math.random() * 100);
         if (stealNumber<5){
@@ -47,7 +49,7 @@ export default class Thief extends Player{
         } else {
             stealObject = null
         }
-        return {play:true,stealObject:stealObject}
+        return {play:true,object:stealObject}
     }
 
     /**
@@ -69,7 +71,7 @@ export default class Thief extends Player{
                 }else{
                     this.damage(monsters[choice])
                     console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                    if (monsters[choice].className==="augmentor"){
+                    if (monsters[choice] instanceof Augmentor){
                         monsters[choice].damageReceve()
                     }
                 }
@@ -81,11 +83,11 @@ export default class Thief extends Player{
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
                 }else{
-                    const action:object=this.specialAttack(monsters[choice])
-                    if (action['stealObject']===null){
-                        console.log(`You've stole nothing, you character missed!}`)
+                    const action:ObjectReturn=this.specialAttack(monsters[choice])
+                    if (action['object'] === null) {
+                        console.log(`You've stole nothing, your character missed!`)
                     } else {
-                        console.log(`You've stole the object : ${action[1]}.`)
+                        console.log(`You've stole the object: ${action['object']}.`)
                     }
                 }
                 break

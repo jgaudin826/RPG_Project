@@ -3,6 +3,8 @@ import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
+import { ObjectReturn } from "../objectReturn.ts";
+import Augmentor from "../Monsters/Augmentor.ts"
 
 
 /**
@@ -50,13 +52,13 @@ export default class Mage extends Player{
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public specialAttack(enemy : Character) : object{
+    public specialAttack(enemy : Character) : ObjectReturn{
         if (this.manaNow - (this.manaMax*(35/100))>= 0){
             this.manaNow -= (this.manaMax*(35/100))
             enemy.currentHp -= this.attack
-            return {play:true,nameMonster:enemy.className}
+            return {play:true,object:enemy.className}
         }
-        return {play:false,stealObject:null}
+        return {play:false,object:null}
     }
 
     /**
@@ -81,7 +83,7 @@ export default class Mage extends Player{
                 }else{
                     this.damage(monsters[choice])
                     console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                    if (monsters[choice].className==="augmentor"){
+                    if (monsters[choice] instanceof Augmentor){
                         monsters[choice].damageReceve()
                     }
                 }
@@ -95,10 +97,10 @@ export default class Mage extends Player{
                     this.playTurn(players,monsters)
                     break;
                 }else{
-                    const action:object=this.specialAttack(monsters[choice])
+                    const action:ObjectReturn=this.specialAttack(monsters[choice])
                     if (action['play']===true){
                         console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                        if (monsters[choice].className==="augmentor"){
+                        if (monsters[choice] instanceof Augmentor){
                             monsters[choice].damageReceve()
                         }
                     } else {

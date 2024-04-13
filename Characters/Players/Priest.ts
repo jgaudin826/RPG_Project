@@ -3,6 +3,8 @@ import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
 import Inventory from "../../Inventory.ts";
 import Player from "../Player.ts";
+import { ObjectReturn } from "../objectReturn.ts";
+import Augmentor from "../Monsters/Augmentor.ts"
 
 /**
  * Class representing a priest player character, inheriting from Player.
@@ -33,9 +35,9 @@ export default class Priest extends Player{
      * @param ally The character to target with the special healing.
      * @returns An object describing the result of the special healing.
      */
-    public specialAttack(ally : Character):object{
+    public specialAttack(ally : Character):ObjectReturn{
             ally.heal(25)
-        return {play:true,namePlayer:ally.className}
+        return {play:true,object:ally.className}
     }
 
     /**
@@ -57,7 +59,7 @@ export default class Priest extends Player{
                 }else{
                     this.damage(monsters[choice])
                     console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                    if (monsters[choice].className==="augmentor"){
+                    if (monsters[choice] instanceof Augmentor){
                         monsters[choice].damageReceve()
                     }
                 }
@@ -69,8 +71,8 @@ export default class Priest extends Player{
                     console.log("You can't make this choice, choose an other one")
                     this.playTurn(players,monsters)
                 }else{
-                    const action:object=this.specialAttack(players[choice])
-                    console.log(`You've healed the ${action['namePlayer']}.`)
+                    const action:ObjectReturn=this.specialAttack(players[choice])
+                    console.log(`You've healed the ${action['object']}.`)
                 }
                 break
             case 2:

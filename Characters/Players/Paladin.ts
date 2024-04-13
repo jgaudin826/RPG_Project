@@ -3,6 +3,8 @@ import Menu from "../../Menu.ts";
 import Monster from "../Monster.ts";
 import Player from "../Player.ts";
 import Inventory from "../../Inventory.ts";
+import { ObjectReturn } from "../objectReturn.ts";
+import Augmentor from "../Monsters/Augmentor.ts"
 
 /**
  * Class representing a paladin player character, inheriting from Player.
@@ -33,9 +35,9 @@ export default class Paladin extends Player{
      * @param enemy The character to target with the special attack.
      * @returns An object describing the result of the special attack.
      */
-    public specialAttack(enemy : Character):object {
+    public specialAttack(enemy : Character):ObjectReturn {
         this.damage(enemy,0.4)
-        return {play:true,stealObject:null} 
+        return {play:true,object:null} 
     }
 
     /**
@@ -58,7 +60,7 @@ export default class Paladin extends Player{
                 }else{
                     this.damage(monsters[choice])
                     console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                    if (monsters[choice].className==="augmentor"){
+                    if (monsters[choice] instanceof Augmentor){
                         monsters[choice].damageReceve()
                     }
                 }
@@ -66,7 +68,7 @@ export default class Paladin extends Player{
             case 1:
                 monsters.forEach(monster=>{
                     this.specialAttack(monster)
-                    if (monster.className==="augmentor"){
+                    if (monster instanceof Augmentor){
                         monster.damageReceve()
                     }
                 })

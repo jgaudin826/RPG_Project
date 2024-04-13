@@ -2,6 +2,7 @@ import Menu from "../../Menu.ts"
 import Player from "../Player.ts";
 import Inventory from "../../Inventory.ts";
 import Monster from "../Monster.ts";
+import Augmentor from "../Monsters/Augmentor.ts"
 
 /**
  * Class representing a warrior player character, inheriting from Player.
@@ -45,7 +46,7 @@ export default class Warrior extends Player{
                 }else{
                     this.damage(monsters[choice])
                     console.log(`You've made dammage to the ${monsters[choice].className}.`)
-                    if (monsters[choice].className==="augmentor"){
+                    if (monsters[choice] instanceof Augmentor){
                         monsters[choice].damageReceve()
                     }
                 }
