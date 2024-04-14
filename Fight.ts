@@ -25,11 +25,11 @@ import Monster from "./Characters/Monster.ts"
  * @method checkDeadCaracters() : checks for dead players after a chest room event
  */
 export default class Fight {
-    private players : Character[]
+    public players : Character[]
     private monsters : Character[]
     private order : Character[]
     private allCharacters : Character[]
-    private deadPlayers : Character[]
+    public deadPlayers : Character[]
     private deadMonsters : Character[]
 
     constructor( boss? : Character[],) {
