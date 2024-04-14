@@ -9,6 +9,7 @@ import Fight from "./Fight.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 import Menu from "./Menu.ts"
 import Screen from "./Screen.ts";
+import Inventory from "./Inventory.ts"
 
 export default class GameManagement {
     private static _game : GameManagement | null = null;
@@ -43,7 +44,7 @@ export default class GameManagement {
      */
     async createTeam() : Promise<Character[]> {
         const playerTeam : Character[] = []
-        const options = [Warrior, Mage, Paladin, Barbarian, Priest, Thief]
+        const options = [Barbarian, Mage, Paladin, Priest, Thief, Warrior]
         for (let i=1; i <= 3; i++) {
             const answer = await Screen.screen.displaySelection(i)
             playerTeam.push(new options[answer]())
@@ -70,15 +71,20 @@ export default class GameManagement {
                 const stealNumber : number = Math.floor(Math.random() * 100)
                 if (stealNumber<5){
                     stealObject = "halfStar"
+                    Inventory.inventory.nHalfStars+=1
                 } else if(5<=stealNumber && stealNumber<20) {
                     stealObject = "starFragment"
+                    Inventory.inventory.nStarFragments+=1
                 } else if (60<=stealNumber && stealNumber<90){
                     stealObject = "potion"
+                    Inventory.inventory.nPotions+=1
                 } else if (90<=stealNumber){
                     stealObject = "ether"
+                    Inventory.inventory.nEthers+=1
                 } else {
-                    stealObject = null
+                    stealObject = "nothing"
                 }
+                Screen.screen.printMessage(`You've obtain ${stealObject}`)
             }
         }        
     }
