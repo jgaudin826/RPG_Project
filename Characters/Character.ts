@@ -84,7 +84,7 @@ export default abstract class Character {
             console.log("You can't heal a dead character !")
             return false
         } else {
-            if(this.currentHp < this.currentHp + this.maxHp*(percent/100)) {
+            if(this.maxHp < this.currentHp + this.maxHp*(percent/100)) {
                 this.currentHp = this.maxHp
             } else {
                 this.currentHp += this.maxHp*(percent/100)
