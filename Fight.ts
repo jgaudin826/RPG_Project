@@ -51,7 +51,7 @@ export default class Fight {
      * - Check for dead or resurected characters
      * 
      */
-    async startFight() {
+    public async startFight() {
         Screen.screen.fight = this
         let message = `Fight has Started`
         while (this.players.length > 0 && this.monsters.length > 0) {
@@ -87,7 +87,7 @@ export default class Fight {
      * @param orderList an unordered list 
      * @returns the ordered list
      */
-    getOrder(orderList : Character[]) : Character[] {
+    private getOrder(orderList : Character[]) : Character[] {
         orderList.sort((a, b) => b.speedPosition - a.speedPosition)
         return orderList
     }
@@ -96,7 +96,7 @@ export default class Fight {
      * generates the monsters team of 3 random monsters
      * @returns the list of monsters
      */
-    createMonsters() : Monster[] {
+    private createMonsters() : Monster[] {
         const monsters : Monster[] = []
         const monsterList = [Augmentor, Ogre, Golem, Vampire, Zombie]
         for (let i=1; i <= 3; i++) {
@@ -111,7 +111,7 @@ export default class Fight {
      * - Removes it from orderd list
      * - Displays the name of the dead characters 
      */
-    async checkDeadCharacters() {
+    private async checkDeadCharacters() {
         const deadCharacters = []
             for (let i=0;i<this.players.length;i++){
                 if (this.players[i].currentHp <= 0){
@@ -141,7 +141,7 @@ export default class Fight {
      * Checks for dead players after they went through the chest room
      * displays on screen if any are dead
      */
-    async checkResurected() {
+    private async checkResurected() {
         for (let i=0;i<this.deadPlayers.length;i++){
             if (this.deadPlayers[i].currentHp > 0){
                 this.players.push(this.deadPlayers[i])
