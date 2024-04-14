@@ -33,8 +33,8 @@ import Vampire from "./Characters/Monsters/Vampire.ts";
  */
 export default class GameManagement {
     private static _game : GameManagement | null = null;
-    players : Character[] = [];
-    deadPlayers : Character[] = [];
+    public players : Character[] = [];
+    public deadPlayers : Character[] = [];
 
     static get game() {
         if (this._game == null) {
@@ -51,7 +51,7 @@ export default class GameManagement {
      * Handles one game loop
      * 
      */
-    async start(){
+    public async start(){
         // Choose Team
         this.players= await this.createTeam()
 
@@ -85,7 +85,7 @@ export default class GameManagement {
      * 
      * @returns the player's team of 3 characters
      */
-    async createTeam() : Promise<Character[]> {
+    private async createTeam() : Promise<Character[]> {
         const playerTeam : Character[] = []
         const options = [Barbarian, Mage, Paladin, Priest, Thief, Warrior]
         for (let i=1; i <= 3; i++) {
@@ -102,7 +102,7 @@ export default class GameManagement {
      * randomly chooses an item to give the player if they decide to open it
      * randomly hurts every player if it is a trapped chest
      */
-    async chestRoom(){
+    private async chestRoom(){
         const choice = await Screen.screen.displayChestRoom("chest","You have found a room containing a mysterious chest. It can either give you a random item or hurt you. Do you want to open it?  1: Yes  2: No")
         if (choice == 1){
             await Screen.screen.displayChestRoom("opening","You have chosen to open the mysterious chest.")
@@ -155,7 +155,7 @@ export default class GameManagement {
      * Checks for dead players after they went through a chest room or fight
      * displays on screen if any are dead
      */
-    async checkDeadCharacters() {
+    private async checkDeadCharacters() {
         const deadCharacters = []
         for (let i=0;i<this.players.length;i++){
             if (this.players[i].currentHp <= 0){
@@ -175,7 +175,7 @@ export default class GameManagement {
      * Makes every statistics better
      * @returns a list of a single monster
      */
-    randomBoss() : Monster[]{
+    private randomBoss() : Monster[]{
         const monsterList = [Augmentor, Ogre, Golem, Vampire, Zombie]
         const boss = new monsterList[Math.floor(Math.random() * 5)]()
         boss.attack = boss.attack*1.5
