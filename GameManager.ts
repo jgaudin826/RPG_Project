@@ -8,7 +8,29 @@ import Thief from "./Characters/Players/Thief.ts"
 import Fight from "./Fight.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 import Screen from "./Screen.ts";
+import Inventory from "./Inventory.ts"
+import Monster from "./Characters/Monster.ts";
+import Augmentor from "./Characters/Monsters/Augmentor.ts";
+import Ogre from "./Characters/Monsters/Ogre.ts";
+import Golem from "./Characters/Monsters/Golem.ts";
+import Vampire from "./Characters/Monsters/Vampire.ts";
 
+/**
+ * use 'await GameManagement.game.start()' to start game
+ * 
+ * 
+ * Singleton class used to manage the game
+ * 
+ * @property _game : contains the singleton game instance
+ * @property players : the character list chosen by the player
+ * @property deadPlayers : the dead characters after a fight or a trapped chest
+ * 
+ * @method start() : handles one game loop (2 fights, 2 chest rooms , 1 boss fight)
+ * @method createTeam() : where the player can choose their characters
+ * @method chestRoom() : handles the chestRoom logic
+ * @method checkDeadCharacters() : checks for dead players after a chest room or fight
+ * @method randomBoss() : generates a stronger version of a monster 
+ */
 export default class GameManagement {
     private static _game : GameManagement | null = null;
     players : Character[] = [];
@@ -112,13 +134,29 @@ export default class GameManagement {
                     stealObject = "ether"
                     Inventory.inventory.nEthers+=1
                 } else {
-                    stealObject = "nothing"
+                    stealObject = null
+                }
+
+                if (stealObject == null) {
+                    await Screen.screen.displayChestRoom("bad","You have found nothing inside the mysterious chest, better luck next time!")
+                    await this.timeout(2000)
+                } else {
+                    await Screen.screen.displayChestRoom("good",`You have found 1 ${stealObject} inside the mysterious chest.`)
+                    await this.timeout(2000)
                 }
             }
-        }        
+        } else {
+            await Screen.screen.displayChestRoom("skip","You have decided to not open the mysterious chest. You will now continue with your journey.")
+            await this.timeout(2000)
+        }       
     }
 
-    checkDeadCharacters() {
+    /**
+     * Checks for dead players after they went through a chest room or fight
+     * displays on screen if any are dead
+     */
+    async checkDeadCharacters() {
+        const deadCharacters = []
         for (let i=0;i<this.players.length;i++){
             if (this.players[i].currentHp <= 0){
                 this.deadPlayers.push(this.players[i])
