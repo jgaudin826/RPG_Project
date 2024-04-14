@@ -51,7 +51,7 @@ export default class Warrior extends Player{
                 case 1: {
                     const action = await Screen.screen.inventory()
                     if(action.length != 0) {
-                        return `You have used an item`
+                        return action
                     }
                     break
                 }

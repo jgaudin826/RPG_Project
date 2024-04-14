@@ -48,7 +48,7 @@ export default abstract class Character {
      * @param multiplicate The multiplier to apply to the received damage.
      */
     public healthLosed(receveDamage:number,multiplicate:number):void{
-        if (this.attack > this.defense+2){
+        if (receveDamage > this.defense+2){
             this.currentHp= Math.max(this.currentHp-(Math.round((receveDamage - this.defense)*multiplicate)),0)
         } else {
             this.currentHp= Math.max(this.currentHp-2,0)
@@ -84,7 +84,7 @@ export default abstract class Character {
             console.log("You can't heal a dead character !")
             return false
         } else {
-            if(this.currentHp < this.currentHp + this.maxHp*(percent/100)) {
+            if(this.maxHp < this.currentHp + this.maxHp*(percent/100)) {
                 this.currentHp = this.maxHp
             } else {
                 this.currentHp += this.maxHp*(percent/100)
