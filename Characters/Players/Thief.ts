@@ -39,12 +39,16 @@ export default class Thief extends Player{
         const stealNumber : number = Math.floor(Math.random() * 100);
         if (stealNumber<5){
             stealObject = "halfStar"
+            Inventory.inventory.nHalfStars+=1
         } else if(5<=stealNumber && stealNumber<20) {
             stealObject = "starFragment"
+            Inventory.inventory.nStarFragments+=1
         } else if (60<=stealNumber && stealNumber<90){
             stealObject = "potion"
+            Inventory.inventory.nPotions+=1
         } else if (90<=stealNumber){
             stealObject = "ether"
+            Inventory.inventory.nEthers+=1
         } else {
             stealObject = null
         }
