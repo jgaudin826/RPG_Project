@@ -149,7 +149,7 @@ export default class Fight {
             if (this.deadPlayers[i].currentHp > 0){
                 this.players.push(this.deadPlayers[i])
                 this.deadPlayers.splice(i,1)
-                Screen.screen.displayScreen(`${this.players[i]} have been resurected.`)
+                Screen.screen.displayScreen(`${this.players[i].name} (${this.players[i].className.slice(0,3)}) have been resurected.`)
                 await this.timeout(2000)
             }
         }
