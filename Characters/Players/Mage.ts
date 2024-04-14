@@ -54,7 +54,7 @@ export default class Mage extends Player{
     public specialAttack(enemy : Character) : ObjectReturn{
         if (this.manaNow - (this.manaMax*(35/100))>= 0){
             this.manaNow = Math.max(Math.round(this.manaNow -this.manaMax*(35/100)),0)
-            enemy.currentHp -= this.attack
+            enemy.currentHp=Math.max((enemy.currentHp - this.attack),0)
             return {play:true,object:enemy.className}
         }
         return {play:false,object:null}
