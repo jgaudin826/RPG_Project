@@ -82,7 +82,7 @@ export default abstract class Character {
      */
     public heal(percent : number,typeHeal:string="heal"):boolean {
         if(typeHeal==="heal" && this.currentHp<=0){
-            Screen.screen.printMessage("You can't heal a dead character !")
+            Screen.screen.displayScreen("You can't heal a dead character !")
             return false
         } else {
             if(this.maxHp < this.currentHp + this.maxHp*(percent/100)) {
@@ -103,7 +103,7 @@ export default abstract class Character {
         if(this.currentHp <= 0) {
             this.heal(percent,"resurrect")
         } else {
-            Screen.screen.printMessage("You can't resurrect a character who's already alive !")
+            Screen.screen.displayScreen("You can't resurrect a character who's already alive !")
         }
     }
 

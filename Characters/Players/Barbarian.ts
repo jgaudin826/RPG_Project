@@ -77,7 +77,7 @@ export default class Barbarian extends Player{
                             }
                             return `You've made dammage to the ${monsters[choice].className}.`
                         } else {
-                            Screen.screen.printMessage("You can't make this choice, your character has not enougth hp to do his special attack")
+                            Screen.screen.displayScreen("You can't make this choice, your character has not enougth hp to do his special attack")
                             break
                         }
                     }
