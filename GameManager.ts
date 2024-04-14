@@ -1,5 +1,4 @@
 import Character from "./Characters/Character.ts"
-import Menu from "./Menu.ts"
 import Warrior from "./Characters/Players/Warrior.ts"
 import Mage from "./Characters/Players/Mage.ts"
 import Paladin from "./Characters/Players/Paladin.ts"
@@ -8,6 +7,7 @@ import Priest from "./Characters/Players/Priest.ts"
 import Thief from "./Characters/Players/Thief.ts"
 import Fight from "./Fight.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
+import Menu from "./Menu.ts"
 
 export default class GameManagement {
     private static _game : GameManagement | null = null;
