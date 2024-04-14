@@ -15,6 +15,22 @@ import Ogre from "./Characters/Monsters/Ogre.ts";
 import Golem from "./Characters/Monsters/Golem.ts";
 import Vampire from "./Characters/Monsters/Vampire.ts";
 
+/**
+ * use 'await GameManagement.game.start()' to start game
+ * 
+ * 
+ * Singleton class used to manage the game
+ * 
+ * @property _game : contains the singleton game instance
+ * @property players : the character list chosen by the player
+ * @property deadPlayers : the dead characters after a fight or a trapped chest
+ * 
+ * @method start() : handles one game loop (2 fights, 2 chest rooms , 1 boss fight)
+ * @method createTeam() : where the player can choose their characters
+ * @method chestRoom() : handles the chestRoom logic
+ * @method checkDeadCharacters() : checks for dead players after a chest room or fight
+ * @method randomBoss() : generates a stronger version of a monster 
+ */
 export default class GameManagement {
     private static _game : GameManagement | null = null;
     players : Character[] = [];
@@ -31,27 +47,33 @@ export default class GameManagement {
 
     /**
      * GameManager.game.start() : to start game
+     * 
+     * Handles one game loop
+     * 
      */
     async start(){
         // Choose Team
         this.players= await this.createTeam()
 
         // Figth 1
-        this.players, this.deadPlayers = await new Fight().startFight()
+        await new Fight().startFight()
+        await this.checkDeadCharacters()
         
         // Chest Room 1
         await this.chestRoom()
         await this.checkDeadCharacters()
 
         //Fight 2
-        this.players, this.deadPlayers = await new Fight().startFight()
+        await new Fight().startFight()
+        await this.checkDeadCharacters()
 
         // Chest Room 2
         await this.chestRoom()
         await this.checkDeadCharacters()
 
         // Boss Fight
-        this.players, this.deadPlayers = await new Fight(this.randomBoss()).startFight()
+        await new Fight(this.randomBoss()).startFight()
+        await this.checkDeadCharacters()
 
         // End
         Screen.screen.displayScreen("Fight Over, you won the Game!")
@@ -59,7 +81,9 @@ export default class GameManagement {
     }
     
     /**
+     * calls on Screen to display character options and get user input 3 times to generate a 3 character team
      * 
+     * @returns the player's team of 3 characters
      */
     async createTeam() : Promise<Character[]> {
         const playerTeam : Character[] = []
@@ -71,6 +95,13 @@ export default class GameManagement {
         return playerTeam
     }
 
+    /**
+     * Handles the chest room.
+     * 
+     * calls on Screen to display options
+     * randomly chooses an item to give the player if they decide to open it
+     * randomly hurts every player if it is a trapped chest
+     */
     async chestRoom(){
         const choice = await Screen.screen.displayChestRoom("chest","You have found a room containing a mysterious chest. It can either give you a random item or hurt you. Do you want to open it?  1: Yes  2: No")
         if (choice == 1){
@@ -120,6 +151,10 @@ export default class GameManagement {
         }       
     }
 
+    /**
+     * Checks for dead players after they went through a chest room or fight
+     * displays on screen if any are dead
+     */
     async checkDeadCharacters() {
         const deadCharacters = []
         for (let i=0;i<this.players.length;i++){
@@ -135,6 +170,11 @@ export default class GameManagement {
         }
     }
 
+    /**
+     * Generates a random monster from the monster classes
+     * Makes every statistics better
+     * @returns a list of a single monster
+     */
     randomBoss() : Monster[]{
         const monsterList = [Augmentor, Ogre, Golem, Vampire, Zombie]
         const boss = new monsterList[Math.floor(Math.random() * 5)]()
@@ -146,6 +186,12 @@ export default class GameManagement {
         return [boss]
     }
 
+    /**
+     * Used to display screen longer in order to have time to read
+     * 
+     * @param ms : delai in miliseconds
+     * @returns a promise lasting that amount of time
+     */
     public timeout (ms : number) {
         return new Promise(res => setTimeout(res,ms));
     }

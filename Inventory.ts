@@ -1,6 +1,15 @@
 import Character from "./Characters/Character.ts"
 import Mage from "./Characters/Players/Mage.ts"
 
+/**
+ * Singleton class that handles the inventory during the whole game
+ * 
+ * @property nPotions : number of potions in the inventory
+ * @property nStarFragments : number of star fragments in the inventory
+ * @property nHalfStars : number of half stars in the inventory
+ * @property nEthers : number of ether in the inventory
+ * @property _inventory : the singleton Inventory instance
+ */
 export default class Inventory {
     public nPotions : number = 2;
     public nStarFragments : number = 1;
@@ -17,6 +26,14 @@ export default class Inventory {
         return this._Inventory
     }
 
+    /**
+     * Handles the potion
+     * - Checks if there is enough
+     * - Checks if the character has low HP in order to use this item
+     * 
+     * @param character the character that will be affected by the item
+     * @returns message description of the action done, It has a space in from if no action has been done
+     */
     public usePotion(character : Character):string {
         if (this.nPotions <= 0){
             return ' Not enough potions ! Choose another item in your inventory'
@@ -29,6 +46,16 @@ export default class Inventory {
         }
     }
 
+    /**
+     * Handles the star fragments
+     * - Checks if there is enough
+     * - Checks if the character has low HP in order to use this item
+     * - Checks if it is used as a resurection or heal
+     * 
+     * 
+     * @param character the character that will be affected by the item
+     * @returns message description of the action done, It has a space in from if no action has been done
+     */
     public useStarFragment(character : Character):string {
         if (this.nStarFragments <= 0){
             return " Not enough star fragments ! Choose another item in your inventory."
@@ -47,6 +74,15 @@ export default class Inventory {
         }
     }
 
+    /**
+     * Handles the half stars
+     * - Checks if there is enough
+     * - Checks if the character has low HP in order to use this item
+     * - Checks if it is used as a resurection or heal
+     * 
+     * @param character the character that will be affected by the potion
+     * @returns message description of the action done, It has a space in from if no action has been done
+     */
     public useHalfStar(character : Character):string {
         if (this.nHalfStars <= 0){
             return " Not enough half stars ! Choose another item in your inventory."
@@ -65,6 +101,15 @@ export default class Inventory {
         }
     }
 
+    /**
+     * Handles the ether
+     * - Checks if there is enough
+     * - Checks if the character is a mage
+     * - Checks if the mage has enough mana
+     * 
+     * @param character the character that will be affected by the potion
+     * @returns message description of the action done, It has a space in from if no action has been done
+     */
     public useEther(character : Character):string {
         if (this.nEthers <= 0){
             return " Not enough ethers ! Choose another item in your inventory."
