@@ -4,6 +4,7 @@ import { ObjectReturn } from "../objectReturn.ts";
 import Augmentor from "../Monsters/Augmentor.ts";
 import Monster from "../Monster.ts"
 import Screen from "../../Screen.ts";
+import Inventory from "../../Inventory.ts";
 
 /**
  * Class representing a thief player character, inheriting from Player.
