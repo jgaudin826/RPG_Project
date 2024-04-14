@@ -5,7 +5,6 @@ import Golem from "./Characters/Monsters/Golem.ts"
 import Vampire from "./Characters/Monsters/Vampire.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 import GameManagement from "./GameManager.ts"
-import Mage from "./Characters/Players/Mage.ts"
 import Screen from "./Screen.ts"
 import Monster from "./Characters/Monster.ts"
 
@@ -31,7 +30,9 @@ export default class Fight {
         let message = "Game has Started"
         while (this.players.length > 0 || this.monsters.length > 0) {
             Screen.screen.displayScreen(message, this.allCharacters, this.order)
+            await this.timeout(2000)
             Screen.screen.displayScreen(`it's ${this.order[0].className}'s turn`, this.allCharacters, this.order)
+            await this.timeout(2000)
             message = await this.order[0].playTurn(this.players, this.monsters)
             if (this.order[0].currentHp == 0) {
                 this.checkDeadCharacters()
@@ -74,28 +75,13 @@ export default class Fight {
             }
             for (let i=0;i<this.monsters.length;i++){
                 if (this.monsters[i].currentHp <= 0){
-                    //this.deadMonsters.push(this.players[i])
+                    this.deadMonsters.push(this.monsters[i])
                     this.monsters.splice(i,1)
                 }
             }
     }
 
-    printStats(character : Character) {
-        console.log(
-            `Character Stats : ${character.className} \n
-            ---------------------------------\n
-            Attack : ${character.attack}\n
-            Defence : ${character.defense}\n
-            Speed : ${character.speed}\n
-            Max HP : ${character.maxHp}\n
-            Current HP : ${character.currentHp}\n`)
-        if (character instanceof Mage){
-            console.log(`
-            Max Mana : ${character.manaMax}\n
-            Current Mana : ${character.manaNow}\n`)
-        } else if (character instanceof Augmentor) {
-            console.log(`
-            Orbs : ${character.orbe.length}\n`)
-        }
+    public timeout (ms : number) {
+        return new Promise(res => setTimeout(res,ms));
     }
 }

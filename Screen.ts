@@ -43,6 +43,7 @@ export default class Screen {
         if (message !== undefined) {
             this.printMessage(message)
             console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+            console.log("\n")
         }
     }
     displayFight(allCharacters : Character[],order : Character[]) {
@@ -251,45 +252,46 @@ export default class Screen {
      * @returns true if player used an item and flase if he canceled
      */
     async inventory(): Promise<string>{
-        this.displayScreen()
-        this.printMessage("You are in the Inventory, Select the item you wish to use or press 'q' to go cancel")
-        const inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦═══════════════════════════╣",`║      1: 🧪 Potion (${Inventory.inventory.nPotions})    ║ 2: ✨ Star fragment (${Inventory.inventory.nStarFragments})  ║    3: 🌟 Half star (${Inventory.inventory.nHalfStars})   ║      4: 🔮 Ether (${Inventory.inventory.nEthers})     ║           q: Quit         ║`,"╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩═══════════════════════════╝"] 
-        for (let i=0; i<3; i++) {
-            console.log(inventory[i])
-        }
-
+        
+        let message = "You are in the Inventory, Select the item you wish to use or press 'q' to go cancel"
         while (true) {
+            this.displayScreen()
+            this.printMessage(message)
+            const inventory = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦═══════════════════════════╣",`║      1: 🧪 Potion (${Inventory.inventory.nPotions})    ║ 2: ✨ Star fragment (${Inventory.inventory.nStarFragments})  ║    3: 🌟 Half star (${Inventory.inventory.nHalfStars})   ║      4: 🔮 Ether (${Inventory.inventory.nEthers})     ║           q: Quit         ║`,"╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩═══════════════════════════╝"] 
+            for (let i=0; i<3; i++) {
+                console.log(inventory[i])
+            }
             for await (const keypress of readKeypress()) {
                 switch (keypress.key) {
                     case "1": {
                         const input = await this.input("Which character do you wish to use the potion on ?",this.fight.players.map((v) => `${v.name} (${v.className.slice(0,3)})`))
-                        const action = Inventory.inventory.usePotion(this.fight.players[input])
-                        if (action.length != 0) {
-                            return action
+                        message = Inventory.inventory.usePotion(this.fight.players[input])
+                        if (message[0] != " ") {
+                            return message
                         }
                         break
                     }
                     case "2": {
                         const input = await this.input("Which character do you wish to use the star fragment on ?",this.fight.players.concat(this.fight.deadPlayers).map((v) => `${v.name} (${v.className.slice(0,3)})`))
-                        const action = Inventory.inventory.useStarFragment(this.fight.players.concat(this.fight.deadPlayers)[input])
-                        if (action.length != 0) {
-                            return action
+                        message = Inventory.inventory.useStarFragment(this.fight.players.concat(this.fight.deadPlayers)[input])
+                        if (message[0] != " ") {
+                            return message
                         }
                         break
                     }
                     case "3": {
                         const input = await this.input("Which character do you wish to use the half star on ?",this.fight.players.concat(this.fight.deadPlayers).map((v) => `${v.name} (${v.className.slice(0,3)})`))
-                        const action = Inventory.inventory.useHalfStar(this.fight.players.concat(this.fight.deadPlayers)[input])
-                        if (action.length != 0) {
-                            return action
+                        message = Inventory.inventory.useHalfStar(this.fight.players.concat(this.fight.deadPlayers)[input])
+                        if (message[0] != " ") {
+                            return message
                         }
                         break
                     }
                     case "4": {
                         const input = await this.input("Which character do you wish to use the ether on ?",this.fight.players.map((v) => `${v.name} (${v.className.slice(0,3)})`))
-                        const action  = Inventory.inventory.useEther(this.fight.players[input])
-                        if (action.length != 0) {
-                            return action
+                        message  = Inventory.inventory.useEther(this.fight.players[input])
+                        if (message[0] != " ") {
+                            return message
                         }
                         break
                     }
@@ -297,7 +299,7 @@ export default class Screen {
                         return ""
                     }
                 }
-                continue
+                break
             }
         }
     }

@@ -1,6 +1,5 @@
 import Character from "./Characters/Character.ts"
 import Mage from "./Characters/Players/Mage.ts"
-import Screen from "./Screen.ts";
 
 export default class Inventory {
     public nPotions : number = 2;
@@ -20,11 +19,9 @@ export default class Inventory {
 
     public usePotion(character : Character):string {
         if (this.nPotions <= 0){
-            Screen.screen.displayScreen('Not enough potions ! Choose another item in your inventory')
-            return ""
+            return ' Not enough potions ! Choose another item in your inventory'
         }else if (character.currentHp==character.maxHp){
-            Screen.screen.displayScreen(`${character.name} (${character.className}) has to much hp, you cannot currently use a potion on ${character.name}.`)
-            return ""
+            return ` ${character.name} (${character.className}) has to much hp, you cannot currently use a potion on ${character.name}.`
         } else {
             character.heal(50)
             this.nPotions-=1
@@ -34,11 +31,9 @@ export default class Inventory {
 
     public useStarFragment(character : Character):string {
         if (this.nStarFragments <= 0){
-            Screen.screen.displayScreen('Not enough star fragments ! Choose another item in your inventory.')
-            return ""
+            return " Not enough star fragments ! Choose another item in your inventory."
         }else if (character.currentHp==character.maxHp){
-            Screen.screen.displayScreen(`${character.name} (${character.className}) has to much hp, you cannot currently use a star fragment on ${character.name}.`)
-            return ""
+            return ` ${character.name} (${character.className}) has to much hp, you cannot currently use a star fragment on ${character.name}.`
         } else {
             if (character.currentHp <= 0){
                 character.resurrect(20)
@@ -54,11 +49,9 @@ export default class Inventory {
 
     public useHalfStar(character : Character):string {
         if (this.nHalfStars <= 0){
-            Screen.screen.displayScreen('Not enough half stars ! Choose another item in your inventory.')
-            return ""
+            return " Not enough half stars ! Choose another item in your inventory."
         }else if (character.currentHp==character.maxHp){
-            Screen.screen.displayScreen(`${character.name} (${character.className}) has to much hp, you cannot currently use a half star on ${character.name}.`)
-            return ""
+            return ` ${character.name} (${character.className}) has to much hp, you cannot currently use a half star on ${character.name}.`
         } else {
             if (character.currentHp <= 0){
                 character.resurrect(100)
@@ -74,18 +67,15 @@ export default class Inventory {
 
     public useEther(character : Character):string {
         if (this.nEthers <= 0){
-            Screen.screen.displayScreen('Not enough ethers ! Choose another item in your inventory.')
-            return ""
+            return " Not enough ethers ! Choose another item in your inventory."
         } else if (character instanceof Mage && character.manaNow==character.manaMax){
-            Screen.screen.displayScreen(`${character.name} (${character.className}) has to much mana, you cannot currently use ether on ${character.name}.`)
-            return ""
+            return ` ${character.name} (${character.className}) has to much mana, you cannot currently use ether on ${character.name}.`
         } else if (character instanceof Mage){
             character.gainMana(30)
             this.nEthers-=1
             return `You have successfuly added mana to ${character.name} (${character.className})`
         } else {
-            Screen.screen.displayScreen(`${character.name} (${character.className}) is not a mage, you can't use this ether on a a ${character.className}.`)
-            return ""
+            return ` ${character.name} (${character.className}) is not a mage, you can't use this ether on a a ${character.className}.`
         }
     }
 }

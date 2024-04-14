@@ -34,7 +34,7 @@ export default class Warrior extends Player{
      */
     public async playTurn(_players:Player[],monsters:Monster[]) : Promise<string> {
         while (true) {
-            let choice = await Screen.screen.input("What do you want to do?",["Normal Attack","Inventory"])
+            let choice = await Screen.screen.input(`What do you want ${this.name} (${this.className.slice(0,3)}) to do?`,["Normal Attack","Inventory"])
             switch (choice){
                 case 0: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
