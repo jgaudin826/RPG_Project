@@ -47,7 +47,7 @@ export default abstract class Character {
      * @param receiveDamage The amount of damage received.
      * @param multiplicate The multiplier to apply to the received damage.
      */
-    public healthLosed(receveDamage:number,multiplicate:number):void{
+    public healthLosed(receveDamage:number,multiplicate:number){
         if (receveDamage > this.defense+2){
             this.currentHp= Math.max(this.currentHp-(Math.round((receveDamage - this.defense)*multiplicate)),0)
         } else {
