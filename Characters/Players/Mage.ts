@@ -24,7 +24,7 @@ export default class Mage extends Player{
      * @param maxHp The maximum HP of the mage (default: random value between 190 and 209).
      * @param manaMax The maximum amount of mana the mage can have (default: 100).
      */
-    public constructor(attack : number = Math.floor((Math.random() * 10)+35), 
+    public constructor(attack : number = Math.floor((Math.random() * 10)+40), 
                 defense : number = Math.floor((Math.random() * 5)+10), 
                 speed : number= Math.floor((Math.random() * 10)+115), 
                 maxHp :number= Math.floor((Math.random() * 20)+190),
