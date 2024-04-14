@@ -28,7 +28,7 @@ export default class Screen {
     //Options
 
     displayScreen(message? : string, allCharacters? : Character[], order? : Character[]) {
-        //console.clear()
+        console.clear()
         if (allCharacters !== undefined && order !== undefined) {
             this.fightScene = ""
             this.fightScene += "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
@@ -107,7 +107,7 @@ export default class Screen {
         for (let i=0;i<3;i++) {
             line = `║${this.getSpaces(30)}`
             for (let j=0;j<3;j++) {
-                if(order.indexOf(allCharacters[i+3])!=-1){
+                if(order.indexOf(allCharacters[j+3])!=-1){
                     line += this.monsterSprite[0][i]
                 } else {
                     line += this.monsterSprite[1][i]
@@ -166,7 +166,7 @@ export default class Screen {
         for (let i=0;i<3;i++) {
             line = `║${this.getSpaces(10)}`
             for (let j=0;j<3;j++) {
-                if(order.indexOf(allCharacters[i])!=-1){
+                if(order.indexOf(allCharacters[j])!=-1){
                     line += this.playerSprite[0][i]
                 } else {
                     line += this.playerSprite[1][i]
@@ -238,7 +238,7 @@ export default class Screen {
             console.log(line)
             line = "║            "
             line += message.slice(110)
-            line += this.getSpaces(123-line.length) + "║"
+            line += this.getSpaces(136-line.length) + "║"
             console.log(line)
         } else {
             line += message
@@ -344,13 +344,20 @@ export default class Screen {
                 if (keypress.key === 'q') {
                   Deno.exit(0) // back to start  
                 }
+
+                if (keypress.ctrlKey && keypress.key === 'c') {
+                    Deno.exit(0);
+                }
             }
         }
     }
 
     async displaySelection(i : number) : Promise<number> {
-        console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 70 - 89        /\\__/\\       Special Attack:              Attakck : 40 - 49        /\\__/\\       Special Attack:        ║\n║       Defence : 15 - 24       ( •ㅅ• )      Attack a random              Defence : 10 - 14       ( •ㅅ• )      Restores 25% HP        ║\n║       Speed :   100 - 109     /      \\      monster for 130%             Speed :   95 - 104      /      \\      of a chosen            ║\n║       Health :  200 - 209   1. Barbarian    attack damage                Health :  190 - 209     4. Priest     character              ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 35 - 44        /\\__/\\       Special Attack:              Attakck : 45 - 54        /\\__/\\       Special Attack:        ║\n║       Defence : 10 - 14       ( •ㅅ• )      A magic attack               Defence : 20 - 29       ( •ㅅ• )      Has a 60% chance       ║\n║       Speed :   115 - 124     /      \\      that ignores                 Speed :   135 - 164     /      \\      to steal a random      ║\n║       Health :  190 - 209     2. Mage       the defense                  Health :  165 - 184     5. Theif      item                   ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 50 - 69        /\\__/\\       Special Attack:              Attakck : 60 - 79        /\\__/\\       Special Attack:        ║\n║       Defence : 40 - 49       ( •ㅅ• )      Targets all enemies          Defence : 35 - 44       ( •ㅅ• )      No special attacks     ║\n║       Speed :   100 - 119     /      \\      dealing 40% damage           Speed :   95 -105       /      \\                             ║\n║       Health :  200 - 219    3. Paladin     to each                      Health :  190 -209     6. Warrior                            ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣")
+        console.clear()
+        console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 70 - 89        /\\__/\\       Special Attack:              Attakck : 40 - 49        /\\__/\\       Special Attack:        ║\n║       Defence : 15 - 24       ( •ㅅ• )      Attack a random              Defence : 10 - 14       ( •ㅅ• )      Restores 25% HP        ║\n║       Speed :   100 - 109     /      \\      monster for 130%             Speed :   95 - 104      /      \\      of a chosen            ║\n║       Health :  200 - 209   \x1b[32m1. Barbarian\x1b[0m    attack damage                Health :  190 - 209     \x1b[32m4. Priest\x1b[0m     character              ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 35 - 44        /\\__/\\       Special Attack:              Attakck : 45 - 54        /\\__/\\       Special Attack:        ║\n║       Defence : 10 - 14       ( •ㅅ• )      A magic attack               Defence : 20 - 29       ( •ㅅ• )      Has a 60% chance       ║\n║       Speed :   115 - 124     /      \\      that ignores                 Speed :   135 - 164     /      \\      to steal a random      ║\n║       Health :  190 - 209     \x1b[32m2. Mage\x1b[0m       the defense                  Health :  165 - 184     \x1b[32m5. Theif\x1b[0m      item                   ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 50 - 69        /\\__/\\       Special Attack:              Attakck : 60 - 79        /\\__/\\       Special Attack:        ║\n║       Defence : 40 - 49       ( •ㅅ• )      Targets all enemies          Defence : 35 - 44       ( •ㅅ• )      No special attacks     ║\n║       Speed :   100 - 119     /      \\      dealing 40% damage           Speed :   95 -105       /      \\                             ║\n║       Health :  200 - 219    \x1b[32m3. Paladin\x1b[0m     to each                      Health :  190 -209     \x1b[32m6. Warrior\x1b[0m                            ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣")
         this.printMessage(`Choose your character ${i}`)
+        console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+        console.log("\n")
         while (true) {
             for await (const keypress of readKeypress()) {
                 if (!Number.isNaN(Number(keypress.key)) && Number(keypress.key) <= 6 && Number(keypress.key) != 0) {
@@ -360,11 +367,71 @@ export default class Screen {
                 if (keypress.key === 'q') {
                   Deno.exit(0) // back to start  
                 }
+
+                if (keypress.ctrlKey && keypress.key === 'c') {
+                    Deno.exit(0);
+                }
             }
         }
     }
 
-    displayCchestRoom() {
+    async displayChestRoom(state : string, message : string) : Promise<number> {
+        console.clear()
+        const chestRoom = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                                 ║\n║                                ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                                    ║\n║                                ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                                 ║\n║                                 ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                                  ║\n║                                 ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                                  ║\n║                                 ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  Take            ⡄⢠⣤⣤⠀⣤⣤⣤⣤⣤⣤⣤⣤⣤⠀⣤⣤⡄⢠                                            ║\n║                                ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      It         ⢸⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿                                           ║\n║                                ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇        Bro      ⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿⡇⠀⠀                                       ║\n║                                ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇                ⣿⡇⢸⣿⣿⠀⣿⣿⣿⠟⠛⠛⠛⠛⠻⣿⣿⠀⣿⣿⡇⢸⣿⣿                                         ║\n║                                ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                ⡉⢁⣀⣉⣀⣀⣉⣉⣉⠀⣴⠖⠲⣦⠀⣉⣉⣉⣀⣉⣉⣀⡈⢉⡁⠀⠀                                      ║\n║                                ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║\n║                                ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║\n║                                ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                        ║\n║                                 ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀               ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠸⠃                                        ║\n║                                ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                                 ║\n║                                ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                               ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        const openingChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                ,-.       _,---._ __  / \\                                                              ║\n║                                                /  )    .-'       `./ /   \\                                                            ║\n║                                                (  (   ,'            `/    /|                                                          ║\n║                                                  \\  `-\"             \\'\\   / |                                                         ║\n║                                                   `.              ,  \\ \\ /  |                                                         ║\n║                                                    /`.          ,'-`----Y   |                                                         ║\n║                                                   (    (       ;        |   /                                                         ║\n║                                                   |  ,-.    ,-'         |  /                                                          ║\n║                                                   |  | (   |            | /                                                           ║\n║                                                   )  |  \\  \`.___________|/                                                            ║\n║                                                   `--'   `--'                                                                         ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        const trappedChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                ⠀⠀ ⠀⠀⠀⠀⠀  ⠀   ⡼⡝⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀⠀⠀  ⠀⣸⢹⣹⠸⡦⠤⠤⠤⠄⣀⡀⠀⠀⡠⢴⢲⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀⠀ ⠀ ⢰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠳⢏⣊⠹⣼⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀  ⠀⢀⠏⠀⠀⢠⡤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠁⡇⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀  ⠀⡎⠀⠀⠀⠀⠙⠓⢺⡄⠀⡴⠾⣿⡽⠖⠀⢸⡇⠀⠀⠀⠀                  Get                                                 ║\n║                                     ⠀⠀  ⠀⣸⠀⠀⠀⠀⠀⢀⢀⠀⢖⢲⠏⠀⠀⠀⠀⠀⢸⠁⠀⠀⠀⠀                       Pranked                                        ║\n║                                     ⠀⠀  ⢀⡇⠀⠀⠀⠀⠀⠈⠓⠧⠼⢧⣂⣊⠇⠀⠀⠀⢸⠀⠀⠀⠀⠀                               LOL                                    ║\n║                                     ⠀  ⠀⡸⠀⠀⠀⠀⠀⠀⠀⠀⠓⠶⠒⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀⠀                                                                      ║\n║                                     ⠀  ⢀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣆⠀⠀⠀⠀                                                                      ║\n║                                     ⠀  ⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀                                                                      ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡴⡫⠃⠀⠀⠀⠀⠀⢹⡀⠀⠀                                                                      ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⡄⠀⠀⠀⢀⡞⠈⠀⠈⡳⠀⠀⡔⡆⠀⠀⠸⡷⠶⡄                                                                      ║\n║                                       ⢰⠀⠀⠀⠀⠀⣇⠀⣀⠴⠋⠀⠀⣠⠔⠁⠀⣠⡇⣇⡀⠀⠀⡇⢠⡇                                                                      ║\n║                                       ⠸⡀⠀⠀⢀⣤⠟⠋⠁⠀⠀⢀⠞⠁⠀⠀⢸⠀⠀⠈⡇⠀⠀⡇⡾⠀                                                                      ║\n║                                       ⠀⣇⠀⠀⠈⠁⠀⠀⠀⢀⠔⠁⠀⠀⠀⠀⢸⡄⠀⢰⡃⠀⢀⣷⠃⠀                                                                      ║\n║                                       ⠀⡟⣦⡀⠀⠀⣀⣠⠖⠁⠀⠀⠀⠀⠀⠀⢸⣇⠀⠈⣧⠀⢸⡿⠀⠀                                                                      ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        const goodChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                          ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                       ║\n║                                          ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                          ║\n║                                          ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                       ║\n║                                           ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                        ║\n║                                           ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                        ║\n║                                           ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  You                                                                  ║\n║                                          ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      Did                                                              ║\n║                                          ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇          It                                                           ║\n║                                          ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇              Bro                                                      ║\n║                                          ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                                         ⠀⠀                            ║\n║                                          ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                                          ⠀                             ║\n║                                          ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                         ⠀                             ║\n║                                          ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                                                       ║\n║                                           ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀                                                                       ║\n║                                          ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                       ║\n║                                          ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                     ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        switch(state) {
+            case "chest" : {
+                console.log(chestRoom)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                while (true) {
+                    for await (const keypress of readKeypress()) {
+                        if (!Number.isNaN(Number(keypress.key)) && Number(keypress.key) <= 2 && Number(keypress.key) != 0) {
+                            return Number(keypress.key)
+                        }
+        
+                        if (keypress.key === 'q') {
+                          Deno.exit(0) // back to start  
+                        }
 
+                        if (keypress.ctrlKey && keypress.key === 'c') {
+                            Deno.exit(0);
+                        }
+                    }
+                }
+            }
+            case "opening" : {
+                console.log(openingChest)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+            case "good" : {
+                console.log(goodChest)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+            case "bad" : {
+                console.log(trappedChest)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+            case "skip" : {
+                console.log(chestRoom)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+        }
+        return NaN
     }
 }   

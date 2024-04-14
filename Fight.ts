@@ -28,27 +28,30 @@ export default class Fight {
     async startFight() : Promise<Character[]> {
         Screen.screen.fight = this
         let message = `Fight has Started`
-        while (this.players.length > 0 || this.monsters.length > 0) {
+        while (this.players.length > 0 && this.monsters.length > 0) {
             Screen.screen.displayScreen(message, this.allCharacters, this.order)
             await this.timeout(2000)
             Screen.screen.displayScreen(`it's ${this.order[0].className}'s turn`, this.allCharacters, this.order)
             await this.timeout(2000)
             message = await this.order[0].playTurn(this.players, this.monsters)
-            if (this.order[0].currentHp == 0) {
-                this.checkDeadCharacters()
-                this.order.splice(0,1)
-            } else {
-                for (let i =0;i<this.order.length;i++){
-                    if (i==0){
-                        this.order[i].speedPosition=0
-                    } else {
-                        this.order[i].speedPosition += (this.order[i].speed)
-                    }
+            for (let i = 0;i<this.order.length;i++){
+                if (i==0) {
+                    this.order[i].speedPosition = 0
+                } else {
+                    this.order[i].speedPosition += (this.order[i].speed)
                 }
-                this.order=this.getOrder(this.order)
             }
+            this.order=this.getOrder(this.order)
+            await this.checkDeadCharacters()
+            await this.checkResurected()
         }
-        console.log("fight over")
+        if (this.players.length == 0) {
+            Screen.screen.displayScreen("Fight Over, you lost to the monsters.")
+            Deno.exit(0)
+        } else {
+            Screen.screen.displayScreen("Fight Over, you won this round.")
+            await this.timeout(2000)
+        }
         return this.players, this.deadPlayers
     }
 
@@ -66,7 +69,8 @@ export default class Fight {
         return monsters
     }
 
-    checkDeadCharacters() {
+    async checkDeadCharacters() {
+        const deadCharacters = []
             for (let i=0;i<this.players.length;i++){
                 if (this.players[i].currentHp <= 0){
                     this.deadPlayers.push(this.players[i])
@@ -79,6 +83,27 @@ export default class Fight {
                     this.monsters.splice(i,1)
                 }
             }
+            for (let i=0;i<this.order.length;i++){
+                if (this.order[i].currentHp <= 0){
+                    deadCharacters.push(this.order[i])
+                    this.order.splice(i,1)
+                }
+            }
+            if (deadCharacters.length != 0) {
+                Screen.screen.displayScreen(`${deadCharacters.map((v) => `${v.name} (${v.className.slice(0,3)})`).join(", ")} have been killed.`)
+                await this.timeout(2000)
+            }
+    }
+
+    async checkResurected() {
+        for (let i=0;i<this.deadPlayers.length;i++){
+            if (this.deadPlayers[i].currentHp > 0){
+                this.players.push(this.deadPlayers[i])
+                this.deadPlayers.splice(i,1)
+                Screen.screen.displayScreen(`${this.players[i]} have been resurected.`)
+                await this.timeout(2000)
+            }
+        }
     }
 
     public timeout (ms : number) {

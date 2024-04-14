@@ -36,7 +36,7 @@ export default class Barbarian extends Player{
      */
     public specialAttack(enemy:Character):ObjectReturn{
         if (this.currentHp- (this.maxHp*(20/100)) > 0){
-            this.currentHp -= (this.maxHp*(20/100))
+            this.currentHp -= Math.round(this.maxHp*(20/100))
             this.damage(enemy,1.3)
             return {play:true,object:enemy.className}
         }
@@ -78,6 +78,7 @@ export default class Barbarian extends Player{
                             return `You've made dammage to the ${monsters[choice].className}.`
                         } else {
                             Screen.screen.displayScreen("You can't make this choice, your character has not enougth hp to do his special attack")
+                            await this.timeout(2000)
                             break
                         }
                     }
@@ -85,12 +86,16 @@ export default class Barbarian extends Player{
                 case 2: {
                     const action = await Screen.screen.inventory()
                     if(action.length != 0) {
-                        return `You have used an item`
+                        return action
                     }
                     break
                 }
                 
             }
         }
+    }
+
+    public timeout (ms : number) {
+        return new Promise(res => setTimeout(res,ms));
     }
 }

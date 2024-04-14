@@ -39,10 +39,10 @@ export default class Thief extends Player{
         let stealObject : string | null
         const stealNumber : number = Math.floor(Math.random() * 100);
         if (stealNumber<5){
-            stealObject = "halfStar"
+            stealObject = "half star"
             Inventory.inventory.nHalfStars+=1
         } else if(5<=stealNumber && stealNumber<20) {
-            stealObject = "starFragment"
+            stealObject = "star fragment"
             Inventory.inventory.nStarFragments+=1
         } else if (60<=stealNumber && stealNumber<90){
             stealObject = "potion"
@@ -80,7 +80,7 @@ export default class Thief extends Player{
                 }
                 case 1: {
                     choice = await Screen.screen.input("who do you want to steal from?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
-                    if (choice == 3){
+                    if (choice == monsters.length){
                         break
                     }else{
                         const action:ObjectReturn=this.specialAttack(monsters[choice])
@@ -94,7 +94,7 @@ export default class Thief extends Player{
                 case 2: {
                     const action = await Screen.screen.inventory()
                     if(action.length != 0) {
-                        return `You have used an item`
+                        return action
                     }
                     break
                 }
