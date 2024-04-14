@@ -53,7 +53,7 @@ export default class Mage extends Player{
      */
     public specialAttack(enemy : Character) : ObjectReturn{
         if (this.manaNow - (this.manaMax*(35/100))>= 0){
-            this.manaNow = Math.max(this.manaNow -this.manaMax*(35/100),0)
+            this.manaNow = Math.max(Math.round(this.manaNow -this.manaMax*(35/100)),0)
             enemy.currentHp -= this.attack
             return {play:true,object:enemy.className}
         }
@@ -98,6 +98,7 @@ export default class Mage extends Player{
                             return `You've made dammage to the ${monsters[choice].className}.`
                         } else {
                             Screen.screen.displayScreen("You can't make this choice, your character has not enougth mana to do his special attack")
+                            await this.timeout(2000)
                             break
                         }
                     }
@@ -105,11 +106,21 @@ export default class Mage extends Player{
                 case 2: {
                     const action = await Screen.screen.inventory()
                     if(action.length != 0) {
-                        return `You have used an item`
+                        return action
                     }
                     break
                 }
             } 
         }
+    }
+
+    /**
+     * Used to display screen longer in order to have time to read
+     * 
+     * @param ms : delai in miliseconds
+     * @returns a promise lasting that amount of time
+     */
+    public timeout (ms : number) {
+        return new Promise(res => setTimeout(res,ms));
     }
 }

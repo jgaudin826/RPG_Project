@@ -1,2 +1,2 @@
 import GameManagement from "./GameManager.ts"
-GameManagement.game.start()
+await GameManagement.game.start()

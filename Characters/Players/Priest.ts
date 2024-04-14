@@ -77,7 +77,7 @@ export default class Priest extends Player{
                 case 2: {
                     const action = await Screen.screen.inventory()
                     if(action.length != 0) {
-                        return `You have used an item`
+                        return action
                     }
                     break
                 }

@@ -55,7 +55,6 @@ export default class Augmentor extends Monster{
         if (this.orbe.length>=1){
             this.orbe.pop()
             this.boost()
-            console.log(`The ${this.className} has taken made dammage so he lost an orbe.`)
         }
     }
 

@@ -3,14 +3,30 @@ import Character from "./Characters/Character.ts"
 import Inventory from "./Inventory.ts"
 import Fight from "./Fight.ts"
 
+/**
+ * Singleton class that handles the display for 
+ * - the fights
+ * - the chest rooms
+ * - the messages
+ * - the user inputs
+ * - the inventory
+ * 
+ * @property _screen : contains the singleton screen instance
+ * @property playerSprite : constains the player sprite for alive and dead
+ * @property monsterSprite : constains the monster sprite for alive and dead
+ * @property bossSprite : constains the boss sprite for alive and dead
+ * @property spaceBar : contains a empty line for display
+ * @property fightScene : contains the fight display when no actions have been done between displays
+ * @property fight : contains the instance of the current fight
+ */
 export default class Screen {
     private static _screen : Screen | null = null
-    playerSprite : Array<Array<string>> = [["       /\\__/\\       ","      ( •ㅅ• )      ","      /      \\      "],["       /\\__/\\       ","      ( XㅅX )      ","      /      \\      "]]
-    monsterSprite : Array<Array<string>>  = [["       /\\__/\\       ","      (=•==•=)``    ","       \\_ㅅ_/       "],["       /\\__/\\       ","      (=X==X=)``    ","       \\_ㅅ_/       "]]
-    bossSprite : Array<string> = ["      (\\__/)        ","      (•ㅅ•)        ","   ＿ノヽ ノ＼＿    "," /  `/ ⌒ Ｙ⌒ Ｙ`ヽ  ","(   (三ヽ人   /   | ", "|  ﾉ⌒＼ ￣￣ヽ  ノ  ","ヽ＿＿＿＞､＿_／    ","   ｜( 王 ﾉ〈 (\\__/)","   /ﾐ`ー ― 彡\\(•ㅅ•)","  /  ╰    ╯   /    \\"]
-    spaceBar = "║                                                                                                                                       ║\n"
-    fightScene : string = ""
-    fight : Fight = new Fight()
+    private playerSprite : Array<Array<string>> = [["       /\\__/\\       ","      ( •ㅅ• )      ","      /      \\      "],["       /\\__/\\       ","      ( XㅅX )      ","      /      \\      "]]
+    private monsterSprite : Array<Array<string>>  = [["       /\\__/\\       ","      (=•==•=)``    ","       \\_ㅅ_/       "],["       /\\__/\\       ","      (=X==X=)``    ","       \\_ㅅ_/       "]]
+    private bossSprite : Array<string> = ["      (\\__/)        ","      (•ㅅ•)        ","   ＿ノヽ ノ＼＿    "," /  `/ ⌒ Ｙ⌒ Ｙ`ヽ  ","(   (三ヽ人   /   | ", "|  ﾉ⌒＼ ￣￣ヽ  ノ  ","ヽ＿＿＿＞､＿_／    ","   ｜( 王 ﾉ〈 (\\__/)","   /ﾐ`ー ― 彡\\(•ㅅ•)","  /  ╰    ╯   /    \\"]
+    private spaceBar = "║                                                                                                                                       ║\n"
+    private fightScene : string = ""
+    public fight : Fight = new Fight()
 
     private constructor() {}
 
@@ -21,14 +37,20 @@ export default class Screen {
         return this._screen
     }
 
-    //Start Menu
-    //Create Player Team (interactif)
-    //Chest Room
-    //Inventory
-    //Options
-
+    /**
+     * Displays the fight scene with an optional message
+     * 
+     * if there is no information on the fight, the previous fightScreen will be displayed
+     * if there is a message it is displayed
+     * 
+     * if the character list has length of 4 then it is a boss fight, else it is a normal fight
+     * 
+     * @param message optional message to display
+     * @param allCharacters optional list of all characters to be displayed
+     * @param order option along with the previous one to differenciate the characters alive and dead
+     */
     displayScreen(message? : string, allCharacters? : Character[], order? : Character[]) {
-        //console.clear()
+        console.clear()
         if (allCharacters !== undefined && order !== undefined) {
             this.fightScene = ""
             this.fightScene += "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n"
@@ -46,6 +68,12 @@ export default class Screen {
             console.log("\n")
         }
     }
+
+    /**
+     * displays a normal fight (3 monsters and 3 players)
+     * @param allCharacters list of all characters to be displayed
+     * @param order list of the characters alive in order of speed
+     */
     displayFight(allCharacters : Character[],order : Character[]) {
         this.fightScene += this.getMonsters(allCharacters,order)
 
@@ -55,11 +83,23 @@ export default class Screen {
 
         this.fightScene += this.getPlayers(allCharacters,order)
     }
+
+    /**
+     * displays a boss fight 
+     * @param allCharacters list of all characters to be displayed
+     * @param order list of the characters alive in order of speed
+     */
     displayBoss(allCharacters : Character[],order : Character[]) {
         this.fightScene += this.getBoss(allCharacters,order)
         this.fightScene += this.getPlayers(allCharacters,order)
     }
 
+    /**
+     * creates a string for the 3 monsters and their info
+     * @param allCharacters list of all characters to be displayed
+     * @param order list of the characters alive in order of speed
+     * @returns the 3 monsters with their info in a single string
+     */
     getMonsters(allCharacters : Character[],order : Character[]): string{
         let fightScreen = ""
         
@@ -107,7 +147,7 @@ export default class Screen {
         for (let i=0;i<3;i++) {
             line = `║${this.getSpaces(30)}`
             for (let j=0;j<3;j++) {
-                if(order.indexOf(allCharacters[i+3])!=-1){
+                if(order.indexOf(allCharacters[j+3])!=-1){
                     line += this.monsterSprite[0][i]
                 } else {
                     line += this.monsterSprite[1][i]
@@ -119,6 +159,12 @@ export default class Screen {
         return fightScreen
     }
 
+    /**
+     * creates a string for the 3 players and their info
+     * @param allCharacters list of all characters to be displayed
+     * @param order list of the characters alive in order of speed
+     * @returns the 3 players with their info in a single string
+     */
     getPlayers(allCharacters : Character[],order : Character[]): string {
         let fightScreen = "" 
         
@@ -166,7 +212,7 @@ export default class Screen {
         for (let i=0;i<3;i++) {
             line = `║${this.getSpaces(10)}`
             for (let j=0;j<3;j++) {
-                if(order.indexOf(allCharacters[i])!=-1){
+                if(order.indexOf(allCharacters[j])!=-1){
                     line += this.playerSprite[0][i]
                 } else {
                     line += this.playerSprite[1][i]
@@ -179,6 +225,13 @@ export default class Screen {
         fightScreen += "╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
         return fightScreen
     }
+
+    /**
+     * creates a string for the boss and it's info
+     * @param allCharacters list of all characters to be displayed
+     * @param order list of the characters alive in order of speed
+     * @returns the boss with it's info in a single string
+     */
     getBoss(allCharacters : Character[],order : Character[]): string {
         let fightScreen = ""
 
@@ -223,6 +276,11 @@ export default class Screen {
         return fightScreen
     }
 
+    /**
+     * Get a string of N spaces
+     * @param nSpaces number of spaces wanted
+     * @returns a string a N spaces
+     */
     getSpaces(nSpaces : number): string{
         let spaces = ""
         for(let i=0; i<nSpaces;i++){
@@ -231,6 +289,10 @@ export default class Screen {
         return spaces
     }
 
+    /**
+     * prints a message 
+     * @param message the message in a string
+     */
     printMessage(message : string) {
         let line = "║     Game : "
         if (message.length>110) {
@@ -238,7 +300,7 @@ export default class Screen {
             console.log(line)
             line = "║            "
             line += message.slice(110)
-            line += this.getSpaces(123-line.length) + "║"
+            line += this.getSpaces(136-line.length) + "║"
             console.log(line)
         } else {
             line += message
@@ -249,8 +311,9 @@ export default class Screen {
     }
 
     /**
-     * USE AWAIT TO CALL THIS FUNCTION
-     * @returns true if player used an item and flase if he canceled
+     * Displays the inventory
+     * Handles the user input and calls on Inventory to handle the action
+     * @returns message of the action that has been done
      */
     async inventory(): Promise<string>{
         
@@ -306,10 +369,11 @@ export default class Screen {
     }
 
     /**
-     * USE AWAIT TO CALL THIS FUNCTION
-     * @param message 
-     * @param optionsList 
-     * @returns index of option seleced
+     * Displays and Handles the options for the player 
+     * 
+     * @param message the message that will be displayed to guide the player
+     * @param optionsList the options that will be displayed 
+     * @returns index of the option selected
      */
     async input(message : string, optionsList : Array<string>) :Promise<number> {
         this.displayScreen()
@@ -344,14 +408,25 @@ export default class Screen {
                 if (keypress.key === 'q') {
                   Deno.exit(0) // back to start  
                 }
+
+                if (keypress.ctrlKey && keypress.key === 'c') {
+                    Deno.exit(0);
+                }
             }
         }
     }
-
+    
+    /**
+     * Displays and Handle the character selection 
+     * @param i number of the character that needs to be chosen ( 1 to 3)
+     * @returns the number of the character selected
+     */
     async displaySelection(i : number) : Promise<number> {
-        console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 70 - 89        /\\__/\\       Special Attack:              Attakck : 40 - 49        /\\__/\\       Special Attack:        ║\n║       Defence : 15 - 24       ( •ㅅ• )      Attack a random              Defence : 10 - 14       ( •ㅅ• )      Restores 25% HP        ║\n║       Speed :   100 - 109     /      \\      monster for 130%             Speed :   95 - 104      /      \\      of a chosen            ║\n║       Health :  200 - 209   1. Barbarian    attack damage                Health :  190 - 209     4. Priest     character              ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 35 - 44        /\\__/\\       Special Attack:              Attakck : 45 - 54        /\\__/\\       Special Attack:        ║\n║       Defence : 10 - 14       ( •ㅅ• )      A magic attack               Defence : 20 - 29       ( •ㅅ• )      Has a 60% chance       ║\n║       Speed :   115 - 124     /      \\      that ignores                 Speed :   135 - 164     /      \\      to steal a random      ║\n║       Health :  190 - 209     2. Mage       the defense                  Health :  165 - 184     5. Theif      item                   ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 50 - 69        /\\__/\\       Special Attack:              Attakck : 60 - 79        /\\__/\\       Special Attack:        ║\n║       Defence : 40 - 49       ( •ㅅ• )      Targets all enemies          Defence : 35 - 44       ( •ㅅ• )      No special attacks     ║\n║       Speed :   100 - 119     /      \\      dealing 40% damage           Speed :   95 -105       /      \\                             ║\n║       Health :  200 - 219    3. Paladin     to each                      Health :  190 -209     6. Warrior                            ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣")
+        console.clear()
+        console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 70 - 89        /\\__/\\       Special Attack:              Attakck : 40 - 49        /\\__/\\       Special Attack:        ║\n║       Defence : 15 - 24       ( •ㅅ• )      Attack a random              Defence : 10 - 14       ( •ㅅ• )      Restores 25% HP        ║\n║       Speed :   100 - 109     /      \\      monster for 130%             Speed :   95 - 104      /      \\      of a chosen            ║\n║       Health :  200 - 209   \x1b[32m1. Barbarian\x1b[0m    attack damage                Health :  190 - 209     \x1b[32m4. Priest\x1b[0m     character              ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 35 - 44        /\\__/\\       Special Attack:              Attakck : 45 - 54        /\\__/\\       Special Attack:        ║\n║       Defence : 10 - 14       ( •ㅅ• )      A magic attack               Defence : 20 - 29       ( •ㅅ• )      Has a 60% chance       ║\n║       Speed :   115 - 124     /      \\      that ignores                 Speed :   135 - 164     /      \\      to steal a random      ║\n║       Health :  190 - 209     \x1b[32m2. Mage\x1b[0m       the defense                  Health :  165 - 184     \x1b[32m5. Theif\x1b[0m      item                   ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 50 - 69        /\\__/\\       Special Attack:              Attakck : 60 - 79        /\\__/\\       Special Attack:        ║\n║       Defence : 40 - 49       ( •ㅅ• )      Targets all enemies          Defence : 35 - 44       ( •ㅅ• )      No special attacks     ║\n║       Speed :   100 - 119     /      \\      dealing 40% damage           Speed :   95 -105       /      \\                             ║\n║       Health :  200 - 219    \x1b[32m3. Paladin\x1b[0m     to each                      Health :  190 -209     \x1b[32m6. Warrior\x1b[0m                            ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣")
         this.printMessage(`Choose your character ${i}`)
         console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+        console.log("\n")
         while (true) {
             for await (const keypress of readKeypress()) {
                 if (!Number.isNaN(Number(keypress.key)) && Number(keypress.key) <= 6 && Number(keypress.key) != 0) {
@@ -361,11 +436,77 @@ export default class Screen {
                 if (keypress.key === 'q') {
                   Deno.exit(0) // back to start  
                 }
+
+                if (keypress.ctrlKey && keypress.key === 'c') {
+                    Deno.exit(0);
+                }
             }
         }
     }
 
-    displayCchestRoom() {
+    /**
+     * Handles the chest room options
+     * @param state which action is happening curently
+     * @param message the message that will be displayed
+     * @returns 1 if user choses to open the chest, 2 if not and 3 if it is not asked
+     */
+    async displayChestRoom(state : string, message : string) : Promise<number> {
+        console.clear()
+        const chestRoom = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                                 ║\n║                                ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                                    ║\n║                                ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                                 ║\n║                                 ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                                  ║\n║                                 ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                                  ║\n║                                 ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  Take            ⡄⢠⣤⣤⠀⣤⣤⣤⣤⣤⣤⣤⣤⣤⠀⣤⣤⡄⢠                                            ║\n║                                ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      It         ⢸⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿                                           ║\n║                                ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇        Bro      ⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿⡇⠀⠀                                       ║\n║                                ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇                ⣿⡇⢸⣿⣿⠀⣿⣿⣿⠟⠛⠛⠛⠛⠻⣿⣿⠀⣿⣿⡇⢸⣿⣿                                         ║\n║                                ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                ⡉⢁⣀⣉⣀⣀⣉⣉⣉⠀⣴⠖⠲⣦⠀⣉⣉⣉⣀⣉⣉⣀⡈⢉⡁⠀⠀                                      ║\n║                                ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║\n║                                ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║\n║                                ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                        ║\n║                                 ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀               ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠸⠃                                        ║\n║                                ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                                 ║\n║                                ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                               ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        const openingChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                ,-.       _,---._ __  / \\                                                              ║\n║                                                /  )    .-'       `./ /   \\                                                            ║\n║                                                (  (   ,'            `/    /|                                                          ║\n║                                                  \\  `-\"             \\'\\   / |                                                         ║\n║                                                   `.              ,  \\ \\ /  |                                                         ║\n║                                                    /`.          ,'-`----Y   |                                                         ║\n║                                                   (    (       ;        |   /                                                         ║\n║                                                   |  ,-.    ,-'         |  /                                                          ║\n║                                                   |  | (   |            | /                                                           ║\n║                                                   )  |  \\  \`.___________|/                                                            ║\n║                                                   `--'   `--'                                                                         ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        const trappedChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                ⠀⠀ ⠀⠀⠀⠀⠀  ⠀   ⡼⡝⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀⠀⠀  ⠀⣸⢹⣹⠸⡦⠤⠤⠤⠄⣀⡀⠀⠀⡠⢴⢲⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀⠀ ⠀ ⢰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠳⢏⣊⠹⣼⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀  ⠀⢀⠏⠀⠀⢠⡤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠁⡇⠀⠀⠀⠀                                                                      ║\n║                                     ⠀⠀⠀  ⠀⡎⠀⠀⠀⠀⠙⠓⢺⡄⠀⡴⠾⣿⡽⠖⠀⢸⡇⠀⠀⠀⠀                  Get                                                 ║\n║                                     ⠀⠀  ⠀⣸⠀⠀⠀⠀⠀⢀⢀⠀⢖⢲⠏⠀⠀⠀⠀⠀⢸⠁⠀⠀⠀⠀                       Pranked                                        ║\n║                                     ⠀⠀  ⢀⡇⠀⠀⠀⠀⠀⠈⠓⠧⠼⢧⣂⣊⠇⠀⠀⠀⢸⠀⠀⠀⠀⠀                               LOL                                    ║\n║                                     ⠀  ⠀⡸⠀⠀⠀⠀⠀⠀⠀⠀⠓⠶⠒⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀⠀                                                                      ║\n║                                     ⠀  ⢀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣆⠀⠀⠀⠀                                                                      ║\n║                                     ⠀  ⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀                                                                      ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡴⡫⠃⠀⠀⠀⠀⠀⢹⡀⠀⠀                                                                      ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⡄⠀⠀⠀⢀⡞⠈⠀⠈⡳⠀⠀⡔⡆⠀⠀⠸⡷⠶⡄                                                                      ║\n║                                       ⢰⠀⠀⠀⠀⠀⣇⠀⣀⠴⠋⠀⠀⣠⠔⠁⠀⣠⡇⣇⡀⠀⠀⡇⢠⡇                                                                      ║\n║                                       ⠸⡀⠀⠀⢀⣤⠟⠋⠁⠀⠀⢀⠞⠁⠀⠀⢸⠀⠀⠈⡇⠀⠀⡇⡾⠀                                                                      ║\n║                                       ⠀⣇⠀⠀⠈⠁⠀⠀⠀⢀⠔⠁⠀⠀⠀⠀⢸⡄⠀⢰⡃⠀⢀⣷⠃⠀                                                                      ║\n║                                       ⠀⡟⣦⡀⠀⠀⣀⣠⠖⠁⠀⠀⠀⠀⠀⠀⢸⣇⠀⠈⣧⠀⢸⡿⠀⠀                                                                      ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        const goodChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                          ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                       ║\n║                                          ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                          ║\n║                                          ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                       ║\n║                                           ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                        ║\n║                                           ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                        ║\n║                                           ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  You                                                                  ║\n║                                          ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      Did                                                              ║\n║                                          ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇          It                                                           ║\n║                                          ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇              Bro                                                      ║\n║                                          ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                                         ⠀⠀                            ║\n║                                          ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                                          ⠀                             ║\n║                                          ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                         ⠀                             ║\n║                                          ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                                                       ║\n║                                           ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀                                                                       ║\n║                                          ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                       ║\n║                                          ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                     ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣"
+        switch(state) {
+            case "chest" : {
+                console.log(chestRoom)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                while (true) {
+                    for await (const keypress of readKeypress()) {
+                        if (!Number.isNaN(Number(keypress.key)) && Number(keypress.key) <= 2 && Number(keypress.key) != 0) {
+                            return Number(keypress.key)
+                        }
+        
+                        if (keypress.key === 'q') {
+                          Deno.exit(0) // back to start  
+                        }
 
+                        if (keypress.ctrlKey && keypress.key === 'c') {
+                            Deno.exit(0);
+                        }
+                    }
+                }
+            }
+            case "opening" : {
+                console.log(openingChest)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+            case "good" : {
+                console.log(goodChest)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+            case "bad" : {
+                console.log(trappedChest)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+            case "skip" : {
+                console.log(chestRoom)
+                this.printMessage(message)
+                console.log("╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝")
+                console.log("\n")
+                return NaN
+            }
+        }
+        return NaN
     }
 }   
