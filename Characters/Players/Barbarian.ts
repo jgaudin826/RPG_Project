@@ -95,6 +95,12 @@ export default class Barbarian extends Player{
         }
     }
 
+    /**
+     * Used to display screen longer in order to have time to read
+     * 
+     * @param ms : delai in miliseconds
+     * @returns a promise lasting that amount of time
+     */
     public timeout (ms : number) {
         return new Promise(res => setTimeout(res,ms));
     }
