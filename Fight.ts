@@ -48,7 +48,7 @@ export default class Fight {
                 this.order=this.getOrder(this.order)
             }
         }
-        console.log("fight over")
+        Screen.screen.printMessage("fight over")
         return this.players, this.deadPlayers
     }
 

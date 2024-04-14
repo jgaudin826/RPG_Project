@@ -18,7 +18,7 @@ export default class Golem extends Monster{
      * @param speed The speed value of the golem (default: random value between 50 and 69).
      * @param maxHp The maximum HP of the golem (default: random value between 400 and 449).
      */
-    public constructor(attack : number = Math.floor((Math.random() * 10)+60), 
+    public constructor(attack : number = Math.floor((Math.random() * 10)+45), 
                 defense : number = Math.floor((Math.random() * 10)+45), 
                 speed : number= Math.floor((Math.random() * 20)+50), 
                 maxHp :number= Math.floor((Math.random() * 50)+300)

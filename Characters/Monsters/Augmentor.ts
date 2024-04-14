@@ -19,7 +19,7 @@ export default class Augmentor extends Monster{
      * @param speed The speed value of the augmentor (default: random value between 100 and 109).
      * @param maxHp The maximum HP of the augmentor (default: random value between 195 and 204).
      */
-    public constructor(attack : number = Math.floor((Math.random() * 10)+50), 
+    public constructor(attack : number = Math.floor((Math.random() * 10)+40), 
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+100), 
                 maxHp :number= Math.floor((Math.random() * 10)+195)

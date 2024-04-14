@@ -17,7 +17,7 @@ export default class Zombie extends Monster{
      * @param speed The speed value of the zombie (default: random value between 90 and 110).
      * @param maxHp The maximum HP of the zombie (default: random value between 180 and 220).
      */
-    public constructor(attack : number = Math.floor((Math.random() * 20)+40), 
+    public constructor(attack : number = Math.floor((Math.random() * 20)+30), 
                 defense : number = Math.floor((Math.random() * 10)+20), 
                 speed : number= Math.floor((Math.random() * 21)+90), 
                 maxHp :number= Math.floor((Math.random()*41)+180)

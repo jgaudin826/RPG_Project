@@ -97,7 +97,7 @@ export default class Mage extends Player{
                             }
                             return `You've made dammage to the ${monsters[choice].className}.`
                         } else {
-                            Screen.screen.displayScreen("You can't make this choice, your character has not enougth mana to do his special attack")
+                            Screen.screen.printMessage("You can't make this choice, your character has not enougth mana to do his special attack")
                             break
                         }
                     }

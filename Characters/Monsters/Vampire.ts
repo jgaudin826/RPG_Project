@@ -19,7 +19,7 @@ export default class vampire extends Monster{
      * @param speed The speed value of the vampire (default: random value between 95 and 104).
      * @param maxHp The maximum HP of the vampire (default: random value between 165 and 184).
      */
-    public constructor(attack : number = Math.floor((Math.random() * 20)+70), 
+    public constructor(attack : number = Math.floor((Math.random() * 20)+55), 
                 defense : number = Math.floor((Math.random() * 5)+15), 
                 speed : number= Math.floor((Math.random() * 10)+95), 
                 maxHp :number= Math.floor((Math.random() * 20)+165)
