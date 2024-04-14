@@ -132,8 +132,11 @@ export default class Fight {
                 }
             }
             if (deadCharacters.length != 0) {
-                Screen.screen.displayScreen(`${deadCharacters.map((v) => `${v.name} (${v.className.slice(0,3)})`).join(", ")} have been killed.`)
-                await this.timeout(2000)
+                for (let i=0; i<deadCharacters.length;i++){
+                    Screen.screen.displayScreen(`${deadCharacters.map((v) => `${v.name} (${v.className.slice(0,3)})`).join(", ")} have been killed.`)
+                    await this.timeout(2000)
+                }
+                
             }
     }
 
