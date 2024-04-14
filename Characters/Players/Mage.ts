@@ -66,16 +66,14 @@ export default class Mage extends Player{
      * @param players An array of player characters.
      * @param monsters An array of monster characters.
      */
-    public async playTurn(players:Player[],monsters:Monster[]) : Promise<string> {
+    public async playTurn(_players:Player[],monsters:Monster[]) : Promise<string> {
         while (true) {
             let choice = await Screen.screen.input(`What do you want ${this.name} (${this.className.slice(0,3)}) to do?`,["Normal Attack","Special Attack","Inventory"])
             switch (choice){
                 case 0: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
-                    if (choice===undefined){
-                        console.log("You can't make this choice, choose an other one")
-                        this.playTurn(players,monsters)
-                        break;
+                    if (choice == monsters.length){
+                            break
                     }else {
                         this.gainMana(10)
                         this.damage(monsters[choice])
@@ -87,7 +85,7 @@ export default class Mage extends Player{
                 }
                 case 1: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
-                    if (choice == 3){
+                    if (choice == monsters.length){
                         break
                     }else{
                         const action:ObjectReturn=this.specialAttack(monsters[choice])

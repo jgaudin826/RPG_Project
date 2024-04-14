@@ -55,7 +55,7 @@ export default class Barbarian extends Player{
             switch (choice){
                 case 0: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
-                    if (choice == 3){
+                    if (choice == monsters.length){
                         break
                     }else{
                         this.damage(monsters[choice])
@@ -67,7 +67,7 @@ export default class Barbarian extends Player{
                 }
                 case 1: {
                     choice = await Screen.screen.input("who do you want to attack?",monsters.map((v) => `${v.name} (${v.className.slice(0,3)})`).concat(["Go back"]))
-                    if (choice == 3){
+                    if (choice == monsters.length){
                         break
                     }else{
                         const action:ObjectReturn=this.specialAttack(monsters[choice])

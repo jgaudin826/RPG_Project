@@ -107,11 +107,11 @@ export default class GameManagement {
         if (choice == 1){
             await Screen.screen.displayChestRoom("opening","You have chosen to open the mysterious chest.")
             await this.timeout(2000)
-            const trapProbability : number = Math.floor(Math.random() * 100)
+            const trapProbability : number = Math.floor(Math.random() * 10)
             if (trapProbability < 30) {
                 for (let i=0; i<this.players.length; i++) {
-                    const dammage : number = Math.floor((Math.random() * 100)/2)
-                    this.players[i].healthLosed(dammage*this.players[i].maxHp)
+                    const dammage : number = Math.floor((Math.random() * 50))
+                    this.players[i].healthLosed((dammage/100)*this.players[i].maxHp)
                     if (this.players[i].currentHp < 0) {
                         this.players[i].currentHp = 0
                     }
