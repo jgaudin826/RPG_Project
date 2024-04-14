@@ -57,6 +57,6 @@ export default class Ogre extends Monster{
         }else{
             this.damage(intendedCharacter)
         }
-        return `${this.className} has made dammage to the ${intendedCharacter.className}: ${this.attack - intendedCharacter.defense}.`
+        return `${this.className} has made dammage to the ${intendedCharacter.className}: ${Math.max((this.attack - intendedCharacter.defense),2)}.`
     }
 }

@@ -74,6 +74,6 @@ export default class Augmentor extends Monster{
             intendedCharacter = players[Math.floor(Math.random() * players.length)]
         }
         this.damage(intendedCharacter)
-        return `${this.className} has made dammage to the ${intendedCharacter.className}: ${this.attack - intendedCharacter.defense}.`
+        return `${this.className} has made dammage to the ${intendedCharacter.className}: ${Math.max((this.attack - intendedCharacter.defense),2)}.`
     }
 }

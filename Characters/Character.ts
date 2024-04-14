@@ -1,5 +1,4 @@
 import { ObjectReturn } from "./objectReturn.ts";
-import Screen from "../Screen.ts"
 /**
  * The abstract class Character sets the common data for all characters (player and monster).
  */
@@ -80,17 +79,16 @@ export default abstract class Character {
      * @param percent The percentage of health to restore.
      * @param typeHeal The type of healing (default: "heal").
      */
-    public heal(percent : number,typeHeal:string="heal"):boolean {
+    public heal(percent : number,typeHeal:string="heal"):ObjectReturn {
         if(typeHeal==="heal" && this.currentHp<=0){
-            Screen.screen.displayScreen("You can't heal a dead character !")
-            return false
+            return {play:false,object:"You can't heal a dead character !"}
         } else {
             if(this.maxHp < this.currentHp + this.maxHp*(percent/100)) {
                 this.currentHp = this.maxHp
             } else {
-                this.currentHp += this.maxHp*(percent/100)
+                this.currentHp += Math.round(this.maxHp*(percent/100))
             }
-            return true 
+            return {play:true ,object:null}
         }
     }
 
@@ -100,11 +98,7 @@ export default abstract class Character {
      * @param percent The percentage of health to restore upon resurrection.
      */
     public resurrect(percent : number):void {
-        if(this.currentHp <= 0) {
             this.heal(percent,"resurrect")
-        } else {
-            Screen.screen.displayScreen("You can't resurrect a character who's already alive !")
-        }
     }
 
     private getName():string{

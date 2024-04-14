@@ -21,7 +21,7 @@ export default class Paladin extends Player{
      * @param maxHp The maximum HP of the paladin (default: random value between 200 and 219).
      */
     constructor(attack : number = Math.floor((Math.random() * 20)+50), 
-                defense : number = Math.floor((Math.random() * 10)+40), 
+                defense : number = Math.floor((Math.random() * 10)+35), 
                 speed : number= Math.floor((Math.random() * 20)+100), 
                 maxHp :number= Math.floor((Math.random() * 20)+200)
                 ){

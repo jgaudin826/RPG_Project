@@ -21,7 +21,7 @@ export default class Golem extends Monster{
     public constructor(attack : number = Math.floor((Math.random() * 10)+45), 
                 defense : number = Math.floor((Math.random() * 10)+45), 
                 speed : number= Math.floor((Math.random() * 20)+50), 
-                maxHp :number= Math.floor((Math.random() * 50)+150)
+                maxHp :number= Math.floor((Math.random() * 50)+250)
                 ){
         super(attack,defense,speed,maxHp)
     }
@@ -59,7 +59,7 @@ export default class Golem extends Monster{
                 intendedCharacter = players[Math.floor(Math.random() * players.length)]
             }
             this.damage(intendedCharacter)
-            return `${this.className} has made dammage to the ${intendedCharacter.className}: ${this.attack - intendedCharacter.defense}.`
+            return `${this.className} has made dammage to the ${intendedCharacter.className}: ${Math.max((this.attack - intendedCharacter.defense),2)}.`
         }
     }
 }

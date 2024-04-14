@@ -36,7 +36,7 @@ export default class Priest extends Player{
      */
     public specialAttack(ally : Character):ObjectReturn{
             const healed=ally.heal(25)
-        return {play:healed,object:ally.className}
+        return {play:healed['play'],object:healed['object']}
     }
 
     /**
@@ -68,9 +68,13 @@ export default class Priest extends Player{
                     }else{
                         const action:ObjectReturn=this.specialAttack(players[choice])
                         if (action['play']===false){
+                            if (action['object'] === (typeof String)) {
+                                Screen.screen.displayScreen(action['object'])
+                                await this.timeout(2000)
+                            }
                             break
                         }else {
-                            return `You've healed the ${action['object']}.`
+                            return `You've healed the ${players[choice].name}.`
                         }
                     }
                 }
@@ -83,5 +87,14 @@ export default class Priest extends Player{
                 }
             }   
         }
+    }
+    /**
+     * Used to display screen longer in order to have time to read
+     * 
+     * @param ms : delai in miliseconds
+     * @returns a promise lasting that amount of time
+     */
+    public timeout (ms : number) {
+        return new Promise(res => setTimeout(res,ms));
     }
 }
