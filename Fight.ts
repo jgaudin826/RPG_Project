@@ -27,7 +27,7 @@ export default class Fight {
 
     async startFight() : Promise<Character[]> {
         Screen.screen.fight = this
-        let message = "Game has Started"
+        let message = `Fight has Started`
         while (this.players.length > 0 || this.monsters.length > 0) {
             Screen.screen.displayScreen(message, this.allCharacters, this.order)
             await this.timeout(2000)

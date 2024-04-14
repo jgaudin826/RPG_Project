@@ -62,8 +62,8 @@ export default class Screen {
 
     getMonsters(allCharacters : Character[],order : Character[]): string{
         let fightScreen = ""
-
-        // Line 1
+        
+        //Line 1
         let line = `║${this.getSpaces(30)}`
         for (let i=0; i<3;i++) { 
             let tempLine = ""
@@ -76,8 +76,8 @@ export default class Screen {
             line += tempLine
         }
         fightScreen += line + "║\n"
-
-        //Line 2
+        
+        // Line 2
         line = `║${this.getSpaces(30)}`
         for (let i=0;i<3;i++){
             let tempLine = ""
@@ -103,14 +103,14 @@ export default class Screen {
         }
         fightScreen += line + "║\n"
 
-        //Line 3-4-5
+        // Line 3-4-5
         for (let i=0;i<3;i++) {
             line = `║${this.getSpaces(30)}`
             for (let j=0;j<3;j++) {
-                if(allCharacters[i+3].currentHp<=0){
-                    line += this.monsterSprite[1][i]
-                } else {
+                if(order.indexOf(allCharacters[i+3])!=-1){
                     line += this.monsterSprite[0][i]
+                } else {
+                    line += this.monsterSprite[1][i]
                 }
                 line += this.getSpaces(15)
             }
@@ -121,6 +121,7 @@ export default class Screen {
 
     getPlayers(allCharacters : Character[],order : Character[]): string {
         let fightScreen = "" 
+        
         // Line 1
         let line = `║${this.getSpaces(10)}`
         for (let i=0; i<3;i++) { 
@@ -135,7 +136,7 @@ export default class Screen {
         }
         fightScreen += line + this.getSpaces(20) + "║\n"
 
-        //Line 2
+        // Line 2
         line = `║${this.getSpaces(10)}`
         for (let i=0;i<3;i++){
             let tempLine = ""
@@ -161,14 +162,14 @@ export default class Screen {
         }
         fightScreen += line + this.getSpaces(20) + "║\n"
 
-        //Line 3-4-5
+        // Line 3-4-5
         for (let i=0;i<3;i++) {
             line = `║${this.getSpaces(10)}`
             for (let j=0;j<3;j++) {
-                if(allCharacters[i].currentHp<=0){
-                    line += this.playerSprite[1][i]
-                } else {
+                if(order.indexOf(allCharacters[i])!=-1){
                     line += this.playerSprite[0][i]
+                } else {
+                    line += this.playerSprite[1][i]
                 }
                 line += this.getSpaces(15)
             }
@@ -181,14 +182,14 @@ export default class Screen {
     getBoss(allCharacters : Character[],order : Character[]): string {
         let fightScreen = ""
 
-        //Line 1
+        // Line 1
         let line = `║${this.getSpaces(95)}`
         let tempLine = `${order.indexOf(allCharacters[3]) + 1}. Jean-Pierre (${allCharacters[3].className})`
         line += tempLine
         line += this.getSpaces(20-(tempLine.length-20))
         fightScreen += line + "║\n"
 
-        //Line 2
+        // Line 2
         line = `║${this.getSpaces(95)}`
         tempLine = ""
         const health = Math.round((allCharacters[3].currentHp/allCharacters[3].maxHp)*20)
@@ -212,7 +213,7 @@ export default class Screen {
         line += tempLine
         fightScreen += line + "║\n"
 
-        // boss
+        // Boss
         for (let i=0;i<10;i++) {
             line = `║${this.getSpaces(95)}` 
             line += this.bossSprite[i]
@@ -311,7 +312,6 @@ export default class Screen {
      * @returns index of option seleced
      */
     async input(message : string, optionsList : Array<string>) :Promise<number> {
-        //1: Temp Name (Augmentor)    
         this.displayScreen()
         this.printMessage(message)
         const options = ["╠══════════════════════════╦══════════════════════════╦══════════════════════════╦══════════════════════════╦═══════════════════════════╣","╚══════════════════════════╩══════════════════════════╩══════════════════════════╩══════════════════════════╩═══════════════════════════╝"] 
@@ -337,18 +337,34 @@ export default class Screen {
 
         while (true) {
             for await (const keypress of readKeypress()) {
-                if (!Number.isNaN(Number(keypress.key)) && Number(keypress.key) <= optionsList.length) {
+                if (!Number.isNaN(Number(keypress.key)) && Number(keypress.key) <= optionsList.length && Number(keypress.key) != 0) {
                     return Number(keypress.key)-1
                 }
 
                 if (keypress.key === 'q') {
                   Deno.exit(0) // back to start  
                 }
+            }
+        }
+    }
 
-                if (keypress.ctrlKey && keypress.key === 'c') {
-                    Deno.exit(0)
+    async displaySelection(i : number) : Promise<number> {
+        console.log("╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 70 - 89        /\\__/\\       Special Attack:              Attakck : 40 - 49        /\\__/\\       Special Attack:        ║\n║       Defence : 15 - 24       ( •ㅅ• )      Attack a random              Defence : 10 - 14       ( •ㅅ• )      Restores 25% HP        ║\n║       Speed :   100 - 109     /      \\      monster for 130%             Speed :   95 - 104      /      \\      of a chosen            ║\n║       Health :  200 - 209   1. Barbarian    attack damage                Health :  190 - 209     4. Priest     character              ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 35 - 44        /\\__/\\       Special Attack:              Attakck : 45 - 54        /\\__/\\       Special Attack:        ║\n║       Defence : 10 - 14       ( •ㅅ• )      A magic attack               Defence : 20 - 29       ( •ㅅ• )      Has a 60% chance       ║\n║       Speed :   115 - 124     /      \\      that ignores                 Speed :   135 - 164     /      \\      to steal a random      ║\n║       Health :  190 - 209     2. Mage       the defense                  Health :  165 - 184     5. Theif      item                   ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n║       Attakck : 50 - 69        /\\__/\\       Special Attack:              Attakck : 60 - 79        /\\__/\\       Special Attack:        ║\n║       Defence : 40 - 49       ( •ㅅ• )      Targets all enemies          Defence : 35 - 44       ( •ㅅ• )      No special attacks     ║\n║       Speed :   100 - 119     /      \\      dealing 40% damage           Speed :   95 -105       /      \\                             ║\n║       Health :  200 - 219    3. Paladin     to each                      Health :  190 -209     6. Warrior                            ║\n║                                                                                                                                       ║\n║                                                                                                                                       ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣")
+        this.printMessage(`Choose your character ${i}`)
+        while (true) {
+            for await (const keypress of readKeypress()) {
+                if (!Number.isNaN(Number(keypress.key)) && Number(keypress.key) <= 6 && Number(keypress.key) != 0) {
+                    return Number(keypress.key)-1
+                }
+
+                if (keypress.key === 'q') {
+                  Deno.exit(0) // back to start  
                 }
             }
         }
+    }
+
+    displayCchestRoom() {
+
     }
 }   

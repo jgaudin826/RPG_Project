@@ -8,6 +8,7 @@ import Thief from "./Characters/Players/Thief.ts"
 import Fight from "./Fight.ts"
 import Zombie from "./Characters/Monsters/Zombie.ts"
 import Menu from "./Menu.ts"
+import Screen from "./Screen.ts";
 
 export default class GameManagement {
     private static _game : GameManagement | null = null;
@@ -27,17 +28,11 @@ export default class GameManagement {
      * GameManager.game.start() : to start game
      */
     async start(){
-        console.log("Game Started")
-        this.players=this.createTeam()
-        console.log("go to fight 1")
+        this.players= await this.createTeam()
         this.players, this.deadPlayers = await new Fight().startFight()
-        console.log("go to chest room 1")
         this.chestRoom()
-        console.log("go to fight 2")
         this.players, this.deadPlayers = await new Fight().startFight()
-        console.log("go to chest room 2")
         this.chestRoom()
-        console.log("go to boss fight")
         const boss = [new Zombie()]
         this.players, this.deadPlayers = await new Fight(boss).startFight()
 
@@ -46,11 +41,11 @@ export default class GameManagement {
     /**
      * 
      */
-    createTeam() : Character[] {
+    async createTeam() : Promise<Character[]> {
         const playerTeam : Character[] = []
         const options = [Warrior, Mage, Paladin, Barbarian, Priest, Thief]
         for (let i=1; i <= 3; i++) {
-            const answer = new Menu(`Choose the class of adventurer ${i}`,["Warrior", "Mage", "Paladin", "Barbarian", "Priest", "Thief"]).input()
+            const answer = await Screen.screen.displaySelection(i)
             playerTeam.push(new options[answer]())
         }
         return playerTeam

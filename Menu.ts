@@ -11,29 +11,26 @@ export default class Menu {
     input() : number {
         //console.log(`
         //╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
-        //║                                                                    |                                                                  ║
-        //║                                                                                                                                       ║
-        //║                              1. Cat Pouchinau (Barabarian)      2. Cat Astrophe (Dead)                                                ║
-        //║                              #################### 23/46         ####################               ####################               ║
-        //║                                     /\__/\                             /\__/\                                                         ║
-        //║                                    ( •ㅅ• )                           ( XㅅX )                                                        ║
-        //║                                    /      \                           /      \                                                        ║
         //║                                                                                                                                       ║
         //║                                                                                                                                       ║
+        //║       Attakck : 70 - 89        /\__/\       Special Attack:              Attakck : 40 - 49        /\__/\       Special Attack:        ║
+        //║       Defence : 15 - 24       ( •ㅅ• )      Attack a random              Defence : 10 - 14       ( •ㅅ• )      Restores 25% HP        ║
+        //║       Speed :   100 - 109     /      \      monster for 130%             Speed :   95 - 104      /      \      of a chosen            ║
+        //║       Health :  200 - 209   1. Barbarian    attack damage                Health :  190 - 209     4. Priest     character              ║
         //║                                                                                                                                       ║
         //║                                                                                                                                       ║
+        //║       Attakck : 35 - 44        /\__/\       Special Attack:              Attakck : 45 - 54        /\__/\       Special Attack:        ║
+        //║       Defence : 10 - 14       ( •ㅅ• )      A magic attack               Defence : 20 - 29       ( •ㅅ• )      Has a 60% chance       ║
+        //║       Speed :   115 - 124     /      \      that ignores                Speed :   135 - 164     /      \      to steal a random      ║
+        //║       Health :  190 - 209     2. Mage       the defense                  Health :  165 - 184     5. Theif      item                   ║
         //║                                                                                                                                       ║
         //║                                                                                                                                       ║
+        //║       Attakck : 50 - 69        /\__/\       Special Attack:              Attakck : 60 - 79        /\__/\       Special Attack:        ║
+        //║       Defence : 40 - 49       ( •ㅅ• )      Targets all enemies          Defence : 35 - 44       ( •ㅅ• )      No special attacks     ║
+        //║       Speed :   100 - 119     /      \      dealing 40% damage           Speed :   95 -105       /      \                             ║
+        //║       Health :  200 - 219    3. Paladin     to each                      Health :  190 -209     6. Warrior                            ║
         //║                                                                                                                                       ║
         //║                                                                                                                                       ║
-        //║          ####################               ####################                ####################               |                  ║
-        //║                   /\__/\                                                                                                              ║
-        //║                  (=X==X=)``                                                                                                            ║
-        //║                   \_ㅅ_/                                                                                                                ║
-        //║                  Cat Edral                                                                                                              ║
-        //║                   Prêtre                                                                                                                ║
-        //║                                                                                                                                         ║
-        //║                                                                                                                                         ║
         //╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
         //║     Game :                                                                                                                            ║
         //║                                                                                                                                       ║
@@ -43,12 +40,65 @@ export default class Menu {
         //║                             ║                                                                                                         ║
         //╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝`)
 
+        //  ╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+        //  ║                                                                                                                                       ║
+        //  ║                                                                                                                                       ║
+        //  ║                             1) Barbarian                                     4) Priest                                                ║
+        //  ║                             Attack : 70 => 89                                Attack : 40 => 49                                        ║
+        //  ║                             Defense : 15 => 24                               Defense : 10 => 14                                       ║
+        //  ║                             Speed : 100 => 109                               Speed : 95 => 104                                        ║
+        //  ║                             Health : 200 => 209                              Health : 190 => 209                                      ║
+        //  ║                             Bersek : Attacks a random                        Healing Capacity : Restores                              ║
+        //  ║                             character and deals 130% physical                25% of a character's HP.                                 ║
+        //  ║                             attack damage                                                                                             ║
+        //  ║                                                                                                                                       ║
+        //  ║                             2) Mage                                          5) Thief                                                 ║
+        //  ║                             Attack : 35 => 44                                Attack : 45 => 54                                        ║
+        //  ║                             Defense : 10 => 14                               Defense : 20 => 29                                       ║
+        //  ║                             Speed : 115 => 124                               Speed : 135 => 164                                       ║
+        //  ║                             Health : 190 => 209                              Health : 165 => 184                                      ║
+        //  ║                             Mana : 100                                       Steal something : 30% to steal                           ║
+        //  ║                                                                              a potion, 15% for star fragment,                         ║
+        //  ║                             3) Paladin                                       10% for ether and 5% for half star.                      ║
+        //  ║                             Attack : 50 => 69                                                                                         ║
+        //  ║                             Defense : 40 => 49                               6) Warrior                                               ║
+        //  ║                             Speed : 100 => 119                               Attack : 60 => 79                                        ║
+        //  ║                             Health : 200 => 219                              Defense : 35 => 44                                       ║
+        //  ║                             Holy Attack : Targets all                        Speed : 95 => 105                                        ║
+        //  ║                             enemies and deals 40% physical                   Health : 190 => 209                                      ║
+        //  ║                             attack damage.                                                                                            ║
+        //  ║                                                                                                                                       ║
+        //  ║                                                                                                                                       ║
+        //  ╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
         // Red : \x1b[31m
         // Green : \x1b[32m
         // Exemple : console.log(\x1b[32m barre de vie \x1b[0m)
+        
 
         /**
-         * 
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                                                                       ║
+║                              4. Temp Name (Ogre)                5. Temp Name (Vampire)             2. Temp Name (Vampire)             ║
+║                              ████████████████████ 158/204       ████████████████████ 96/174        ████████████████████ 125/170       ║
+║                                     /\__/\                             /\__/\                             /\__/\                      ║
+║                                    (=•==•=)``                         (=•==•=)``                         (=•==•=)``                   ║
+║                                     \_ㅅ_/                             \_ㅅ_/                             \_ㅅ_/                      ║
+║                                                                                                                                       ║
+║                                                                                                                                       ║
+║                                                                                                                                       ║
+║                                                                                                                                       ║
+║                                                                                                                                       ║
+║                                                                                                                                       ║
+║                                                                                                                                       ║
+║                                                                                                                                       ║
+║          6. Temp Name (Warrior)             1. Temp Name (Mage)                3. Temp Name (Paladin)                                 ║
+║          ████████████████████ 154/198       ████████████████████ 202/202       ████████████████████ 149/210                           ║
+║                 /\__/\                             /\__/\                             /\__/\                                          ║
+║                ( •ㅅ• )                           ( •ㅅ• )                           ( •ㅅ• )                                         ║
+║                /      \                           /      \                           /      \                                         ║
+║                                                                                                                                       ║
+╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
+
          *  ──▄────▄▄▄▄▄▄▄────▄───
             ─▀▀▄─▄█████████▄─▄▀▀──
             ─────██─▀███▀─██──────
