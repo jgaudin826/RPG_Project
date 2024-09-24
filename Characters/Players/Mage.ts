@@ -26,9 +26,10 @@ export default class Mage extends Player{
                 defense : number = Math.floor((Math.random() * 5)+10), 
                 speed : number= Math.floor((Math.random() * 10)+115), 
                 maxHp :number= Math.floor((Math.random() * 20)+190),
-                manaMax : number= 100
+                manaMax : number= 100,
+                divinPowerMax : number =0
                 ){
-        super(attack,defense,speed,maxHp,manaMax)
+        super(attack,defense,speed,maxHp,manaMax,divinPowerMax)
     }
 
     /**

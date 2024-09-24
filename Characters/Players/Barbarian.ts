@@ -23,9 +23,11 @@ export default class Barbarian extends Player{
     public constructor(attack : number = Math.floor((Math.random() * 20)+70), 
                 defense : number = Math.floor((Math.random() * 10)+15), 
                 speed : number= Math.floor((Math.random() * 10)+100), 
-                maxHp :number= Math.floor((Math.random() * 10)+200)
+                maxHp :number= Math.floor((Math.random() * 10)+200),
+                manaMax : number = 0,
+                divinPowerMax : number =0
                 ){
-        super(attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp,manaMax,divinPowerMax)
     }
 
     /**

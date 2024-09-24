@@ -22,9 +22,10 @@ export default class Ogre extends Monster{
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+75), 
                 maxHp :number= Math.floor((Math.random() * 10)+195),
-                manaMax : number=0
+                manaMax : number=0,
+                divinPowerMax : number =0
                 ){
-        super(attack,defense,speed,maxHp,manaMax)
+        super(attack,defense,speed,maxHp,manaMax,divinPowerMax)
     }
 
     /**

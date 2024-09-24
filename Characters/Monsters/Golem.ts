@@ -22,9 +22,10 @@ export default class Golem extends Monster{
                 defense : number = Math.floor((Math.random() * 10)+45), 
                 speed : number= Math.floor((Math.random() * 20)+50), 
                 maxHp :number= Math.floor((Math.random() * 50)+250),
-                manaMax : number=0
+                manaMax : number=0,
+                divinPowerMax : number =0
                 ){
-        super(attack,defense,speed,maxHp,manaMax)
+        super(attack,defense,speed,maxHp,manaMax,divinPowerMax)
     }
 
     /**

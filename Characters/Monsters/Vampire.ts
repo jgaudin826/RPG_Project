@@ -23,9 +23,10 @@ export default class vampire extends Monster{
                 defense : number = Math.floor((Math.random() * 5)+15), 
                 speed : number= Math.floor((Math.random() * 10)+95), 
                 maxHp :number= Math.floor((Math.random() * 20)+165),
-                manaMax : number=0
+                manaMax : number=0,
+                divinPowerMax : number =0
                 ){
-        super(attack,defense,speed,maxHp,manaMax)
+        super(attack,defense,speed,maxHp,manaMax,divinPowerMax)
     }
 
     /**
