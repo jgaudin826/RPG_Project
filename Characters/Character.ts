@@ -11,6 +11,8 @@ export default abstract class Character {
     public className:string=""
     public name : string="Name"
     public speedPosition:number=0;
+    public manaMax : number;
+    public manaNow : number;
     
 
     /**
@@ -21,12 +23,14 @@ export default abstract class Character {
      * @param speed The speed value of the character.
      * @param maxHp The maximum HP of the character.
      */
-    public constructor(attack : number, defense : number,speed : number, maxHp : number){
+    public constructor(attack : number, defense : number,speed : number, maxHp : number,manaMax : number){
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
         this.maxHp = maxHp;
         this.currentHp = maxHp;
+        this.manaMax= manaMax
+        this.manaNow = manaMax
         this.name = this.getName()
         
     }

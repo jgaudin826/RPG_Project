@@ -22,9 +22,10 @@ export default class Augmentor extends Monster{
     public constructor(attack : number = Math.floor((Math.random() * 10)+40), 
                 defense : number = Math.floor((Math.random() * 10)+25), 
                 speed : number= Math.floor((Math.random() * 10)+100), 
-                maxHp :number= Math.floor((Math.random() * 10)+195)
+                maxHp :number= Math.floor((Math.random() * 10)+195),
+                manaMax : number=0
                 ){
-        super(attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp,manaMax)
     }
 
     /**

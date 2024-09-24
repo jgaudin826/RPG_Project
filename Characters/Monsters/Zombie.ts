@@ -20,9 +20,10 @@ export default class Zombie extends Monster{
     public constructor(attack : number = Math.floor((Math.random() * 20)+30), 
                 defense : number = Math.floor((Math.random() * 10)+20), 
                 speed : number= Math.floor((Math.random() * 21)+90), 
-                maxHp :number= Math.floor((Math.random()*41)+180)
+                maxHp :number= Math.floor((Math.random()*41)+180),
+                manaMax : number=0
                 ){
-        super(attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp,manaMax)
     }
 
     /**

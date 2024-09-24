@@ -24,9 +24,10 @@ export default class Thief extends Player{
     public constructor(attack : number = Math.floor((Math.random() * 10)+45), 
                 defense : number = Math.floor((Math.random() * 10)+20), 
                 speed : number= Math.floor((Math.random() * 30)+135), 
-                maxHp :number= Math.floor((Math.random() * 20)+165)
+                maxHp :number= Math.floor((Math.random() * 20)+165),
+                manaMax : number=0
                 ){
-        super(attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp,manaMax)
     }
 
     /**

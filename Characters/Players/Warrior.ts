@@ -21,9 +21,10 @@ export default class Warrior extends Player{
     public constructor(attack : number = Math.floor((Math.random() * 20)+60), 
                 defense : number = Math.floor((Math.random() * 10)+35), 
                 speed : number= Math.floor((Math.random() * 11)+95), 
-                maxHp :number= Math.floor((Math.random() * 20)+190)
+                maxHp :number= Math.floor((Math.random() * 20)+190),
+                manaMax : number=0
                 ){
-        super(attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp,manaMax)
     }
 
     /**

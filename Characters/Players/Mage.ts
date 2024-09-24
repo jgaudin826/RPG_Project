@@ -11,8 +11,6 @@ import Screen from "../../Screen.ts";
  */
 export default class Mage extends Player{
     public className:string="Mage";
-    public manaNow : number;
-    public manaMax : number;
     public speedPosition:number=this.speed;
 
     /**
@@ -30,9 +28,7 @@ export default class Mage extends Player{
                 maxHp :number= Math.floor((Math.random() * 20)+190),
                 manaMax : number= 100
                 ){
-        super(attack,defense,speed,maxHp)
-        this.manaMax = manaMax
-        this.manaNow = manaMax
+        super(attack,defense,speed,maxHp,manaMax)
     }
 
     /**

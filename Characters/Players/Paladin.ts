@@ -23,9 +23,10 @@ export default class Paladin extends Player{
     constructor(attack : number = Math.floor((Math.random() * 20)+50), 
                 defense : number = Math.floor((Math.random() * 10)+35), 
                 speed : number= Math.floor((Math.random() * 20)+100), 
-                maxHp :number= Math.floor((Math.random() * 20)+200)
+                maxHp :number= Math.floor((Math.random() * 20)+200),
+                manaMax : number=0
                 ){
-        super(attack,defense,speed,maxHp)
+        super(attack,defense,speed,maxHp,manaMax)
     }
 
     /**
