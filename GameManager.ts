@@ -165,7 +165,7 @@ export default class GameManagement {
             }
         }
         if (deadCharacters.length != 0) {
-            await Screen.screen.displayChestRoom("bad",`${deadCharacters.join(", ")} have been killed by the trapped chest. RIP!`)
+            await Screen.screen.displayChestRoom("bad",`${deadCharacters.map((v) => `${v.name} (${v.className.slice(0,3)})`).join(", ")} have been killed by the trapped chest. RIP!`)
             await this.timeout(2000)
         }
     }

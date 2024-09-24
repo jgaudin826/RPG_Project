@@ -67,9 +67,10 @@ export default class Fight {
                     this.order[i].speedPosition += (this.order[i].speed)
                 }
             }
-            this.order=this.getOrder(this.order)
             await this.checkDeadCharacters()
             await this.checkResurected()
+            this.order=this.getOrder(this.order)
+            
         }
         if (this.players.length == 0) {
             Screen.screen.displayScreen("Fight Over, you lost to the monsters.")
@@ -148,6 +149,7 @@ export default class Fight {
         for (let i=0;i<this.deadPlayers.length;i++){
             if (this.deadPlayers[i].currentHp > 0){
                 this.players.push(this.deadPlayers[i])
+                this.order.push(this.deadPlayers[i])
                 this.deadPlayers.splice(i,1)
                 Screen.screen.displayScreen(`${this.players[i].name} (${this.players[i].className.slice(0,3)}) have been resurected.`)
                 await this.timeout(2000)
