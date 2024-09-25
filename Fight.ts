@@ -27,7 +27,7 @@ import Monster from "./Characters/Monster.ts"
 export default class Fight {
     public players : Character[]
     private monsters : Character[]
-    private order : Character[]
+    public order : Character[]
     private allCharacters : Character[]
     public deadPlayers : Character[]
     private deadMonsters : Character[]
@@ -88,7 +88,7 @@ export default class Fight {
      * @param orderList an unordered list 
      * @returns the ordered list
      */
-    private getOrder(orderList : Character[]) : Character[] {
+    public getOrder(orderList : Character[]) : Character[] {
         orderList.sort((a, b) => b.speedPosition - a.speedPosition)
         return orderList
     }
