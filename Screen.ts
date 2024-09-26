@@ -54,7 +54,7 @@ export default class Screen {
         if (allCharacters !== undefined && order !== undefined) {
             this.fightScene = ""
             this.fightScene += "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n"
-            this.fightScene += this.spaceBar+`                          ║\n`
+            this.fightScene += this.spaceBar+this.getSpaces(26)+`║\n`
             if (allCharacters.length == 4) {
                 this.displayBoss(allCharacters,order)
             } else {
@@ -78,10 +78,10 @@ export default class Screen {
         this.fightScene += this.getMonsters(allCharacters,order)
 
         for (let i=0; i<6; i++) {
-            this.fightScene += this.spaceBar+`${order[i].className} ${order[i].speedPosition}`+this.getSpaces(("                          ").length-(order[i].className+" "+order[i].speedPosition).length)+"║\n"
+            this.fightScene += this.spaceBar+`${order[i].className} ${order[i].speedPosition}`+this.getSpaces(26-(order[i].className+" "+order[i].speedPosition).length)+"║\n"
         }
         for (let i=0; i<2; i++) {
-            this.fightScene += this.spaceBar+`                          ║\n`
+            this.fightScene += this.spaceBar+this.getSpaces(26)+`║\n`
         }
 
         this.fightScene += this.getPlayers(allCharacters,order)
@@ -118,7 +118,7 @@ export default class Screen {
             tempLine += this.getSpaces(15-(tempLine.length-20))
             line += tempLine
         }
-        fightScreen += line + "║                          ║\n"
+        fightScreen += line + "║"+this.getSpaces(26)+"║\n"
         
         // Line 2
         line = `║${this.getSpaces(30)}`
@@ -144,7 +144,7 @@ export default class Screen {
             tempLine += healthText + this.getSpaces(15-healthText.length) 
             line += tempLine
         }
-        fightScreen += line + "║                          ║\n"
+        fightScreen += line + "║"+this.getSpaces(26)+"║\n"
 
         // Line 3-4-5
         for (let i=0;i<3;i++) {
@@ -157,7 +157,7 @@ export default class Screen {
                 }
                 line += this.getSpaces(15)
             }
-            fightScreen += line + "║                          ║\n"
+            fightScreen += line + "║"+this.getSpaces(26)+"║\n"
         }
         return fightScreen
     }
@@ -183,7 +183,7 @@ export default class Screen {
             tempLine += this.getSpaces(15-(tempLine.length-20))
             line += tempLine
         }
-        fightScreen += line + this.getSpaces(20) + "║                          ║\n"
+        fightScreen += line + this.getSpaces(20) + "║"+this.getSpaces(26)+"║\n"
 
         // Line 2
         line = `║${this.getSpaces(10)}`
@@ -209,7 +209,7 @@ export default class Screen {
             tempLine += healthText + this.getSpaces(15-healthText.length) 
             line += tempLine
         }
-        fightScreen += line + this.getSpaces(20) + "║                          ║\n"
+        fightScreen += line + this.getSpaces(20) + "║"+this.getSpaces(26)+"║\n"
 
         // Line 3-4-5
         for (let i=0;i<3;i++) {
@@ -222,9 +222,52 @@ export default class Screen {
                 }
                 line += this.getSpaces(15)
             }
-            fightScreen += line + this.getSpaces(20) + "║                          ║\n"
+            fightScreen += line + this.getSpaces(20) + "║"+this.getSpaces(26)+"║\n"
         }
-        fightScreen += this.spaceBar+`                          ║\n`
+        //ligne 6
+        line = "║"+this.getSpaces(10)
+        for (let i=0;i<3;i++){
+            let tempLine = ""
+            const mana = Math.round((allCharacters[i].manaNow/allCharacters[i].manaMax)*20)
+            const divinePower = Math.round((allCharacters[i].divinPowerNow/allCharacters[i].divinPowerMax)*20)
+            if (allCharacters[i].manaMax == 0 && allCharacters[i].divinPowerMax == 0) {
+                tempLine += this.getSpaces(20)
+            } else if (divinePower  == 20){
+                tempLine += "\x1b[33m████████████████████\x1b[0m"
+            } else if (mana == 20){
+                tempLine += "\x1b[34m████████████████████\x1b[0m"
+            } else{
+                if (divinePower<20 && divinePower!=0){
+                    tempLine += "\x1b[33m"
+                    for (let j=0;j<divinePower;j++){
+                        tempLine+= "█"
+                    }
+                }else{
+                    tempLine += "\x1b[34m"
+                    for (let j=0;j<divinePower;j++){
+                        tempLine+= "█"
+                    }
+                }
+                tempLine +="\x1b[30m"
+                for (let j=0;j<(20-divinePower);j++){
+                    tempLine+= "█"
+                }
+                tempLine += "\x1b[0m"
+            }
+            let manaText : string
+            if (allCharacters[i].className=="Priest" || allCharacters[i].className=="Paladin"){
+                manaText = `${allCharacters[i].divinPowerNow}/${allCharacters[i].divinPowerMax}`
+                tempLine += manaText + this.getSpaces(15-manaText.length) 
+            } else if (allCharacters[i].className=="Mage"){
+                manaText = `${allCharacters[i].manaNow}/${allCharacters[i].manaMax}`
+                tempLine += manaText + this.getSpaces(15-manaText.length) 
+            } else{
+                tempLine += this.getSpaces(15) 
+            }
+            line += tempLine
+        }
+        fightScreen += line + this.getSpaces(20) + "║"+this.getSpaces(26)+"║\n"
+        fightScreen += this.spaceBar+this.getSpaces(26)+`║\n`
         fightScreen += "╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
         return fightScreen
     }
@@ -243,7 +286,7 @@ export default class Screen {
         let tempLine = `${order.indexOf(allCharacters[3]) + 1}. Jean-Pierre (${allCharacters[3].className})`
         line += tempLine
         line += this.getSpaces(20-(tempLine.length-20))
-        fightScreen += line + "║                          ║\n"
+        fightScreen += line + "║"+this.getSpaces(26)+"║\n"
 
         // Line 2
         line = `║${this.getSpaces(95)}`
@@ -267,15 +310,15 @@ export default class Screen {
         const healthText = ` ${allCharacters[3].currentHp}/${allCharacters[3].maxHp}`
         tempLine += healthText + this.getSpaces(20-healthText.length) 
         line += tempLine
-        fightScreen += line + "║                          ║\n"
+        fightScreen += line + "║"+this.getSpaces(26)+"║\n"
 
         // Boss
         for (let i=0;i<10;i++) {
             line = `║${this.getSpaces(95)}` 
             line += this.bossSprite[i]
-            fightScreen += line + this.getSpaces(20) + "║                          ║\n"
+            fightScreen += line + this.getSpaces(20) + "║"+this.getSpaces(26)+"║\n"
         }
-        fightScreen += this.spaceBar+`                          ║\n`
+        fightScreen += this.spaceBar+this.getSpaces(26)+`║\n`
         return fightScreen
     }
 
@@ -299,17 +342,17 @@ export default class Screen {
     private printMessage(message : string) {
         let line = "║     Game : "
         if (message.length>110) {
-            line += message.slice(0,110) + "                                        ║"
+            line += message.slice(0,110) +this.getSpaces(40)+"║"
             console.log(line)
-            line = "║            "
+            line = "║"+this.getSpaces(12)
             line += message.slice(110)
-            line += this.getSpaces(136-line.length) + "                           ║"
+            line += this.getSpaces(136-line.length) + this.getSpaces(27)+"║"
             console.log(line)
         } else {
             line += message
-            line += this.getSpaces(123-message.length) + "                           ║"
+            line += this.getSpaces(123-message.length) + this.getSpaces(27)+"║"
             console.log(line)
-            console.log("║" + this.getSpaces(135) + "                           ║")
+            console.log("║" + this.getSpaces(135) + this.getSpaces(27)+"║")
         }
     }
 
@@ -395,7 +438,7 @@ export default class Screen {
 
         // if empty less than 4 options fill them with empty spaces
         for (let i=0; i<5-optionsList.length; i++) {
-            line += `                          ║`
+            line += this.getSpaces(26)+`║`
         }
 
         line += `         q: Quit           ║`
@@ -455,10 +498,10 @@ export default class Screen {
      */
     public async displayChestRoom(state : string, message : string) : Promise<number> {
         console.clear()
-        const chestRoom = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                                 ║                          ║\n║                                ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                                    ║                          ║\n║                                ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                                 ║                          ║\n║                                 ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                                  ║                          ║\n║                                 ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                                  ║                          ║\n║                                 ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  Take            ⡄⢠⣤⣤⠀⣤⣤⣤⣤⣤⣤⣤⣤⣤⠀⣤⣤⡄⢠                                            ║                          ║\n║                                ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      It         ⢸⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿                                           ║                          ║\n║                                ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇        Bro      ⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿⡇⠀⠀                                       ║                          ║\n║                                ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇                ⣿⡇⢸⣿⣿⠀⣿⣿⣿⠟⠛⠛⠛⠛⠻⣿⣿⠀⣿⣿⡇⢸⣿⣿                                         ║                          ║\n║                                ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                ⡉⢁⣀⣉⣀⣀⣉⣉⣉⠀⣴⠖⠲⣦⠀⣉⣉⣉⣀⣉⣉⣀⡈⢉⡁⠀⠀                                      ║                          ║\n║                                ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║                          ║\n║                                ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║                          ║\n║                                ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                        ║                          ║\n║                                 ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀               ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠸⠃                                        ║                          ║\n║                                ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                                 ║                          ║\n║                                ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                               ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
-        const openingChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                ,-.       _,---._ __  / \\                                                              ║                          ║\n║                                                /  )    .-'       `./ /   \\                                                            ║                          ║\n║                                                (  (   ,'            `/    /|                                                          ║                          ║\n║                                                  \\  `-\"             \\'\\   / |                                                         ║                          ║\n║                                                   `.              ,  \\ \\ /  |                                                         ║                          ║\n║                                                    /`.          ,'-`----Y   |                                                         ║\n║                                                   (    (       ;        |   /                                                         ║                          ║\n║                                                   |  ,-.    ,-'         |  /                                                          ║                          ║\n║                                                   |  | (   |            | /                                                           ║                          ║\n║                                                   )  |  \\  \`.___________|/                                                            ║                          ║\n║                                                   `--'   `--'                                                                         ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
-        const trappedChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                ⠀⠀ ⠀⠀⠀⠀⠀  ⠀   ⡼⡝⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀⠀⠀⠀⠀  ⠀⣸⢹⣹⠸⡦⠤⠤⠤⠄⣀⡀⠀⠀⡠⢴⢲⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀⠀⠀⠀ ⠀ ⢰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠳⢏⣊⠹⣼⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀⠀⠀  ⠀⢀⠏⠀⠀⢠⡤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠁⡇⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀⠀⠀  ⠀⡎⠀⠀⠀⠀⠙⠓⢺⡄⠀⡴⠾⣿⡽⠖⠀⢸⡇⠀⠀⠀⠀                  Get                                                 ║                          ║\n║                                     ⠀⠀  ⠀⣸⠀⠀⠀⠀⠀⢀⢀⠀⢖⢲⠏⠀⠀⠀⠀⠀⢸⠁⠀⠀⠀⠀                       Pranked                                        ║                          ║\n║                                     ⠀⠀  ⢀⡇⠀⠀⠀⠀⠀⠈⠓⠧⠼⢧⣂⣊⠇⠀⠀⠀⢸⠀⠀⠀⠀⠀                               LOL                                    ║                          ║\n║                                     ⠀  ⠀⡸⠀⠀⠀⠀⠀⠀⠀⠀⠓⠶⠒⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⢀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣆⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡴⡫⠃⠀⠀⠀⠀⠀⢹⡀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⡄⠀⠀⠀⢀⡞⠈⠀⠈⡳⠀⠀⡔⡆⠀⠀⠸⡷⠶⡄                                                                      ║                          ║\n║                                       ⢰⠀⠀⠀⠀⠀⣇⠀⣀⠴⠋⠀⠀⣠⠔⠁⠀⣠⡇⣇⡀⠀⠀⡇⢠⡇                                                                      ║                          ║\n║                                       ⠸⡀⠀⠀⢀⣤⠟⠋⠁⠀⠀⢀⠞⠁⠀⠀⢸⠀⠀⠈⡇⠀⠀⡇⡾⠀                                                                      ║                          ║\n║                                       ⠀⣇⠀⠀⠈⠁⠀⠀⠀⢀⠔⠁⠀⠀⠀⠀⢸⡄⠀⢰⡃⠀⢀⣷⠃⠀                                                                      ║                          ║\n║                                       ⠀⡟⣦⡀⠀⠀⣀⣠⠖⠁⠀⠀⠀⠀⠀⠀⢸⣇⠀⠈⣧⠀⢸⡿⠀⠀                                                                      ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║                          ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
-        const goodChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                          ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                       ║                          ║\n║                                          ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                          ║                          ║\n║                                          ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                       ║                          ║\n║                                           ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                        ║                          ║\n║                                           ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                        ║                          ║\n║                                           ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  You                                                                  ║                          ║\n║                                          ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      Did                                                              ║                          ║\n║                                          ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇          It                                                           ║                          ║\n║                                          ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇              Bro                                                      ║                          ║\n║                                          ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                                         ⠀⠀                            ║                          ║\n║                                          ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                                          ⠀                             ║                          ║\n║                                          ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                         ⠀                             ║                          ║\n║                                          ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                                                       ║                          ║\n║                                           ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀                                                                       ║                          ║\n║                                          ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                       ║                          ║\n║                                          ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                     ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║                          ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
+        const chestRoom = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                                                                                                                       ║"+this.getSpaces(26)+"║\n║                                                                                                                                       ║"+this.getSpaces(26)+"║\n║                                ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                                 ║"+this.getSpaces(26)+"║\n║                                ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                                    ║                          ║\n║                                ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                                 ║                          ║\n║                                 ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                                  ║                          ║\n║                                 ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                                  ║                          ║\n║                                 ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  Take            ⡄⢠⣤⣤⠀⣤⣤⣤⣤⣤⣤⣤⣤⣤⠀⣤⣤⡄⢠                                            ║                          ║\n║                                ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      It         ⢸⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿                                           ║                          ║\n║                                ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇        Bro      ⡇⢸⣿⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⡇⢸⣿⡇⠀⠀                                       ║                          ║\n║                                ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇                ⣿⡇⢸⣿⣿⠀⣿⣿⣿⠟⠛⠛⠛⠛⠻⣿⣿⠀⣿⣿⡇⢸⣿⣿                                         ║                          ║\n║                                ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                ⡉⢁⣀⣉⣀⣀⣉⣉⣉⠀⣴⠖⠲⣦⠀⣉⣉⣉⣀⣉⣉⣀⡈⢉⡁⠀⠀                                      ║                          ║\n║                                ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║                          ║\n║                                ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇⠀                                       ║                          ║\n║                                ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀               ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                        ║                          ║\n║                                 ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀               ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠸⠃                                        ║                          ║\n║                                ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                                 ║                          ║\n║                                ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                               ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
+        const openingChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                                                                                                                       ║"+this.getSpaces(26)+"║\n║                                                                                                                                       ║"+this.getSpaces(26)+"║\n║                                                                                                                                       ║"+this.getSpaces(26)+"║\n║                                                                                                                                       ║                          ║\n║                                                ,-.       _,---._ __  / \\                                                              ║                          ║\n║                                                /  )    .-'       `./ /   \\                                                            ║                          ║\n║                                                (  (   ,'            `/    /|                                                          ║                          ║\n║                                                  \\  `-\"             \\'\\   / |                                                         ║                          ║\n║                                                   `.              ,  \\ \\ /  |                                                         ║                          ║\n║                                                    /`.          ,'-`----Y   |                                                         ║\n║                                                   (    (       ;        |   /                                                         ║                          ║\n║                                                   |  ,-.    ,-'         |  /                                                          ║                          ║\n║                                                   |  | (   |            | /                                                           ║                          ║\n║                                                   )  |  \\  \`.___________|/                                                            ║                          ║\n║                                                   `--'   `--'                                                                         ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n║                                                                                                                                       ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
+        const trappedChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                ⠀⠀ ⠀⠀⠀⠀⠀  ⠀   ⡼⡝⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                                                                      ║"+this.getSpaces(26)+"║\n║                                     ⠀⠀⠀⠀⠀  ⠀⣸⢹⣹⠸⡦⠤⠤⠤⠄⣀⡀⠀⠀⡠⢴⢲⠀⠀⠀⠀                                                                      ║"+this.getSpaces(26)+"║\n║                                     ⠀⠀⠀⠀ ⠀ ⢰⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠳⢏⣊⠹⣼⠀⠀⠀⠀                                                                      ║"+this.getSpaces(26)+"║\n║                                     ⠀⠀⠀  ⠀⢀⠏⠀⠀⢠⡤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠁⡇⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀⠀⠀  ⠀⡎⠀⠀⠀⠀⠙⠓⢺⡄⠀⡴⠾⣿⡽⠖⠀⢸⡇⠀⠀⠀⠀                  Get                                                 ║                          ║\n║                                     ⠀⠀  ⠀⣸⠀⠀⠀⠀⠀⢀⢀⠀⢖⢲⠏⠀⠀⠀⠀⠀⢸⠁⠀⠀⠀⠀                       Pranked                                        ║                          ║\n║                                     ⠀⠀  ⢀⡇⠀⠀⠀⠀⠀⠈⠓⠧⠼⢧⣂⣊⠇⠀⠀⠀⢸⠀⠀⠀⠀⠀                               LOL                                    ║                          ║\n║                                     ⠀  ⠀⡸⠀⠀⠀⠀⠀⠀⠀⠀⠓⠶⠒⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⢀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣆⠀⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⣼⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⠀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡴⡫⠃⠀⠀⠀⠀⠀⢹⡀⠀⠀                                                                      ║                          ║\n║                                     ⠀  ⡇⠀⠀⠀⠀⡄⠀⠀⠀⢀⡞⠈⠀⠈⡳⠀⠀⡔⡆⠀⠀⠸⡷⠶⡄                                                                      ║                          ║\n║                                       ⢰⠀⠀⠀⠀⠀⣇⠀⣀⠴⠋⠀⠀⣠⠔⠁⠀⣠⡇⣇⡀⠀⠀⡇⢠⡇                                                                      ║                          ║\n║                                       ⠸⡀⠀⠀⢀⣤⠟⠋⠁⠀⠀⢀⠞⠁⠀⠀⢸⠀⠀⠈⡇⠀⠀⡇⡾⠀                                                                      ║                          ║\n║                                       ⠀⣇⠀⠀⠈⠁⠀⠀⠀⢀⠔⠁⠀⠀⠀⠀⢸⡄⠀⢰⡃⠀⢀⣷⠃⠀                                                                      ║                          ║\n║                                       ⠀⡟⣦⡀⠀⠀⣀⣠⠖⠁⠀⠀⠀⠀⠀⠀⢸⣇⠀⠈⣧⠀⢸⡿⠀⠀                                                                      ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║                          ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
+        const goodChest = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╦══════════════════════════╗\n║                                          ⠀⠀⠀⠀⠀⣀⣴⣶⣶⣶⣶⣶⣶⣶⣦⣄⣀⠀⠀⠀⠀⠀                                                                       ║"+this.getSpaces(26)+"║\n║                                          ⠀⠀⣀⣴⣾⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⣿⣿⣷⡄                                                                          ║"+this.getSpaces(26)+"║\n║                                          ⠀⠀⣿⣿⣿⣿⣿⣿⠉⠀⠀⠀⠀⠀⠉⠉⠉⠙⢷⡄⠀⠀                                                                       ║"+this.getSpaces(26)+"║\n║                                           ⣼⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡄                                                                        ║                          ║\n║                                           ⣿⣿⣿⣿⣿⡿⠛⠁⠀⣠⣾⣿⣶⣤⣤⣄⠀⠀⠀⡇                                                                        ║                          ║\n║                                           ⣿⣿⣿⣿⣿⠁⠀⠀⠚⠉⣴⣶⣦⡌⠙⠛⠀⣶⣶⣽⡄  You                                                                  ║                          ║\n║                                          ⣴⡿⠉⠻⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠙⠀⠀⢆⣤⣭⡙⡇      Did                                                              ║                          ║\n║                                          ⣿⠀⠉⠇⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠑⡄⠀⡇          It                                                           ║                          ║\n║                                          ⠻⣍⠑⠇⣿⣿⣿⣷⣦⣄⡀⣀⣠⣤⣼⣦⣀⣠⣤⡇ ⡇              Bro                                                      ║                          ║\n║                                          ⠀⣿⡟⢲⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣴⠇                                         ⠀⠀                            ║                          ║\n║                                          ⠀⣿⡇⣼⣿⣿⣿⣿⣿⣿⣿⣿⣷⣆⣀⠀⠉⠉⢿⣿⡿                                          ⠀                             ║                          ║\n║                                          ⠀⣿⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                         ⠀                             ║                          ║\n║                                          ⠀⣿⠀⠀⠙⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀                                                                       ║                          ║\n║                                           ⡿⠀⠀⠀⠀⠀⠉⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀                                                                       ║                          ║\n║                                          ⣿⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠿⣿⣿⣿⣿⣿⣿⣿⠟⠀⠀                                                                       ║                          ║\n║                                          ⣿              ⠉⠉⣿⠛⠛⠁⠀⠀⠀                                                                     ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⡄⢠⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⠀⣿⣧⣼⣿⠀⣿⣿⣿⣿⣿⣿⣿⡇⢸⡇                                                                        ║                          ║\n║                                     ⢸⡇⢸⣿⣿⣿⣿⣿⣿⣿⣀⣉⣉⣉⣉⣀⣿⣿⣿⣿⣿⣿⣿ ⢸⡇                                                                        ║                          ║\n║                                     ⠘⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ⠸⠃                                                                        ║                          ║\n╠═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╩══════════════════════════╣"
         switch(state) {
             case "chest" : {
                 console.log(chestRoom)
